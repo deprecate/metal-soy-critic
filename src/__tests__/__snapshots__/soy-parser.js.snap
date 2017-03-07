@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Soy Parser should parse file correctly 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "name": ".helper",
+          "type": "Call",
+        },
+        Object {
+          "name": "OtherTemplate.render",
+          "type": "Call",
+        },
+      ],
+      "name": ".render",
+      "params": Array [
+        Object {
+          "name": "name",
+          "paramType": "string",
+          "required": true,
+          "type": "Param",
+        },
+        Object {
+          "name": "title",
+          "paramType": "string",
+          "required": true,
+          "type": "Param",
+        },
+        Object {
+          "name": "optionalInfo",
+          "paramType": "string",
+          "required": false,
+          "type": "Param",
+        },
+      ],
+      "type": "Template",
+    },
+    Object {
+      "body": Array [],
+      "name": ".helper",
+      "params": Array [
+        Object {
+          "name": "test",
+          "paramType": "asdasd",
+          "required": false,
+          "type": "Param",
+        },
+      ],
+      "type": "Template",
+    },
+  ],
+  "namespace": "Test",
+  "type": "Program",
+}
+`;

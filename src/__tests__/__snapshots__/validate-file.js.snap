@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Validate file should fail; missing params 1`] = `
+Array [
+  "The following params should be included in STATE:
+
+[31moptionalInfo[39m",
+]
+`;
