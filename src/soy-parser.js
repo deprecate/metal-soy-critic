@@ -1,5 +1,4 @@
 const P = require('parsimmon');
-const Promise = require('bluebird');
 
 /* Parsers */
 

@@ -4,8 +4,6 @@ const fs = Promise.promisifyAll(require('fs'));
 const babylon = require('babylon');
 const parseSoy = require('./soy-parser');
 const path = require('path');
-const prettyFormat = require('pretty-format');
-const validateParams = require('./validate-params');
 const {combineResults, toResult} = require('./util');
 
 /* Error Types */
@@ -23,7 +21,7 @@ const ERR_SOY_READ = 'ERR_SOY_READ';
  *
  */
 const validators = [
-  validateParams
+  require('./validate-params')
 ];
 
 function toError(type) {
