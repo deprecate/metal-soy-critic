@@ -1,5 +1,7 @@
 # metal-soy-critic
 
+[![Build Status](https://travis-ci.org/mthadley/metal-soy-critic.svg?branch=master)](https://travis-ci.org/mthadley/metal-soy-critic)
+
 A utility for validating your `metal-soy` components. This tool is not meant to
 to do the same work that your javascript or soy compiler already does. Instead
 it is meant to check for bad practices in your components.
