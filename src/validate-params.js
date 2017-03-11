@@ -4,53 +4,45 @@ const {toResult} = require('./util');
 const chalk = require('chalk');
 
 function getSoyParams(ast) {
-  const {params} = soyTraverse.visit(ast, {
+  return soyTraverse.visit(ast, {
     Template(node, state) {
       if (node.name === '.render') {
-        state.params = (node.params.map(param => param.name));
+        state.params = node.params.map(param => param.name);
       }
     }
-  }, {params: []});
-
-  return params;
+  }, {params: []}).params;
 }
 
 function getJSParams(ast) {
-  let defaultName;
+  let params = null;
+
   jsTraverse(ast, {
-    ExportDefaultDeclaration({node}) {
-      defaultName = node.declaration.name;
-    }
-  });
+    ExportDefaultDeclaration(path) {
+      const defaultName = path.node.declaration.name;
 
-  if (!defaultName) {
-    return null;
-  }
+      path
+        .findParent(path => path.isProgram())
+        .scope.bindings[defaultName].referencePaths.forEach(path => {
+          const {parentPath} = path;
 
-  const params = [];
-  jsTraverse(ast, {
-    Program(path) {
-      const binding = path.scope.bindings[defaultName];
-      binding.referencePaths.forEach(path => {
-        const {container} = path;
-
-        if (container.type === 'MemberExpression' &&
-          container.property.name === 'STATE'
-        ) {
-          if (path.parentPath.parentPath.isAssignmentExpression()) {
-            path.parentPath.parentPath.node.right.properties.forEach(
-              ({key}) => params.push(key.name)
+          if (parentPath.isMemberExpression() &&
+            parentPath.node.property.name === 'STATE' &&
+            parentPath.parentPath.isAssignmentExpression()
+          ) {
+            params = parentPath.parentPath.node.right.properties.map(
+              prop => prop.key.name
             );
           }
-        }
-      });
+        });
+
+      path.stop();
     }
   });
 
   return params;
 }
 
-module.exports = function(soyAst, jsAst) {
+module.exports = function validateParams(soyAst, jsAst) {
   const soyParams = getSoyParams(soyAst);
   const jsParams = getJSParams(jsAst);
 

@@ -61,11 +61,9 @@ function getJSAst(filePath) {
 }
 
 function runValidations(soyAst, jsAst) {
-  const result = validators
+  return validators
     .map(validator => validator(soyAst, jsAst))
     .reduce(combineResults);
-
-  return result;
 }
 
 module.exports = function validateFile(filePath) {
