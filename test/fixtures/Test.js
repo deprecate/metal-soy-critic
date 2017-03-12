@@ -2,7 +2,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import templates from './Test.soy';
-import {Config} from '../../util/imports';
+import {Config} from 'metal-state';
 
 class Test extends Component {
 }

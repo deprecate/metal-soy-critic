@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Validate file should fail; missing internal 1`] = `
+Array [
+  "Based on their name, these attributes should have the [33m.internal()[39m config added:
+
+[31mcount_[39m",
+]
+`;
+
 exports[`Validate file should fail; missing params 1`] = `
 Array [
   "The following params should be included in STATE:

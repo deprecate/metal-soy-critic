@@ -1,7 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import templates from './MissingParams.soy';
+import templates from './MissingInternal.soy';
 import {Config} from 'metal-state';
 
 class Test extends Component {
@@ -9,7 +9,11 @@ class Test extends Component {
 
 Test.STATE = {
   name: Config.string().required(),
-  title: Config.string().required()
+  title: Config.string().required(),
+  optionalInfo: Config.string(),
+  count_: Config.number(),
+  otherCount_: Config.number().internal(),
+  backwardsCount_: Config.internal().number().value(23)
 };
 
 Soy.register(Test, templates);

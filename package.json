@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-traverse": "^6.23.1",
+    "babel-types": "^6.23.0",
     "babylon": "^6.16.1",
     "bluebird": "^3.4.7",
     "chalk": "^1.1.3",

@@ -21,7 +21,8 @@ const ERR_SOY_READ = 'ERR_SOY_READ';
  *
  */
 const validators = [
-  require('./validate-params')
+  require('./validate-params'),
+  require('./validate-internal')
 ];
 
 function toError(type) {

@@ -1,7 +1,7 @@
-const jsTraverse = require('babel-traverse').default;
+const chalk = require('chalk');
+const jsHelpers = require('./js-helpers');
 const soyTraverse = require('./soy-traverse');
 const {toResult} = require('./util');
-const chalk = require('chalk');
 
 function getSoyParams(ast) {
   return soyTraverse.visit(ast, {
@@ -14,30 +14,12 @@ function getSoyParams(ast) {
 }
 
 function getJSParams(ast) {
-  let params = null;
+  let params = null
 
-  jsTraverse(ast, {
-    ExportDefaultDeclaration(path) {
-      const defaultName = path.node.declaration.name;
-
-      path
-        .findParent(path => path.isProgram())
-        .scope.bindings[defaultName].referencePaths.forEach(path => {
-          const {parentPath} = path;
-
-          if (parentPath.isMemberExpression() &&
-            parentPath.node.property.name === 'STATE' &&
-            parentPath.parentPath.isAssignmentExpression()
-          ) {
-            params = parentPath.parentPath.node.right.properties.map(
-              prop => prop.key.name
-            );
-          }
-        });
-
-      path.stop();
-    }
-  });
+  const node = jsHelpers.getParamsNode(ast);
+  if (node) {
+    params = node.properties.map(prop => prop.key.name);
+  }
 
   return params;
 }
