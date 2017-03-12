@@ -17,7 +17,7 @@ function isMissingInternal(node) {
     t.isIdentifier(node.callee.property)
   ) {
     if (node.callee.property.name === 'internal') {
-      return false
+      return false;
     }
 
     return isMissingInternal(node.callee.object);
@@ -38,7 +38,7 @@ module.exports = function validateInternal(soyAst, jsAst) {
     const name = node.key.name;
 
     if (isInternalName(name) && isMissingInternal(node.value)) {
-      missingInternal.push(name)
+      missingInternal.push(name);
     }
   });
 

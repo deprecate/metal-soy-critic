@@ -14,7 +14,7 @@ function getSoyParams(ast) {
 }
 
 function getJSParams(ast) {
-  let params = null
+  let params = null;
 
   const node = jsHelpers.getParamsNode(ast);
   if (node) {
