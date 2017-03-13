@@ -1,6 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
+import 'OtherComponent';
 import templates from './MissingInternal.soy';
 import {Config} from 'metal-state';
 

@@ -3,7 +3,7 @@
 /**
  * Test
  */
-{template this should not be here .render}
+{template .render}
   {@param name: string}
   {@param title: string}
   {@param? optionalInfo: string}
@@ -16,11 +16,23 @@
       <p>{$optionalInfo}</p>
     {/if}
 
-    {call .helper /}
+    {if isNonnull(optionalInfo)}
+      <p>{$name}</p>
+    {elseif}
+      <p>{$title}</p>
+    {else}
+      <p>Empty</p>
+    {/if}
 
     {call OtherComponent.render}
       {param foo: 'bar' /}
+      {param content kind="html"}
+        {call .helper /}
+        {call .helper /}
+      {/param}
     {/call}
+
+    {call .helper /}
   </div>
 {/template}
 

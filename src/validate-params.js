@@ -25,14 +25,14 @@ function getJSParams(ast) {
 }
 
 module.exports = function validateParams(soyAst, jsAst) {
-  const soyParams = getSoyParams(soyAst);
   const jsParams = getJSParams(jsAst);
 
   if (!jsParams) {
     return toResult(true);
   }
 
-  const missingParams = soyParams.filter(param => !jsParams.includes(param));
+  const missingParams = getSoyParams(soyAst)
+    .filter(param => !jsParams.includes(param));
 
   if (missingParams.length) {
     return toResult(

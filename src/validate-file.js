@@ -22,7 +22,8 @@ const ERR_SOY_READ = 'ERR_SOY_READ';
  */
 const validators = [
   require('./validate-params'),
-  require('./validate-internal')
+  require('./validate-internal'),
+  require('./validate-call-imports')
 ];
 
 function toError(type) {
@@ -73,6 +74,7 @@ module.exports = function validateFile(filePath) {
     ])
     .then(([soyAst, jsAst]) => runValidations(soyAst, jsAst))
     .catch(error => {
+      console.log(error);
       switch(error.type) {
         case ERR_JS_READ:
           return toResult(true);

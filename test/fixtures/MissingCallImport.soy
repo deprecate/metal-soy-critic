@@ -3,7 +3,7 @@
 /**
  * Test
  */
-{template this should not be here .render}
+{template .render}
   {@param name: string}
   {@param title: string}
   {@param? optionalInfo: string}
@@ -18,7 +18,11 @@
 
     {call .helper /}
 
-    {call OtherComponent.render}
+    {call MyExternalComponent.render}
+      {param foo: 'bar' /}
+    {/call}
+
+    {call MyCoolComponent.render}
       {param foo: 'bar' /}
     {/call}
   </div>

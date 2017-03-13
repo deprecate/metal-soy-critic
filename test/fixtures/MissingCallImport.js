@@ -1,7 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import 'OtherComponent';
+import 'MyCoolComponent';
 import templates from './Test.soy';
 import {Config} from 'metal-state';
 

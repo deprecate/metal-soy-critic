@@ -6,11 +6,38 @@ Object {
     Object {
       "body": Array [
         Object {
-          "name": ".helper",
+          "content": "$title",
+          "type": "Interpolation",
+        },
+        Object {
+          "content": "$name",
+          "type": "Interpolation",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "content": "$optionalInfo",
+              "type": "Interpolation",
+            },
+          ],
+          "type": "If",
+        },
+        Object {
+          "body": Array [],
+          "name": "helper",
+          "namespace": null,
           "type": "Call",
         },
         Object {
-          "name": "OtherTemplate.render",
+          "body": Array [
+            Object {
+              "body": Array [],
+              "name": "foo",
+              "type": "Param",
+            },
+          ],
+          "name": "render",
+          "namespace": "OtherComponent",
           "type": "Call",
         },
       ],
@@ -20,19 +47,19 @@ Object {
           "name": "name",
           "paramType": "string",
           "required": true,
-          "type": "Param",
+          "type": "ParamDeclaration",
         },
         Object {
           "name": "title",
           "paramType": "string",
           "required": true,
-          "type": "Param",
+          "type": "ParamDeclaration",
         },
         Object {
           "name": "optionalInfo",
           "paramType": "string",
           "required": false,
-          "type": "Param",
+          "type": "ParamDeclaration",
         },
       ],
       "type": "Template",
@@ -45,7 +72,121 @@ Object {
           "name": "test",
           "paramType": "asdasd",
           "required": false,
-          "type": "Param",
+          "type": "ParamDeclaration",
+        },
+      ],
+      "type": "Template",
+    },
+  ],
+  "namespace": "Test",
+  "type": "Program",
+}
+`;
+
+exports[`Soy Parser should parse nested calls 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "content": "$title",
+          "type": "Interpolation",
+        },
+        Object {
+          "content": "$name",
+          "type": "Interpolation",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "content": "$optionalInfo",
+              "type": "Interpolation",
+            },
+          ],
+          "type": "If",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "content": "$name",
+              "type": "Interpolation",
+            },
+            Object {
+              "content": "$title",
+              "type": "Interpolation",
+            },
+          ],
+          "type": "If",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "body": Array [],
+              "name": "foo",
+              "type": "Param",
+            },
+            Object {
+              "body": Array [
+                Object {
+                  "body": Array [],
+                  "name": "helper",
+                  "namespace": null,
+                  "type": "Call",
+                },
+                Object {
+                  "body": Array [],
+                  "name": "helper",
+                  "namespace": null,
+                  "type": "Call",
+                },
+              ],
+              "name": "content",
+              "type": "Param",
+            },
+          ],
+          "name": "render",
+          "namespace": "OtherComponent",
+          "type": "Call",
+        },
+        Object {
+          "body": Array [],
+          "name": "helper",
+          "namespace": null,
+          "type": "Call",
+        },
+      ],
+      "name": ".render",
+      "params": Array [
+        Object {
+          "name": "name",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "title",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "optionalInfo",
+          "paramType": "string",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "type": "Template",
+    },
+    Object {
+      "body": Array [],
+      "name": ".helper",
+      "params": Array [
+        Object {
+          "name": "test",
+          "paramType": "asdasd",
+          "required": false,
+          "type": "ParamDeclaration",
         },
       ],
       "type": "Template",

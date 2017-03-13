@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Validate file should fail; missing import 1`] = `
+Array [
+  "It looks like the following component calls are missing an [33mimport[39m:
+
+[31mMyExternalComponent[39m",
+]
+`;
+
 exports[`Validate file should fail; missing internal 1`] = `
 Array [
   "Based on their name, these attributes should have the [33m.internal()[39m config added:
