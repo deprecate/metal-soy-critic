@@ -8,7 +8,7 @@ function getExternalSoyCalls(ast) {
   const {calls} = soyTraverse.visit(ast, {
     Call(node, state) {
       if (node.namespace) {
-        state.calls.add(node.namespace)
+        state.calls.add(node.namespace);
       }
     }
   }, {calls: new Set()});
@@ -31,7 +31,6 @@ module.exports = function valdiateCallImports(soyAst, jsAst) {
   const importNames = getImportPaths(jsAst)
     .map(importPath => path.parse(importPath).name);
 
-  console.log(getExternalSoyCalls(soyAst));
   const missingImports = getExternalSoyCalls(soyAst)
     .filter(name => !importNames.includes(name));
 

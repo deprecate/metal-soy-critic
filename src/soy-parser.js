@@ -70,8 +70,7 @@ const parser = P.seqMap(
 
 function cmd(name, ...inter) {
   return openCmd(name).then(
-    bodyFor(name, ...inter)
-      .map(body => MakeCmd(name, body))
+    bodyFor(name, ...inter).map(body => MakeCmd(name, body))
   );
 }
 
@@ -93,9 +92,8 @@ function bodyFor(name, ...inter) {
           cmd('literal'),
           interpolation),
         bodyParser,
-        (left, right) => [left, ...right]
-      )
-    )));
+        (left, right) => [left, ...right])))
+  );
 
   return bodyParser;
 }
@@ -115,9 +113,7 @@ function withAny(parser) {
       P.seqMap(
         P.any,
         newParser,
-        (s, next) => s + next
-      )
-    )
+        (s, next) => s + next))
   );
 
   return newParser;

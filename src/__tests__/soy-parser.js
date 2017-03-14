@@ -17,12 +17,6 @@ describe('Soy Parser', () => {
   test('should parse nested calls', () => {
     const input = getFixture('NestedCalls.soy');
 
-    try {
-      soyParser(input);
-    } catch(e) {
-      console.log(e);
-    }
-
     expect(soyParser(input)).toMatchSnapshot();
   });
 });
