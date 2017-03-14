@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`joinErrors should return a string with all messages joined 1`] = `[Function]`;
