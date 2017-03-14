@@ -18,7 +18,7 @@ Array [
 
 exports[`Validate file should fail; missing params 1`] = `
 Array [
-  "The following params should be included in STATE:
+  "The following params should be included in [33mSTATE[39m:
 
 [31moptionalInfo[39m",
 ]

@@ -37,7 +37,7 @@ module.exports = function validateParams(soyAst, jsAst) {
   if (missingParams.length) {
     return toResult(
       false,
-      'The following params should be included in STATE:\n\n' +
+      `The following params should be included in ${chalk.yellow('STATE')}:\n\n` +
       missingParams.map(name => chalk.red(name)).join('\n'));
   }
 
