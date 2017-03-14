@@ -2,7 +2,7 @@ const chalk = require('chalk');
 const jsTraverse = require('babel-traverse').default;
 const path = require('path');
 const soyTraverse = require('./soy-traverse');
-const {toResult} = require('./util');
+const {joinErrors, toResult} = require('./util');
 
 function getExternalSoyCalls(ast) {
   const {calls} = soyTraverse.visit(ast, {
@@ -38,7 +38,7 @@ module.exports = function valdiateCallImports(soyAst, jsAst) {
     return toResult(
       false,
       `It looks like the following component calls are missing an ${chalk.yellow('import')}:\n\n` +
-      missingImports.map(name => chalk.red(name)).join('\n'));
+      joinErrors(missingImports));
   }
 
   return toResult(true);

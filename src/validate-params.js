@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const jsHelpers = require('./js-helpers');
 const soyTraverse = require('./soy-traverse');
-const {toResult} = require('./util');
+const {joinErrors, toResult} = require('./util');
 
 function getSoyParams(ast) {
   return soyTraverse.visit(ast, {
@@ -38,7 +38,7 @@ module.exports = function validateParams(soyAst, jsAst) {
     return toResult(
       false,
       `The following params should be included in ${chalk.yellow('STATE')}:\n\n` +
-      missingParams.map(name => chalk.red(name)).join('\n'));
+      joinErrors(missingParams));
   }
 
   return toResult(true);

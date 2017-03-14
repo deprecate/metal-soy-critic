@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const jsHelpers = require('./js-helpers');
 const t = require('babel-types');
-const {toResult} = require('./util');
+const {joinErrors, toResult} = require('./util');
 
 function isInternalName(name) {
   return name.startsWith('_') || name.endsWith('_');
@@ -49,5 +49,5 @@ module.exports = function validateInternal(soyAst, jsAst) {
   return toResult(
     false,
     `Based on their name, these attributes should have the ${chalk.yellow('.internal()')} config added:\n\n` +
-    missingInternal.map(name => chalk.red(name)).join('\n'));
+    joinErrors(missingInternal));
 }

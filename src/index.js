@@ -4,7 +4,6 @@
 const chalk = require('chalk');
 const pkg = require('../package.json');
 const program = require('commander');
-const Promise = require('bluebird');
 const validateFile = require('./validate-file');
 
 function main() {
