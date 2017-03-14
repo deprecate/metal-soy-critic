@@ -24,7 +24,7 @@ describe('joinErrors', () => {
   test('should return a string with all messages joined', () => {
     const errors = ['nope', 'bad', 'try again'];
 
-    expect(Util.joinErrors).toMatchSnapshot();
+    expect(Util.joinErrors(errors)).toMatchSnapshot();
   });
 });
 
