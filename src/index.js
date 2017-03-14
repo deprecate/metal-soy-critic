@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 'use strict';
 
+const chalk = require('chalk');
+const pkg = require('../package.json');
 const program = require('commander');
 const Promise = require('bluebird');
 const validateFile = require('./validate-file');
-const chalk = require('chalk');
 
 function main() {
   program
-    .version('1.0.0')
+    .version(pkg.version)
     .usage('mcritic [options] <file ...>')
     .parse(process.argv);
 
