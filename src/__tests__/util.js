@@ -93,3 +93,32 @@ describe('difference', () => {
     expect(Util.difference(setB, setA)).toEqual(new Set([4]));
   })
 })
+
+describe('parseTemplateName', () => {
+  test('should parse template name', () => {
+    const result = Util.parseTemplateName('.render');
+
+    expect(result).toMatchObject({
+      name: 'render',
+      namespace: null
+    });
+  })
+
+  test('should parse a namespace', () => {
+    const result = Util.parseTemplateName('MyNamespace.render');
+
+    expect(result).toMatchObject({
+      name: 'render',
+      namespace: 'MyNamespace'
+    });
+  })
+
+  test('should parse nested namespaces', () => {
+    const result = Util.parseTemplateName('My.Nested.Namespace.render');
+
+    expect(result).toMatchObject({
+      name: 'render',
+      namespace: 'My.Nested.Namespace'
+    });
+  })
+});

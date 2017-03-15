@@ -1,4 +1,5 @@
 const P = require('parsimmon');
+const {parseTemplateName} = require('./util');
 
 /* Parsers */
 
@@ -25,8 +26,6 @@ const param = P.lazy(() => P.seqMap(
     rb.then(bodyFor('param')))),
   Param
 ));
-
-const interpolation = lb.then(withAny(rb)).map(Interpolation);
 
 const paramDeclaration = P.seqMap(
   P.string('{@param')
@@ -60,13 +59,34 @@ const template = P.seqMap(
   Template
 );
 
-const parser = P.seqMap(
+const delTemplate = P.seqMap(
+  orAny(P.string('{deltemplate'))
+    .skip(P.whitespace)
+    .then(templateName),
+  P.seq(P.whitespace, P.string('variant='))
+    .then(interpolation('"'))
+    .atMost(1)
+    .map(values => values[0] || null),
+  rb.then(spaced(paramDeclaration).many()),
+  bodyFor('deltemplate'),
+  DelTemplate
+);
+
+const program = P.seqMap(
   namespaceCmd,
-  template.atLeast(1).skip(spaced(P.eof)),
+  P.alt(template, delTemplate)
+    .atLeast(1)
+    .skip(spaced(P.eof)),
   Program
 );
 
+const parser = program;
+
 /* Higher-order Parsers */
+
+function interpolation(start, end = start) {
+  return P.string(start).then(withAny(P.string(end))).map(Interpolation);
+}
 
 function cmd(name, ...inter) {
   return openCmd(name).then(
@@ -90,7 +110,7 @@ function bodyFor(name, ...inter) {
           cmd('switch'),
           cmd('let'),
           cmd('literal'),
-          interpolation),
+          interpolation('{', '}')),
         bodyParser,
         (left, right) => [left, ...right])))
   );
@@ -149,12 +169,28 @@ function Program(namespace, body) {
   };
 }
 
-function Template(name, params = [], body = []) {
+function Template(rawName, params = [], body = []) {
+  const {name, namespace} = parseTemplateName(rawName);
+
   return {
     body,
     name,
+    namespace,
     params,
     type: 'Template'
+  };
+}
+
+function DelTemplate(rawName, variant, params = [], body = []) {
+  const {name, namespace} = parseTemplateName(rawName);
+
+  return {
+    body,
+    name,
+    namespace,
+    params,
+    variant,
+    type: 'DelTemplate'
   };
 }
 
@@ -182,16 +218,13 @@ function ParamDeclaration(required, name, paramType) {
   };
 }
 
-function Call(name, body = []) {
-  const segments = name.split('.');
-  const namespace = segments
-    .slice(0, segments.length - 1)
-    .join('.');
+function Call(rawName, body = []) {
+  const {name, namespace} = parseTemplateName(rawName);
 
   return {
     body,
-    name: segments[segments.length - 1],
-    namespace: namespace || null,
+    name,
+    namespace,
     type: 'Call'
   };
 }

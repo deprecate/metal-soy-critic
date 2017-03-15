@@ -3,7 +3,7 @@ const soyTraverse = require('./soy-traverse');
 function getSoyParams(ast) {
   return soyTraverse.visit(ast, {
     Template(node, state) {
-      if (node.name === '.render') {
+      if (node.namespace === null && node.name === 'render') {
         state.params = node.params;
       }
     }

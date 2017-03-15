@@ -24,6 +24,18 @@ function toResult(status, ...messages) {
   };
 }
 
+function parseTemplateName(rawName) {
+  const segments = rawName.split('.');
+  const namespace = segments
+    .slice(0, segments.length - 1)
+    .join('.');
+
+  return {
+    name: segments[segments.length - 1],
+    namespace: namespace || null
+  };
+}
+
 function joinErrors(lines) {
   return lines
     .map(line => chalk.red(line))
@@ -34,5 +46,6 @@ module.exports = {
   combineResults,
   difference,
   joinErrors,
+  parseTemplateName,
   toResult
 };

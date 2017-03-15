@@ -1,5 +1,143 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Soy Parser should parse deltemplates 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "content": "$title",
+          "type": "Interpolation",
+        },
+        Object {
+          "content": "$name",
+          "type": "Interpolation",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "content": "$optionalInfo",
+              "type": "Interpolation",
+            },
+          ],
+          "type": "If",
+        },
+        Object {
+          "body": Array [],
+          "name": "helper",
+          "namespace": null,
+          "type": "Call",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "body": Array [],
+              "name": "foo",
+              "type": "Param",
+            },
+          ],
+          "name": "render",
+          "namespace": "OtherComponent",
+          "type": "Call",
+        },
+      ],
+      "name": "First",
+      "namespace": "Test",
+      "params": Array [
+        Object {
+          "name": "name",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "title",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "optionalInfo",
+          "paramType": "string",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "type": "DelTemplate",
+      "variant": null,
+    },
+    Object {
+      "body": Array [
+        Object {
+          "content": "$title",
+          "type": "Interpolation",
+        },
+        Object {
+          "content": "$name",
+          "type": "Interpolation",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "content": "$optionalInfo",
+              "type": "Interpolation",
+            },
+          ],
+          "type": "If",
+        },
+        Object {
+          "body": Array [],
+          "name": "helper",
+          "namespace": null,
+          "type": "Call",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "body": Array [],
+              "name": "foo",
+              "type": "Param",
+            },
+          ],
+          "name": "render",
+          "namespace": "OtherComponent",
+          "type": "Call",
+        },
+      ],
+      "name": "Second",
+      "namespace": "Othernamespace",
+      "params": Array [
+        Object {
+          "name": "name",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "title",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "optionalInfo",
+          "paramType": "string",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "type": "DelTemplate",
+      "variant": Object {
+        "content": "'neato'",
+        "type": "Interpolation",
+      },
+    },
+  ],
+  "namespace": "Test",
+  "type": "Program",
+}
+`;
+
 exports[`Soy Parser should parse file correctly 1`] = `
 Object {
   "body": Array [
@@ -41,7 +179,8 @@ Object {
           "type": "Call",
         },
       ],
-      "name": ".render",
+      "name": "render",
+      "namespace": null,
       "params": Array [
         Object {
           "name": "name",
@@ -66,7 +205,8 @@ Object {
     },
     Object {
       "body": Array [],
-      "name": ".helper",
+      "name": "helper",
+      "namespace": null,
       "params": Array [
         Object {
           "name": "test",
@@ -155,7 +295,8 @@ Object {
           "type": "Call",
         },
       ],
-      "name": ".render",
+      "name": "render",
+      "namespace": null,
       "params": Array [
         Object {
           "name": "name",
@@ -180,7 +321,8 @@ Object {
     },
     Object {
       "body": Array [],
-      "name": ".helper",
+      "name": "helper",
+      "namespace": null,
       "params": Array [
         Object {
           "name": "test",

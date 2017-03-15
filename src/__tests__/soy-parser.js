@@ -19,4 +19,10 @@ describe('Soy Parser', () => {
 
     expect(soyParser(input)).toMatchSnapshot();
   });
+
+  test('should parse deltemplates', () => {
+    const input = getFixture('DelTemplate.soy');
+
+    expect(soyParser(input)).toMatchSnapshot();
+  });
 });
