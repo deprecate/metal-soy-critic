@@ -29,8 +29,8 @@ const param = P.lazy(() => P.seqMap(
 
 const paramDeclaration = P.seqMap(
   P.string('{@param')
-    .then(P.string('?').atMost(1))
-    .map(values => values.length < 1),
+    .then(optional(P.string('?')))
+    .map(value => !value),
   spaced(paramName),
   spaced(P.string(':'))
     .then(spaced(typeName))
@@ -63,10 +63,8 @@ const delTemplate = P.seqMap(
   orAny(P.string('{deltemplate'))
     .skip(P.whitespace)
     .then(templateName),
-  P.seq(P.whitespace, P.string('variant='))
-    .then(interpolation('"'))
-    .atMost(1)
-    .map(values => values[0] || null),
+  optional(P.seq(P.whitespace, P.string('variant='))
+    .then(interpolation('"'))),
   rb.then(spaced(paramDeclaration).many()),
   bodyFor('deltemplate'),
   DelTemplate
@@ -83,6 +81,10 @@ const program = P.seqMap(
 const parser = program;
 
 /* Higher-order Parsers */
+
+function optional(parser) {
+  return parser.atMost(1).map(values => values[0] || null);
+}
 
 function interpolation(start, end = start) {
   return P.string(start).then(withAny(P.string(end))).map(Interpolation);
