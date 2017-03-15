@@ -83,3 +83,13 @@ describe('combineResults', () => {
     });
   });
 });
+
+describe('difference', () => {
+  test('should return the difference of two sets', () => {
+    const setA = new Set([1, 2, 3]);
+    const setB = new Set([1, 2, 4]);
+
+    expect(Util.difference(setA, setB)).toEqual(new Set([3]));
+    expect(Util.difference(setB, setA)).toEqual(new Set([4]));
+  })
+})

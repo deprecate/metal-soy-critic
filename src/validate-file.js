@@ -75,7 +75,6 @@ module.exports = function validateFile(filePath) {
     ])
     .then(([soyAst, jsAst]) => runValidations(soyAst, jsAst))
     .catch(error => {
-      console.log(error);
       switch(error.type) {
         case ERR_JS_READ:
           return toResult(true);
