@@ -13,7 +13,7 @@ function getExternalSoyCalls(ast) {
     }
   }, {calls: new Set()});
 
-  return Array.from(calls.values());
+  return [...calls];
 }
 
 function getImportPaths(ast) {

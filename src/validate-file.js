@@ -21,9 +21,10 @@ const ERR_SOY_READ = 'ERR_SOY_READ';
  *
  */
 const validators = [
+  require('./validate-call-imports'),
   require('./validate-params'),
   require('./validate-internal'),
-  require('./validate-call-imports')
+  require('./validate-required-params')
 ];
 
 function toError(type) {

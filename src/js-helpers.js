@@ -1,4 +1,24 @@
 const jsTraverse = require('babel-traverse').default;
+const t = require('babel-types');
+
+function hasAttribute(node, name) {
+  if (t.isIdentifier(node) && node.name === 'Config') {
+    return false;
+  }
+
+  if (t.isCallExpression(node) &&
+    t.isMemberExpression(node.callee) &&
+    t.isIdentifier(node.callee.property)
+  ) {
+    if (node.callee.property.name === name) {
+      return true;
+    }
+
+    return hasAttribute(node.callee.object, name);
+  }
+
+  return false;
+}
 
 function getParamsNode(ast) {
   let node = null;
@@ -28,5 +48,6 @@ function getParamsNode(ast) {
 }
 
 module.exports = {
-  getParamsNode
+  getParamsNode,
+  hasAttribute
 };

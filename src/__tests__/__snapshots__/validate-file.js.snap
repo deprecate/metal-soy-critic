@@ -23,3 +23,14 @@ Array [
 [31moptionalInfo[39m",
 ]
 `;
+
+exports[`Validate file should fail; missing required 1`] = `
+Array [
+  "These attributes are [33mrequired[39m in your Soy Template but not in your Component:
+
+[31mtitle[39m",
+  "These attributes are [33m.required()[39m in your Component but not in your Template:
+
+[31mdescription[39m",
+]
+`;

@@ -1,17 +1,7 @@
 const chalk = require('chalk');
 const jsHelpers = require('./js-helpers');
-const soyTraverse = require('./soy-traverse');
+const soyHelpers = require('./soy-helpers');
 const {joinErrors, toResult} = require('./util');
-
-function getSoyParams(ast) {
-  return soyTraverse.visit(ast, {
-    Template(node, state) {
-      if (node.name === '.render') {
-        state.params = node.params.map(param => param.name);
-      }
-    }
-  }, {params: []}).params;
-}
 
 function getJSParams(ast) {
   let params = null;
@@ -31,7 +21,8 @@ module.exports = function validateParams(soyAst, jsAst) {
     return toResult(true);
   }
 
-  const missingParams = getSoyParams(soyAst)
+  const missingParams = soyHelpers.getSoyParams(soyAst)
+    .map(param => param.name)
     .filter(param => !jsParams.includes(param));
 
   if (missingParams.length) {

@@ -1,0 +1,18 @@
+{namespace Test}
+
+/**
+ * Test
+ */
+{template .render}
+  {@param name: string}
+  {@param title: string}
+  {@param? description: string}
+  {@param? other: string}
+
+  <div>
+    <h1>{$title}</h1>
+    <h2>{$name}</h2>
+    <h2>{$description ?: ''}</h2>
+    <h3>{$other ?: 'default'}</h3>
+  </div>
+{/template}

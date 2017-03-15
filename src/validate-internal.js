@@ -1,29 +1,9 @@
 const chalk = require('chalk');
 const jsHelpers = require('./js-helpers');
-const t = require('babel-types');
 const {joinErrors, toResult} = require('./util');
 
 function isInternalName(name) {
   return name.startsWith('_') || name.endsWith('_');
-}
-
-function isMissingInternal(node) {
-  if (t.isIdentifier(node) && node.name === 'Config') {
-    return true;
-  }
-
-  if (t.isCallExpression(node) &&
-    t.isMemberExpression(node.callee) &&
-    t.isIdentifier(node.callee.property)
-  ) {
-    if (node.callee.property.name === 'internal') {
-      return false;
-    }
-
-    return isMissingInternal(node.callee.object);
-  }
-
-  return false;
 }
 
 module.exports = function validateInternal(soyAst, jsAst) {
@@ -33,14 +13,14 @@ module.exports = function validateInternal(soyAst, jsAst) {
     return toResult(true);
   }
 
-  const missingInternal = [];
-  params.properties.forEach(node => {
-    const name = node.key.name;
+  const missingInternal = params.properties
+    .filter(node => {
+      const name = node.key.name;
 
-    if (isInternalName(name) && isMissingInternal(node.value)) {
-      missingInternal.push(name);
-    }
-  });
+      return isInternalName(name) &&
+        !jsHelpers.hasAttribute(node.value, 'internal');
+    })
+    .map(node => node.key.name);
 
   if (!missingInternal.length) {
     return toResult(true);
