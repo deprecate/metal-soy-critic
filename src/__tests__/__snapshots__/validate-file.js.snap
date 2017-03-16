@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Validate file should fail; invalid namespace 1`] = `
+Array [
+  "Failed to parse soy template",
+]
+`;
+
 exports[`Validate file should fail; missing import 1`] = `
 Array [
   "It looks like the following component calls are missing an [33mimport[39m:

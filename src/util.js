@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const Promise = require('bluebird');
 
 function combineResults(first, second) {
   return toResult(
@@ -36,6 +37,13 @@ function parseTemplateName(rawName) {
   };
 }
 
+function sequence(...tasks) {
+  return Promise.reduce(tasks, (res, next) =>
+    next().then(value => [...res, value]),
+    []
+  );
+}
+
 function joinErrors(lines) {
   return lines
     .map(line => chalk.red(line))
@@ -47,5 +55,6 @@ module.exports = {
   difference,
   joinErrors,
   parseTemplateName,
+  sequence,
   toResult
 };

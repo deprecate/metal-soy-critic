@@ -4,6 +4,7 @@
 const chalk = require('chalk');
 const pkg = require('../package.json');
 const program = require('commander');
+const Promise = require('bluebird');
 const validateFile = require('./validate-file');
 
 function main() {
@@ -17,7 +18,7 @@ function main() {
   }
 
   Promise
-    .all(program.args.map(validate))
+    .map(program.args, validate)
     .then(validations => {
       const failed = validations.filter(validation => !validation.result.status);
 

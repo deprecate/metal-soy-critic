@@ -4,7 +4,7 @@ const fs = Promise.promisifyAll(require('fs'));
 const babylon = require('babylon');
 const parseSoy = require('./soy-parser');
 const path = require('path');
-const {combineResults, toResult} = require('./util');
+const {combineResults, sequence, toResult} = require('./util');
 
 /* Error Types */
 
@@ -68,14 +68,10 @@ function runValidations(soyAst, jsAst) {
 }
 
 module.exports = function validateFile(filePath) {
-  return Promise
-    .all([
-      getSoyAst(filePath),
-      getJSAst(getJSPath(filePath))
-    ])
+  return sequence(() => getSoyAst(filePath), () => getJSAst(getJSPath(filePath)))
     .then(([soyAst, jsAst]) => runValidations(soyAst, jsAst))
     .catch(error => {
-      switch(error.type) {
+      switch (error.type) {
         case ERR_JS_READ:
           return toResult(true);
         case ERR_JS_PARSE:
