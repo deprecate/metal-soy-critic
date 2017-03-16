@@ -25,4 +25,10 @@ describe('Soy Parser', () => {
 
     expect(soyParser(input)).toMatchSnapshot();
   });
+
+  test('should parse private templates', () => {
+    const input = getFixture('PrivateTemplate.soy');
+
+    expect(soyParser(input)).toMatchSnapshot();
+  });
 });

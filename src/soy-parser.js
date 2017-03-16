@@ -6,12 +6,18 @@ const {parseTemplateName} = require('./util');
 const lb = P.string('{');
 const rb = P.string('}');
 const cb = P.string('/}');
+const dquote = P.string('"');
 
 const html = P.noneOf('{}').many().desc("Html Char");
 const namespace = joined(P.letter, P.digit, P.string('.'));
 const paramName = joined(P.letter, P.digit);
 const templateName = joined(P.letter, P.digit, P.string('.'));
 const typeName = joined(P.letter, P.digit, P.oneOf('<>?'));
+
+const boolean = P.alt(
+  P.string('true').result(true),
+  P.string('false').result(false)
+);
 
 const namespaceCmd = P.string('{namespace')
   .skip(P.whitespace)
@@ -52,9 +58,12 @@ const call = P.seqMap(
 const template = P.seqMap(
   orAny(P.string('{template'))
     .skip(P.whitespace)
-    .then(templateName)
-    .skip(rb),
-  spaced(paramDeclaration).many(),
+    .then(templateName),
+  P.seq(P.whitespace, P.string('private="'))
+    .then(boolean)
+    .skip(dquote)
+    .fallback(false),
+  spaced(rb).then(spaced(paramDeclaration).many()),
   bodyFor('template'),
   Template
 );
@@ -171,7 +180,7 @@ function Program(namespace, body) {
   };
 }
 
-function Template(rawName, params = [], body = []) {
+function Template(rawName, isPrivate, params = [], body = []) {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
@@ -179,6 +188,7 @@ function Template(rawName, params = [], body = []) {
     name,
     namespace,
     params,
+    private: isPrivate,
     type: 'Template'
   };
 }

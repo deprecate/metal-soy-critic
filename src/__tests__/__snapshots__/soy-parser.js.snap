@@ -201,6 +201,7 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
+      "private": false,
       "type": "Template",
     },
     Object {
@@ -215,6 +216,7 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
+      "private": false,
       "type": "Template",
     },
   ],
@@ -317,6 +319,7 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
+      "private": false,
       "type": "Template",
     },
     Object {
@@ -331,6 +334,72 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
+      "private": false,
+      "type": "Template",
+    },
+  ],
+  "namespace": "Test",
+  "type": "Program",
+}
+`;
+
+exports[`Soy Parser should parse private templates 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "content": "$title",
+          "type": "Interpolation",
+        },
+        Object {
+          "content": "$name",
+          "type": "Interpolation",
+        },
+        Object {
+          "body": Array [],
+          "name": "helper",
+          "namespace": null,
+          "type": "Call",
+        },
+      ],
+      "name": "render",
+      "namespace": null,
+      "params": Array [
+        Object {
+          "name": "name",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "title",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "private": false,
+      "type": "Template",
+    },
+    Object {
+      "body": Array [
+        Object {
+          "content": "$test ?: ''",
+          "type": "Interpolation",
+        },
+      ],
+      "name": "helper",
+      "namespace": null,
+      "params": Array [
+        Object {
+          "name": "test",
+          "paramType": "asdasd",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "private": true,
       "type": "Template",
     },
   ],
