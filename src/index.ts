@@ -1,11 +1,9 @@
-#!/usr/bin/env node
-'use strict';
-
-const chalk = require('chalk');
+import * as chalk from 'chalk';
+import * as program from 'commander';
+import * as Promise from 'bluebird';
+import validateFile from './validate-file';
+import {Result} from './util';
 const pkg = require('../package.json');
-const program = require('commander');
-const Promise = require('bluebird');
-const validateFile = require('./validate-file');
 
 function main() {
   program
@@ -35,14 +33,14 @@ function main() {
     });
 }
 
-function printValidation({file, result}) {
-  const {messages} = result;
+function printValidation(validation: Validation): void {
+  const {messages} = validation.result;
 
-  printHeader(`File - ${file}`);
+  printHeader(`File - ${validation.file}`);
   messages.forEach(message => printIndented(message));
 }
 
-function printIndented(string = '', indentSize = 2, symbol = '/') {
+function printIndented(string = '', indentSize = 2, symbol = '/'): void {
   const indentStr = chalk.black(symbol.repeat(indentSize));
 
   console.log(indentStr);
@@ -52,13 +50,18 @@ function printIndented(string = '', indentSize = 2, symbol = '/') {
   console.log(indentStr);
 }
 
-function printHeader(content = '', symbol = '/') {
+function printHeader(content = '', symbol = '/'): void {
   console.log(
     chalk.black(symbol.repeat(10) + ' '),
     chalk.yellow(content));
 }
 
-function validate(file) {
+interface Validation {
+  file: string,
+  result: Result
+}
+
+function validate(file: string): Promise<Validation> {
   return validateFile(file)
     .then(result => ({
       file,

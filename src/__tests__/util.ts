@@ -1,4 +1,4 @@
-const Util = require('../util');
+import * as Util from '../util';
 
 describe('toResult', () => {
   test('should return a Result object', () => {

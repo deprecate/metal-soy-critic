@@ -1,5 +1,5 @@
-const {getFixturePath} = require('../../test/util');
-const validateFile = require('../validate-file');
+import {getFixturePath}  from '../../test/util';
+import validateFile from '../validate-file';
 
 describe('Validate file', () => {
   function validate(fileName) {

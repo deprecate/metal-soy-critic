@@ -18,7 +18,7 @@ function getExit(handler) {
   }
 }
 
-function visit(node, visitor, state) {
+export default function visit(node, visitor, state) {
   const handler = visitor[node.type];
 
   getEnter(handler)(node, state);
@@ -31,7 +31,3 @@ function visit(node, visitor, state) {
 
   return state;
 }
-
-module.exports = {
-  visit
-};

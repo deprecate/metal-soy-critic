@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 function getFixturePath(name) {
-  return path.join(__dirname, 'fixtures', name);
+  return path.join(__dirname, '..', 'test', 'fixtures', name);
 }
 
 function getFixture(file) {
@@ -10,6 +10,6 @@ function getFixture(file) {
 }
 
 module.exports = {
-  getFixturePath,
-  getFixture
+  getFixture,
+  getFixturePath
 };

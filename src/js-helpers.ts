@@ -1,7 +1,7 @@
-const jsTraverse = require('babel-traverse').default;
-const t = require('babel-types');
+import jsTraverse from 'babel-traverse';
+import * as t from 'babel-types';
 
-function hasAttribute(node, name) {
+export function hasAttribute(node: t.Node, name: string): boolean {
   if (t.isIdentifier(node) && node.name === 'Config') {
     return false;
   }
@@ -20,12 +20,12 @@ function hasAttribute(node, name) {
   return false;
 }
 
-function getParamsNode(ast) {
+export function getParams(ast): Array<t.Property> {
   let node = null;
 
   jsTraverse(ast, {
     ExportDefaultDeclaration(path) {
-      const defaultName = path.node.declaration.name;
+      const defaultName = (<t.Identifier>path.node.declaration).name;
 
       path
         .findParent(path => path.isProgram())
@@ -33,10 +33,10 @@ function getParamsNode(ast) {
           const {parentPath} = path;
 
           if (parentPath.isMemberExpression() &&
-            parentPath.node.property.name === 'STATE' &&
+            (<t.Identifier>(<t.MemberExpression>parentPath.node).property).name === 'STATE' &&
             parentPath.parentPath.isAssignmentExpression()
           ) {
-            node = parentPath.parentPath.node.right;
+            node = (<t.ObjectExpression>(<t.AssignmentExpression>parentPath.parentPath.node).right).properties;
           }
         });
 
@@ -46,8 +46,3 @@ function getParamsNode(ast) {
 
   return node;
 }
-
-module.exports = {
-  getParamsNode,
-  hasAttribute
-};

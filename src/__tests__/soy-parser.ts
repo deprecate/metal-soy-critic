@@ -1,5 +1,5 @@
-const soyParser = require('../soy-parser');
-const {getFixture} = require('../../test/util');
+import soyParser from '../soy-parser';
+import {getFixture} from '../../test/util';
 
 describe('Soy Parser', () => {
   test('should parse file correctly', () => {

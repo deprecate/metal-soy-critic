@@ -1,11 +1,11 @@
-const chalk = require('chalk');
-const jsTraverse = require('babel-traverse').default;
-const path = require('path');
-const soyTraverse = require('./soy-traverse');
-const {joinErrors, toResult} = require('./util');
+import * as chalk from 'chalk';
+import jsTraverse from 'babel-traverse';
+import * as path from 'path';
+import soyVisit from './soy-traverse';
+import {joinErrors, toResult, Result} from './util';
 
-function getExternalSoyCalls(ast) {
-  const {calls} = soyTraverse.visit(ast, {
+function getExternalSoyCalls(ast: object): Array<string> {
+  const {calls} = soyVisit(ast, {
     Call(node, state) {
       if (node.namespace) {
         state.calls.add(node.namespace);
@@ -16,7 +16,7 @@ function getExternalSoyCalls(ast) {
   return [...calls];
 }
 
-function getImportPaths(ast) {
+function getImportPaths(ast): Array<string> {
   const importPaths = [];
   jsTraverse(ast, {
     ImportDeclaration(path) {
@@ -27,7 +27,7 @@ function getImportPaths(ast) {
   return importPaths;
 }
 
-module.exports = function valdiateCallImports(soyAst, jsAst) {
+export default function valdiateCallImports(soyAst, jsAst): Result {
   const importNames = getImportPaths(jsAst)
     .map(importPath => path.parse(importPath).name);
 

@@ -1,5 +1,5 @@
-const P = require('parsimmon');
-const {parseTemplateName} = require('./util');
+import * as P from 'parsimmon';
+import {parseTemplateName} from './util';
 
 /* Parsers */
 
@@ -123,7 +123,7 @@ function bodyFor(name, ...inter) {
           cmd('literal'),
           interpolation('{', '}')),
         bodyParser,
-        (left, right) => [left, ...right])))
+        (left, right: Array<any>) => [left, ...right])))
   );
 
   return bodyParser;
@@ -172,7 +172,16 @@ function openCmd(name) {
 
 /* Nodes */
 
-function Program(namespace, body) {
+interface Node {
+  type: string
+}
+
+interface Program extends Node {
+  body: Array<Template>,
+  namespace: string
+}
+
+function Program(namespace: string, body: Array<Template>): Program {
   return {
     body,
     namespace,
@@ -180,7 +189,20 @@ function Program(namespace, body) {
   };
 }
 
-function Template(rawName, isPrivate, params = [], body = []) {
+interface Template extends Node {
+  body: Array<any>
+  name: string,
+  namespace: string,
+  params: Array<any>,
+  private: boolean
+}
+
+function Template(
+  rawName: string,
+  isPrivate: boolean,
+  params: Array<any> = [],
+  body = []
+  ): Template {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
@@ -248,7 +270,7 @@ function MakeCmd(name, body = []) {
   };
 }
 
-module.exports = function parse(input) {
+export default function parse(input: string): Program {
   const result = parser.parse(input);
   if (!result.status) {
     throw result;

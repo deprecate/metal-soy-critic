@@ -1,10 +1,11 @@
-const chalk = require('chalk');
-const jsHelpers = require('./js-helpers');
-const soyHelpers = require('./soy-helpers');
-const {difference, joinErrors, toResult} = require('./util');
+import * as chalk from 'chalk';
+import * as jsHelpers from './js-helpers';
+import * as soyHelpers from './soy-helpers';
+import {difference, joinErrors, toResult} from './util';
+import * as t from 'babel-types';
 
-module.exports = function validateRequiredParams(soyAst, jsAst) {
-  let jsParams = jsHelpers.getParamsNode(jsAst);
+export default function validateRequiredParams(soyAst, jsAst) {
+  let jsParams = jsHelpers.getParams(jsAst);
 
   if (!jsParams) {
     return toResult(true);
@@ -13,13 +14,13 @@ module.exports = function validateRequiredParams(soyAst, jsAst) {
   const soyParams = soyHelpers.getSoyParams(soyAst);
   const soyParamNames = soyParams.map(param => param.name);
 
-  const requiredJSParams = new Set(jsParams.properties
+  const requiredJSParams = new Set<string>(jsParams
     .filter(node =>
-      soyParamNames.includes(node.key.name) &&
+      soyParamNames.includes((<t.Identifier>node.key).name) &&
         jsHelpers.hasAttribute(node.value, 'required'))
-    .map(node => node.key.name));
+    .map(node => (<t.Identifier>node.key).name));
 
-  const requiredSoyParams = new Set(soyParams
+  const requiredSoyParams = new Set<string>(soyParams
     .filter(param => param.required)
     .map(({name}) => name));
 

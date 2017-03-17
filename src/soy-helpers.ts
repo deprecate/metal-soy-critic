@@ -1,7 +1,7 @@
-const soyTraverse = require('./soy-traverse');
+import visit from './soy-traverse';
 
-function getSoyParams(ast) {
-  return soyTraverse.visit(ast, {
+export function getSoyParams(ast): Array<any> {
+  return visit(ast, {
     Template(node, state) {
       if (node.namespace === null && node.name === 'render') {
         state.params = node.params;
@@ -9,7 +9,3 @@ function getSoyParams(ast) {
     }
   }, {params: []}).params;
 }
-
-module.exports = {
-  getSoyParams
-};
