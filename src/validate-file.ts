@@ -5,27 +5,17 @@ import * as S from './soy-parser';
 import * as T from 'babel-types';
 import parseSoy from './soy-parser';
 
-const enum ErrorTypes {
-  JSParse,
-  JSRead,
-  SoyParse,
-  SoyRead
-}
-
-/**
- * Validators should be added here. Each validator is a function that should
- * have the following signature:
- *
- * validator(soyAst: SoyAst, jsAst: JSAst): Util.Result
- *
- */
-
-type Validator = (soyAst: S.Program, jsAst: T.Node) => Result;
-
+/* Validators */
 import validateCallImports from './validate-call-imports';
 import validateParams from './validate-params';
 import validateInternal from './validate-internal';
 import validateRequiredParams from './validate-required-params';
+
+/**
+ * Validators should be added here. Each validator is a function that should
+ * have the following signature.
+ */
+type Validator = (soyAst: S.Program, jsAst: T.Node) => Result;
 
 const validators: Array<Validator> = [
   validateCallImports,
@@ -33,6 +23,13 @@ const validators: Array<Validator> = [
   validateInternal,
   validateRequiredParams
 ];
+
+const enum ErrorTypes {
+  JSParse,
+  JSRead,
+  SoyParse,
+  SoyRead
+}
 
 class ErrorResult extends Error {
   type: ErrorTypes;
