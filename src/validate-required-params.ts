@@ -1,10 +1,11 @@
 import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
 import * as soyHelpers from './soy-helpers';
-import {difference, joinErrors, toResult} from './util';
-import * as t from 'babel-types';
+import {difference, joinErrors, toResult, Result} from './util';
+import * as T from 'babel-types';
+import * as S from './soy-parser';
 
-export default function validateRequiredParams(soyAst, jsAst) {
+export default function validateRequiredParams(soyAst: S.Program, jsAst: T.Node): Result {
   let jsParams = jsHelpers.getParams(jsAst);
 
   if (!jsParams) {
@@ -16,9 +17,9 @@ export default function validateRequiredParams(soyAst, jsAst) {
 
   const requiredJSParams = new Set<string>(jsParams
     .filter(node =>
-      soyParamNames.includes((<t.Identifier>node.key).name) &&
+      soyParamNames.includes((<T.Identifier>node.key).name) &&
         jsHelpers.hasAttribute(node.value, 'required'))
-    .map(node => (<t.Identifier>node.key).name));
+    .map(node => (<T.Identifier>node.key).name));
 
   const requiredSoyParams = new Set<string>(soyParams
     .filter(param => param.required)

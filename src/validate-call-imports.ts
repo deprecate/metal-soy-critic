@@ -3,8 +3,10 @@ import jsTraverse from 'babel-traverse';
 import * as path from 'path';
 import soyVisit from './soy-traverse';
 import {joinErrors, toResult, Result} from './util';
+import * as S from './soy-parser';
+import * as T from 'babel-types';
 
-function getExternalSoyCalls(ast: object): Array<string> {
+function getExternalSoyCalls(ast: S.Program): Array<string> {
   const {calls} = soyVisit(ast, {
     Call(node, state) {
       if (node.namespace) {
@@ -16,7 +18,7 @@ function getExternalSoyCalls(ast: object): Array<string> {
   return [...calls];
 }
 
-function getImportPaths(ast): Array<string> {
+function getImportPaths(ast: T.Node): Array<string> {
   const importPaths = [];
   jsTraverse(ast, {
     ImportDeclaration(path) {
@@ -27,7 +29,7 @@ function getImportPaths(ast): Array<string> {
   return importPaths;
 }
 
-export default function valdiateCallImports(soyAst, jsAst): Result {
+export default function valdiateCallImports(soyAst: S.Program, jsAst: T.Node): Result {
   const importNames = getImportPaths(jsAst)
     .map(importPath => path.parse(importPath).name);
 

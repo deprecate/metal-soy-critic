@@ -2,18 +2,19 @@ import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
 import * as soyHelpers from './soy-helpers';
 import {joinErrors, toResult, Result} from './util';
-import * as t from 'babel-types';
+import * as T from 'babel-types';
+import * as S from './soy-parser';
 
-function getJSParams(ast): Array<string> {
+function getJSParams(ast: T.Node): Array<string> {
   const params = jsHelpers.getParams(ast);
   if (params) {
-    return params.map(prop => (<t.Identifier>prop.key).name);
+    return params.map(prop => (<T.Identifier>prop.key).name);
   }
 
   return null;
 }
 
-export default function validateParams(soyAst: any, jsAst: any): Result {
+export default function validateParams(soyAst: S.Program, jsAst: T.Node): Result {
   const jsParams = getJSParams(jsAst);
 
   if (!jsParams) {

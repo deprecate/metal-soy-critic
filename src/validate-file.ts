@@ -1,8 +1,10 @@
-import * as Promise from 'bluebird';
 import * as fs from 'fs';
 import * as tp from 'typed-promisify';
 const readFile = tp.promisify(fs.readFile);
 
+import * as S from './soy-parser';
+import * as T from 'babel-types';
+import * as Promise from 'bluebird';
 import * as babylon from 'babylon';
 import parseSoy from './soy-parser';
 import {combineResults, sequence, toResult, Result} from './util';
@@ -22,7 +24,7 @@ const enum ErrorTypes {
  *
  */
 
-type Validator = (soyAst: any, jsAst: any) => Result;
+type Validator = (soyAst: S.Program, jsAst: T.Node) => Result;
 
 import validateCallImports from './validate-call-imports';
 import validateParams from './validate-params';
@@ -72,7 +74,7 @@ function getJSAst(filePath: string): any {
     );
 }
 
-function runValidations(soyAst, jsAst): Result {
+function runValidations(soyAst: S.Program, jsAst: T.Node): Result {
   return validators
     .map(validator => validator(soyAst, jsAst))
     .reduce(combineResults);
@@ -80,7 +82,7 @@ function runValidations(soyAst, jsAst): Result {
 
 export default function validateFile(filePath: string): Promise<Result> {
   return sequence(() => getSoyAst(filePath), () => getJSAst(getJSPath(filePath)))
-    .then(([soyAst, jsAst]) => runValidations(soyAst, jsAst))
+    .then(([soyAst, jsAst]) => runValidations(<S.Program>soyAst, <T.Node>jsAst))
     .catch(error => {
       switch (error.type) {
         case ErrorTypes.JSRead:

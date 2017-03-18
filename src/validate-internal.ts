@@ -1,13 +1,14 @@
 import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
 import {joinErrors, toResult, Result} from './util';
-import * as t from 'babel-types';
+import * as T from 'babel-types';
+import * as S from './soy-parser';
 
 function isInternalName(name: string): boolean {
   return name.startsWith('_') || name.endsWith('_');
 }
 
-export default function validateInternal(soyAst: any, jsAst: any): Result {
+export default function validateInternal(soyAst: S.Program, jsAst: T.Node): Result {
   const params = jsHelpers.getParams(jsAst);
 
   if (!params) {
@@ -16,14 +17,14 @@ export default function validateInternal(soyAst: any, jsAst: any): Result {
 
   const missingInternal = params
     .filter(node => {
-      node = <t.ObjectProperty>node;
+      node = <T.ObjectProperty>node;
       
-      const name = (<t.Identifier>node.key).name;
+      const name = (<T.Identifier>node.key).name;
 
       return isInternalName(name) &&
         !jsHelpers.hasAttribute(node.value, 'internal');
     })
-    .map(node => (<t.Identifier>node.key).name);
+    .map(node => (<T.Identifier>node.key).name);
 
   if (!missingInternal.length) {
     return toResult(true);

@@ -95,17 +95,17 @@ function optional(parser) {
   return parser.atMost(1).map(values => values[0] || null);
 }
 
-function interpolation(start, end = start) {
+function interpolation(start: string, end: string = start) {
   return P.string(start).then(withAny(P.string(end))).map(Interpolation);
 }
 
-function cmd(name, ...inter) {
+function cmd(name: string, ...inter) {
   return openCmd(name).then(
     bodyFor(name, ...inter).map(body => MakeCmd(name, body))
   );
 }
 
-function bodyFor(name, ...inter) {
+function bodyFor(name: string, ...inter) {
   const bodyParser = P.lazy(() =>
     html.then(P.alt(
       closeCmd(name).result([]),
@@ -129,7 +129,7 @@ function bodyFor(name, ...inter) {
   return bodyParser;
 }
 
-function orAny(parser) {
+function orAny<T>(parser: P.Parser<T>): P.Parser<T> {
   const newParser = P.lazy(() =>
     parser.or(P.any.then(newParser))
   );
@@ -150,33 +150,36 @@ function withAny(parser) {
   return newParser;
 }
 
-function spaced(parser) {
+function spaced<T>(parser: P.Parser<T>): P.Parser<T> {
   return P.optWhitespace
     .then(parser)
     .skip(P.optWhitespace);
 }
 
-function joined(...parsers) {
+function joined(...parsers: Array<P.Parser<string>>): P.Parser<string> {
   return P.alt(...parsers)
     .many()
     .map(values => values.join(''));
 }
 
-function closeCmd(name) {
+function closeCmd(name: string): P.Parser<string> {
   return P.string(`{/${name}}`);
 }
 
-function openCmd(name) {
+function openCmd(name: string): P.Parser<string> {
   return P.string(`{${name}`).skip(orAny(rb));
 }
 
 /* Nodes */
 
-interface Node {
+export type Body = Array<any>;
+
+export interface Node {
+  body?: any,
   type: string
 }
 
-interface Program extends Node {
+export interface Program extends Node {
   body: Array<Template>,
   namespace: string
 }
@@ -189,20 +192,19 @@ function Program(namespace: string, body: Array<Template>): Program {
   };
 }
 
-interface Template extends Node {
-  body: Array<any>
+export interface Template extends Node {
+  body: Body,
   name: string,
   namespace: string,
-  params: Array<any>,
+  params: Array<ParamDeclaration>,
   private: boolean
 }
 
 function Template(
   rawName: string,
   isPrivate: boolean,
-  params: Array<any> = [],
-  body = []
-  ): Template {
+  params: Array<ParamDeclaration> = [],
+  body: Body = []): Template {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
@@ -215,7 +217,19 @@ function Template(
   };
 }
 
-function DelTemplate(rawName, variant, params = [], body = []) {
+export interface DelTemplate extends Node {
+  body: Body,
+  name: string, 
+  namespace: string,
+  params: Array<ParamDeclaration>,
+  variant: string
+}
+
+function DelTemplate(
+  rawName: string,
+  variant: string,
+  params: Array<ParamDeclaration> = [],
+  body: Body = []): DelTemplate {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
@@ -228,14 +242,23 @@ function DelTemplate(rawName, variant, params = [], body = []) {
   };
 }
 
-function Interpolation(content) {
+export interface Interpolation extends Node {
+  content: string
+}
+
+function Interpolation(content: string): Interpolation {
   return {
     content,
     type: 'Interpolation'
   };
 }
 
-function Param(name, body = []) {
+export interface Param extends Node {
+  body: Body,
+  name: string
+}
+
+function Param(name: string, body: Body = []) {
   return {
     body,
     name,
@@ -243,7 +266,16 @@ function Param(name, body = []) {
   };
 }
 
-function ParamDeclaration(required, name, paramType) {
+export interface ParamDeclaration extends Node {
+  name: string,
+  paramType: string,
+  required: boolean
+}
+
+function ParamDeclaration(
+  required: boolean,
+  name: string,
+  paramType: string): ParamDeclaration {
   return {
     name,
     paramType,
@@ -252,7 +284,13 @@ function ParamDeclaration(required, name, paramType) {
   };
 }
 
-function Call(rawName, body = []) {
+export interface Call extends Node {
+  body: Body,
+  name: string,
+  namespace: string
+}
+
+function Call(rawName: string, body: Body = []): Call {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
@@ -263,7 +301,7 @@ function Call(rawName, body = []) {
   };
 }
 
-function MakeCmd(name, body = []) {
+function MakeCmd(name: string, body: Body = []): Node {
   return {
     body,
     type: name.charAt(0).toUpperCase() + name.slice(1)

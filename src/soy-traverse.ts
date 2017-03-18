@@ -1,24 +1,40 @@
+import * as S from './soy-parser';
+
+export type VisitFunction<T> = (node: T, state: any) => void;
+
+export interface VisitObject<T> {
+  enter?: VisitFunction<T>;
+  exit?: VisitFunction<T>;
+}
+
+export type Visit<T> = VisitFunction<T> | VisitFunction<T>;
+
+export interface Visitor {
+  Call?: Visit<S.Call>,
+  Template?: Visit<S.Template>
+}
+
 function noop() {}
 
-function getEnter(handler) {
+function getEnter<T>(handler: Visit<T>): VisitFunction<T> {
   if (typeof handler === 'function') {
     return handler;
-  } else if (handler && handler.enter) {
-    return handler.enter;
+  } else if (handler && (<VisitObject<T>>handler).enter) {
+    return (<VisitObject<T>>handler).enter;
   } else {
     return noop;
   }
 }
 
-function getExit(handler) {
-  if (handler && handler.exit) {
-    return handler.exit;
+function getExit<T>(handler: Visit<T>): VisitFunction<T> {
+  if (handler && (<VisitObject<T>>handler).exit) {
+    return (<VisitObject<T>>handler).exit;
   } else {
     return noop;
   }
 }
 
-export default function visit(node, visitor, state) {
+export default function visit<T>(node: S.Node, visitor: Visitor, state: T): T{
   const handler = visitor[node.type];
 
   getEnter(handler)(node, state);

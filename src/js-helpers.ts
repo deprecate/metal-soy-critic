@@ -1,14 +1,14 @@
 import jsTraverse from 'babel-traverse';
-import * as t from 'babel-types';
+import * as T from 'babel-types';
 
-export function hasAttribute(node: t.Node, name: string): boolean {
-  if (t.isIdentifier(node) && node.name === 'Config') {
+export function hasAttribute(node: T.Node, name: string): boolean {
+  if (T.isIdentifier(node) && node.name === 'Config') {
     return false;
   }
 
-  if (t.isCallExpression(node) &&
-    t.isMemberExpression(node.callee) &&
-    t.isIdentifier(node.callee.property)
+  if (T.isCallExpression(node) &&
+    T.isMemberExpression(node.callee) &&
+    T.isIdentifier(node.callee.property)
   ) {
     if (node.callee.property.name === name) {
       return true;
@@ -20,12 +20,12 @@ export function hasAttribute(node: t.Node, name: string): boolean {
   return false;
 }
 
-export function getParams(ast): Array<t.Property> {
+export function getParams(ast: T.Node): Array<T.Property> {
   let node = null;
 
   jsTraverse(ast, {
     ExportDefaultDeclaration(path) {
-      const defaultName = (<t.Identifier>path.node.declaration).name;
+      const defaultName = (<T.Identifier>path.node.declaration).name;
 
       path
         .findParent(path => path.isProgram())
@@ -33,10 +33,10 @@ export function getParams(ast): Array<t.Property> {
           const {parentPath} = path;
 
           if (parentPath.isMemberExpression() &&
-            (<t.Identifier>(<t.MemberExpression>parentPath.node).property).name === 'STATE' &&
+            (<T.Identifier>(<T.MemberExpression>parentPath.node).property).name === 'STATE' &&
             parentPath.parentPath.isAssignmentExpression()
           ) {
-            node = (<t.ObjectExpression>(<t.AssignmentExpression>parentPath.parentPath.node).right).properties;
+            node = (<T.ObjectExpression>(<T.AssignmentExpression>parentPath.parentPath.node).right).properties;
           }
         });
 

@@ -1,6 +1,7 @@
 import visit from './soy-traverse';
+import * as S from './soy-parser';
 
-export function getSoyParams(ast): Array<any> {
+export function getSoyParams(ast: S.Program): Array<S.ParamDeclaration> {
   return visit(ast, {
     Template(node, state) {
       if (node.namespace === null && node.name === 'render') {
