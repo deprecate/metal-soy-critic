@@ -1,8 +1,8 @@
 import * as chalk from 'chalk';
 
 export interface Result {
-  status: boolean,
-  messages: Array<string>
+  status: boolean;
+  messages: Array<string>;
 }
 
 export function combineResults(first: Result, second: Result): Result {

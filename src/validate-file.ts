@@ -105,17 +105,19 @@ export default function validateFile(filePath: string): Promise<Result> {
     .then(soyAst => getJSAst(getJSPath(filePath))
     .then(jsAst => runValidations(soyAst, jsAst)))
     .catch(error => {
-      switch (error.type) {
-        case ErrorTypes.JSRead:
-          return toResult(true);
-        case ErrorTypes.JSParse:
-          return toResult(false, 'Failed to parse component');
-        case ErrorTypes.SoyRead:
-          return toResult(false, 'Unable to read soy template');
-        case ErrorTypes.SoyParse:
-          return toResult(false, 'Failed to parse soy template');
-        default:
-          return toResult(false, 'Something went wrong validating soy file');
+      if (error instanceof ErrorResult) {
+        switch (error.type) {
+          case ErrorTypes.JSRead:
+            return toResult(true);
+          case ErrorTypes.JSParse:
+            return toResult(false, 'Failed to parse component');
+          case ErrorTypes.SoyRead:
+            return toResult(false, 'Unable to read soy template');
+          case ErrorTypes.SoyParse:
+            return toResult(false, 'Failed to parse soy template');
+        }
       }
+
+      return toResult(false, 'Something went wrong validating soy file');
     });
 }
