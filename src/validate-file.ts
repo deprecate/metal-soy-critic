@@ -1,13 +1,9 @@
 import * as fs from 'fs';
-import * as tp from 'typed-promisify';
-const readFile = tp.promisify(fs.readFile);
-
 import * as S from './soy-parser';
 import * as T from 'babel-types';
-import * as Promise from 'bluebird';
 import * as babylon from 'babylon';
 import parseSoy from './soy-parser';
-import {combineResults, sequence, toResult, Result} from './util';
+import {combineResults, toResult, Result} from './util';
 
 const enum ErrorTypes {
   JSParse,
@@ -39,14 +35,14 @@ const validators: Array<Validator> = [
 ];
 
 class ErrorResult extends Error {
- type: string;
- inner: any;
+  type: ErrorTypes;
+  inner: Error;
 
- constructor(type, inner) {
-   super();
-   this.type = type;
-   this.inner = inner;
- }
+  constructor(type: ErrorTypes, inner: Error) {
+    super();
+    this.type = type;
+    this.inner = inner;
+  }
 }
 
 function toError(type: ErrorTypes): (any) => never {
@@ -55,24 +51,45 @@ function toError(type: ErrorTypes): (any) => never {
   };
 }
 
+function readFile(filePath: string): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+}
+
 function getJSPath(filePath: string): string {
   return filePath.replace('.soy', '.js');
 }
 
-function getSoyAst(filePath: string): any {
+function getSoyAst(filePath: string): Promise<S.Program> {
   return readFile(filePath)
     .then(
-      input => Promise.try(() => parseSoy(input.toString('utf8'))).catch(toError(ErrorTypes.SoyParse)),
+      buffer => {
+        try {
+          return parseSoy(buffer.toString('utf8'));
+        } catch (e) {
+          throw new ErrorResult(ErrorTypes.SoyParse, e);
+        }
+      },
       toError(ErrorTypes.SoyRead)
     );
 }
 
-function getJSAst(filePath: string): any {
+function getJSAst(filePath: string): Promise<T.Node> {
   return readFile(filePath)
     .then(
-      buffer => Promise.try(
-        () => babylon.parse(buffer.toString('utf8'), {allowImportExportEverywhere: true})
-      ).catch(toError(ErrorTypes.JSParse)),
+      buffer => {
+        try {
+          return babylon.parse(buffer.toString('utf8'), {allowImportExportEverywhere: true});
+        } catch (e) {
+          throw new ErrorResult(ErrorTypes.JSParse, e);
+        }
+      },
       toError(ErrorTypes.JSRead)
     );
 }
@@ -84,8 +101,9 @@ function runValidations(soyAst: S.Program, jsAst: T.Node): Result {
 }
 
 export default function validateFile(filePath: string): Promise<Result> {
-  return sequence(() => getSoyAst(filePath), () => getJSAst(getJSPath(filePath)))
-    .then(([soyAst, jsAst]) => runValidations(<S.Program>soyAst, <T.Node>jsAst))
+  return getSoyAst(filePath)
+    .then(soyAst => getJSAst(getJSPath(filePath))
+    .then(jsAst => runValidations(soyAst, jsAst)))
     .catch(error => {
       switch (error.type) {
         case ErrorTypes.JSRead:

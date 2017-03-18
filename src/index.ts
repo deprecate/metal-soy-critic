@@ -1,6 +1,5 @@
 import * as chalk from 'chalk';
 import * as program from 'commander';
-import * as Promise from 'bluebird';
 import validateFile from './validate-file';
 import {Result} from './util';
 const pkg = require('../package.json');
@@ -16,7 +15,7 @@ function main() {
   }
 
   Promise
-    .map(program.args, validate)
+    .all(program.args.map(validate))
     .then(validations => {
       const failed = validations.filter(validation => !validation.result.status);
 

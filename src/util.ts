@@ -1,5 +1,4 @@
 import * as chalk from 'chalk';
-import * as Promise from 'bluebird';
 
 export interface Result {
   status: boolean,
@@ -45,13 +44,6 @@ export function difference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
     }
   }
   return difference;
-}
-
-export function sequence<T>(...tasks: Array<() => Promise<T>>): Promise<Array<T>> {
-  return Promise.reduce(tasks, (res, next) =>
-    next().then(value => [...res, value]),
-    []
-  );
 }
 
 export function joinErrors(lines: Array<string>): string {
