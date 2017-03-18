@@ -2,13 +2,12 @@ import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
 import {joinErrors, toResult, Result} from './util';
 import * as T from 'babel-types';
-import * as S from './soy-parser';
 
 function isInternalName(name: string): boolean {
   return name.startsWith('_') || name.endsWith('_');
 }
 
-export default function validateInternal(soyAst: S.Program, jsAst: T.Node): Result {
+export default function validateInternal(_, jsAst: T.Node): Result {
   const params = jsHelpers.getParams(jsAst);
 
   if (!params) {
@@ -17,12 +16,12 @@ export default function validateInternal(soyAst: S.Program, jsAst: T.Node): Resu
 
   const missingInternal = params
     .filter(node => {
-      const name = (<T.Identifier>node.key).name;
+      const name = jsHelpers.getKeyName(node.key);
 
       return isInternalName(name) &&
         !jsHelpers.hasAttribute(node.value, 'internal');
     })
-    .map(node => (<T.Identifier>node.key).name);
+    .map(node => jsHelpers.getKeyName(node.key));
 
   if (!missingInternal.length) {
     return toResult(true);

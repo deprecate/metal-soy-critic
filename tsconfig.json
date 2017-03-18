@@ -1,13 +1,16 @@
 {
     "compilerOptions": {
-        "outDir": "./lib",
+        "alwaysStrict": true,
         "allowJs": true,
-        "target": "es6",
         "lib": ["es2016"],
-        "moduleResolution": "node",
         "module": "commonjs",
+        "moduleResolution": "node",
+        "noUnusedLocals": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedParameters": true,
+        "outDir": "./lib",
         "strictNullChecks": true,
-        "noUnusedLocals": true
+        "target": "es6"
     },
     "include": [
         "./src/*.ts"
