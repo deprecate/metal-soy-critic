@@ -53,9 +53,7 @@ export function getParams(ast: T.Node): Array<T.ObjectProperty> | null {
             T.isAssignmentExpression(parentPath.parentPath.node) &&
             T.isObjectExpression(parentPath.parentPath.node.right)
           ) {
-            node = <Array<T.ObjectProperty>>parentPath.parentPath.node.right.properties.filter(
-              node => T.isObjectProperty(node)
-            );
+            node = parentPath.parentPath.node.right.properties;
           }
         });
 
