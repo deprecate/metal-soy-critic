@@ -20,18 +20,18 @@ function getEnter<T>(handler: Visit<T>): VisitFunction<T> {
   if (typeof handler === 'function') {
     return handler;
   } else if (handler && (<VisitObject<T>>handler).enter) {
-    return (<VisitObject<T>>handler).enter;
-  } else {
-    return noop;
+    return (<VisitObject<T>>handler).enter || noop;
   }
+
+  return noop;
 }
 
 function getExit<T>(handler: Visit<T>): VisitFunction<T> {
   if (handler && (<VisitObject<T>>handler).exit) {
-    return (<VisitObject<T>>handler).exit;
-  } else {
-    return noop;
+    return (<VisitObject<T>>handler).exit || noop;
   }
+
+  return noop;
 }
 
 export default function visit<T>(node: S.Node, visitor: Visitor, state: T): T{

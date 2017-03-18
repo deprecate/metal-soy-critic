@@ -3,7 +3,6 @@ import {parseTemplateName} from './util';
 
 /* Parsers */
 
-const lb = P.string('{');
 const rb = P.string('}');
 const cb = P.string('/}');
 const dquote = P.string('"');
@@ -27,7 +26,7 @@ const namespaceCmd = P.string('{namespace')
 const param = P.lazy(() => P.seqMap(
   P.string('{param')
     .then(spaced(paramName)),
-  orAny(P.alt(
+  <P.Parser<Body>>orAny(P.alt(
     cb.result([]),
     rb.then(bodyFor('param')))),
   Param
@@ -95,7 +94,7 @@ function optional(parser) {
   return parser.atMost(1).map(values => values[0] || null);
 }
 
-function interpolation(start: string, end: string = start) {
+function interpolation(start: string, end: string = start): P.Parser<Interpolation> {
   return P.string(start).then(withAny(P.string(end))).map(Interpolation);
 }
 
@@ -130,14 +129,14 @@ function bodyFor(name: string, ...inter) {
 }
 
 function orAny<T>(parser: P.Parser<T>): P.Parser<T> {
-  const newParser = P.lazy(() =>
+  const newParser: P.Parser<T> = P.lazy(() =>
     parser.or(P.any.then(newParser))
   );
 
   return newParser;
 }
 
-function withAny(parser) {
+function withAny<T>(parser: P.Parser<T>): P.Parser<string> {
   const newParser = P.lazy(() =>
     P.alt(
       parser.result(''),
@@ -195,7 +194,7 @@ function Program(namespace: string, body: Array<Template>): Program {
 export interface Template extends Node {
   body: Body,
   name: string,
-  namespace: string,
+  namespace: string | null,
   params: Array<ParamDeclaration>,
   private: boolean
 }
@@ -219,8 +218,8 @@ function Template(
 
 export interface DelTemplate extends Node {
   body: Body,
-  name: string, 
-  namespace: string,
+  name: string,
+  namespace: string | null,
   params: Array<ParamDeclaration>,
   variant: string
 }
@@ -287,7 +286,7 @@ function ParamDeclaration(
 export interface Call extends Node {
   body: Body,
   name: string,
-  namespace: string
+  namespace: string | null
 }
 
 function Call(rawName: string, body: Body = []): Call {

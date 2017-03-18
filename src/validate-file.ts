@@ -38,17 +38,20 @@ const validators: Array<Validator> = [
   validateRequiredParams
 ];
 
-interface ErrorResult {
-  type: string,
-  inner: any
+class ErrorResult extends Error {
+ type: string;
+ inner: any;
+
+ constructor(type, inner) {
+   super();
+   this.type = type;
+   this.inner = inner;
+ }
 }
 
-function toError(type: ErrorTypes): (any) => void {
+function toError(type: ErrorTypes): (any) => never {
   return inner => {
-    throw {
-      type,
-      inner
-    };
+    throw new ErrorResult(type, inner);
   };
 }
 

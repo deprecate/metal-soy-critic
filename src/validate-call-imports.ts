@@ -19,7 +19,7 @@ function getExternalSoyCalls(ast: S.Program): Array<string> {
 }
 
 function getImportPaths(ast: T.Node): Array<string> {
-  const importPaths = [];
+  const importPaths: Array<string> = [];
   jsTraverse(ast, {
     ImportDeclaration(path) {
       importPaths.push(path.node.source.value);

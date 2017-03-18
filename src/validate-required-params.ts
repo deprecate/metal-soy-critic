@@ -28,7 +28,7 @@ export default function validateRequiredParams(soyAst: S.Program, jsAst: T.Node)
   const missingInJS = difference(requiredSoyParams, requiredJSParams);
   const missingInSoy = difference(requiredJSParams, requiredSoyParams);
 
-  const messages = [];
+  const messages: Array<string> = [];
 
   if (missingInJS.size) {
     messages.push(

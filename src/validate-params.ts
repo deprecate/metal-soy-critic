@@ -5,7 +5,7 @@ import {joinErrors, toResult, Result} from './util';
 import * as T from 'babel-types';
 import * as S from './soy-parser';
 
-function getJSParams(ast: T.Node): Array<string> {
+function getJSParams(ast: T.Node): Array<string> | null {
   const params = jsHelpers.getParams(ast);
   if (params) {
     return params.map(prop => (<T.Identifier>prop.key).name);

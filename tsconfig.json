@@ -5,7 +5,9 @@
         "target": "es6",
         "lib": ["es2016"],
         "moduleResolution": "node",
-        "module": "commonjs"
+        "module": "commonjs",
+        "strictNullChecks": true,
+        "noUnusedLocals": true
     },
     "include": [
         "./src/*.ts"

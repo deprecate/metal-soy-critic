@@ -20,8 +20,8 @@ export function hasAttribute(node: T.Node, name: string): boolean {
   return false;
 }
 
-export function getParams(ast: T.Node): Array<T.Property> {
-  let node = null;
+export function getParams(ast: T.Node): Array<T.Property> | null {
+  let node;
 
   jsTraverse(ast, {
     ExportDefaultDeclaration(path) {
