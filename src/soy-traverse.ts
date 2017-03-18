@@ -7,7 +7,7 @@ export interface VisitObject<T> {
   exit?: VisitFunction<T>;
 }
 
-export type Visit<T> = VisitFunction<T> | VisitFunction<T>;
+export type Visit<T> = VisitFunction<T> | VisitObject<T>;
 
 export interface Visitor {
   Call?: Visit<S.Call>;
@@ -20,22 +20,22 @@ function noop() {}
 function getEnter<T>(handler: Visit<T>): VisitFunction<T> {
   if (typeof handler === 'function') {
     return handler;
-  } else if (handler && (<VisitObject<T>>handler).enter) {
-    return (<VisitObject<T>>handler).enter || noop;
+  } else if (handler && handler.enter) {
+    return handler.enter;
   }
 
   return noop;
 }
 
 function getExit<T>(handler: Visit<T>): VisitFunction<T> {
-  if (handler && (<VisitObject<T>>handler).exit) {
-    return (<VisitObject<T>>handler).exit || noop;
+  if (typeof handler === 'object' && handler.exit) {
+    return handler.exit;
   }
 
   return noop;
 }
 
-export default function visit<T>(node: S.Node, visitor: Visitor, state: T): T{
+export default function visit<T>(node: S.Node, visitor: Visitor, state: T): T {
   const handler = visitor[node.type];
 
   getEnter(handler)(node, state);
