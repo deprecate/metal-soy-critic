@@ -23,10 +23,10 @@ const namespaceCmd = P.string('{namespace')
   .then(namespace)
   .skip(rb);
 
-const param: P.Parser<Param> = P.lazy(() => P.seqMap(
+const param = P.lazy(() => P.seqMap(
   P.string('{param')
     .then(spaced(paramName)),
-  <P.Parser<Body>>orAny(P.alt(
+  orAny(P.alt(
     cb.result([]),
     rb.then(bodyFor('param')))),
   Param
