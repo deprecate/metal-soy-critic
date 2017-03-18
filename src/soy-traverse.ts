@@ -10,8 +10,9 @@ export interface VisitObject<T> {
 export type Visit<T> = VisitFunction<T> | VisitFunction<T>;
 
 export interface Visitor {
-  Call?: Visit<S.Call>,
-  Template?: Visit<S.Template>
+  Call?: Visit<S.Call>;
+  Template?: Visit<S.Template>;
+  [propName: string]: any;
 }
 
 function noop() {}

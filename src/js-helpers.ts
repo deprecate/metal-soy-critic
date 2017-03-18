@@ -30,8 +30,8 @@ export function hasAttribute(node: T.Node, name: string): boolean {
   return false;
 }
 
-export function getParams(ast: T.Node): Array<T.Property> | null {
-  let node;
+export function getParams(ast: T.Node): Array<T.ObjectProperty> | null {
+  let node = null;
 
   jsTraverse(ast, {
     ExportDefaultDeclaration(path) {
@@ -53,7 +53,9 @@ export function getParams(ast: T.Node): Array<T.Property> | null {
             T.isAssignmentExpression(parentPath.parentPath.node) &&
             T.isObjectExpression(parentPath.parentPath.node.right)
           ) {
-            node = parentPath.parentPath.node.right.properties;
+            node = <Array<T.ObjectProperty>>parentPath.parentPath.node.right.properties.filter(
+              node => T.isObjectProperty(node)
+            );
           }
         });
 

@@ -23,7 +23,7 @@ const namespaceCmd = P.string('{namespace')
   .then(namespace)
   .skip(rb);
 
-const param = P.lazy(() => P.seqMap(
+const param: P.Parser<Param> = P.lazy(() => P.seqMap(
   P.string('{param')
     .then(spaced(paramName)),
   <P.Parser<Body>>orAny(P.alt(
@@ -90,7 +90,7 @@ const parser = program;
 
 /* Higher-order Parsers */
 
-function optional(parser) {
+function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
   return parser.atMost(1).map(values => values[0] || null);
 }
 
@@ -98,14 +98,14 @@ function interpolation(start: string, end: string = start): P.Parser<Interpolati
   return P.string(start).then(withAny(P.string(end))).map(Interpolation);
 }
 
-function cmd(name: string, ...inter) {
+function cmd(name: string, ...inter: Array<string>): P.Parser<Node> {
   return openCmd(name).then(
     bodyFor(name, ...inter).map(body => MakeCmd(name, body))
   );
 }
 
-function bodyFor(name: string, ...inter) {
-  const bodyParser = P.lazy(() =>
+function bodyFor(name: string, ...inter: Array<String>) {
+  const bodyParser: P.Parser<Body> = P.lazy(() =>
     html.then(P.alt(
       closeCmd(name).result([]),
       P.alt(...inter.map(openCmd))
@@ -122,7 +122,7 @@ function bodyFor(name: string, ...inter) {
           cmd('literal'),
           interpolation('{', '}')),
         bodyParser,
-        (left, right: Array<any>) => [left, ...right])))
+        (left, right: Body) => [left, ...right])))
   );
 
   return bodyParser;
@@ -137,7 +137,7 @@ function orAny<T>(parser: P.Parser<T>): P.Parser<T> {
 }
 
 function withAny<T>(parser: P.Parser<T>): P.Parser<string> {
-  const newParser = P.lazy(() =>
+  const newParser: P.Parser<string> = P.lazy(() =>
     P.alt(
       parser.result(''),
       P.seqMap(
@@ -171,10 +171,10 @@ function openCmd(name: string): P.Parser<string> {
 
 /* Nodes */
 
-export type Body = Array<any>;
+export type Body = Array<Node>;
 
 export interface Node {
-  body?: any,
+  body?: Body,
   type: string
 }
 
@@ -221,12 +221,12 @@ export interface DelTemplate extends Node {
   name: string,
   namespace: string | null,
   params: Array<ParamDeclaration>,
-  variant: string
+  variant: Interpolation | null
 }
 
 function DelTemplate(
   rawName: string,
-  variant: string,
+  variant: Interpolation | null,
   params: Array<ParamDeclaration> = [],
   body: Body = []): DelTemplate {
   const {name, namespace} = parseTemplateName(rawName);

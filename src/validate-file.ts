@@ -45,7 +45,7 @@ class ErrorResult extends Error {
   }
 }
 
-function toError(type: ErrorTypes): (Error) => never {
+function toError(type: ErrorTypes): (err: Error) => never {
   return inner => {
     throw new ErrorResult(type, inner);
   };

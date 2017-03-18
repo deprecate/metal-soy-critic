@@ -1,13 +1,14 @@
 import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
 import {joinErrors, toResult, Result} from './util';
+import * as S from './soy-parser';
 import * as T from 'babel-types';
 
 function isInternalName(name: string): boolean {
   return name.startsWith('_') || name.endsWith('_');
 }
 
-export default function validateInternal(_, jsAst: T.Node): Result {
+export default function validateInternal(_: S.Program, jsAst: T.Node): Result {
   const params = jsHelpers.getParams(jsAst);
 
   if (!params) {
