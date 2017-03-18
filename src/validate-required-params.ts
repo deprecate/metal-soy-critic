@@ -17,9 +17,9 @@ export default function validateRequiredParams(soyAst: S.Program, jsAst: T.Node)
 
   const requiredJSParams = new Set<string>(jsParams
     .filter(node =>
-      soyParamNames.includes((<T.Identifier>node.key).name) &&
+      soyParamNames.includes(jsHelpers.getKeyName(node.key)) &&
         jsHelpers.hasAttribute(node.value, 'required'))
-    .map(node => (<T.Identifier>node.key).name));
+    .map(node => jsHelpers.getKeyName(node.key)));
 
   const requiredSoyParams = new Set<string>(soyParams
     .filter(param => param.required)

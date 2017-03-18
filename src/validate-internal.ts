@@ -17,8 +17,6 @@ export default function validateInternal(soyAst: S.Program, jsAst: T.Node): Resu
 
   const missingInternal = params
     .filter(node => {
-      node = <T.ObjectProperty>node;
-      
       const name = (<T.Identifier>node.key).name;
 
       return isInternalName(name) &&

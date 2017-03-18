@@ -1,5 +1,15 @@
-import jsTraverse from 'babel-traverse';
 import * as T from 'babel-types';
+import jsTraverse from 'babel-traverse';
+
+export function getKeyName(node: T.Node): string {
+  if (T.isIdentifier(node)) {
+    return node.name;
+  } else if (T.isStringLiteral(node)) {
+    return node.value;
+  }
+
+  throw new Error('Unable to parse key name');
+}
 
 export function hasAttribute(node: T.Node, name: string): boolean {
   if (T.isIdentifier(node) && node.name === 'Config') {
@@ -25,18 +35,25 @@ export function getParams(ast: T.Node): Array<T.Property> | null {
 
   jsTraverse(ast, {
     ExportDefaultDeclaration(path) {
-      const defaultName = (<T.Identifier>path.node.declaration).name;
+      let defaultName;
+      if (T.isIdentifier(path.node.declaration)) {
+        defaultName = path.node.declaration.name;
+      } else {
+        return;
+      }
 
       path
         .findParent(path => path.isProgram())
         .scope.bindings[defaultName].referencePaths.forEach(path => {
           const {parentPath} = path;
 
-          if (parentPath.isMemberExpression() &&
-            (<T.Identifier>(<T.MemberExpression>parentPath.node).property).name === 'STATE' &&
-            parentPath.parentPath.isAssignmentExpression()
+          if (T.isMemberExpression(parentPath.node) &&
+            T.isIdentifier(parentPath.node.property) &&
+            parentPath.node.property.name === 'STATE' &&
+            T.isAssignmentExpression(parentPath.parentPath.node) &&
+            T.isObjectExpression(parentPath.parentPath.node.right)
           ) {
-            node = (<T.ObjectExpression>(<T.AssignmentExpression>parentPath.parentPath.node).right).properties;
+            node = parentPath.parentPath.node.right.properties;
           }
         });
 

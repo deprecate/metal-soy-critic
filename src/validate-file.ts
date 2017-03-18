@@ -1,9 +1,9 @@
+import {combineResults, toResult, Result} from './util';
+import * as babylon from 'babylon';
 import * as fs from 'fs';
 import * as S from './soy-parser';
 import * as T from 'babel-types';
-import * as babylon from 'babylon';
 import parseSoy from './soy-parser';
-import {combineResults, toResult, Result} from './util';
 
 const enum ErrorTypes {
   JSParse,
@@ -45,7 +45,7 @@ class ErrorResult extends Error {
   }
 }
 
-function toError(type: ErrorTypes): (any) => never {
+function toError(type: ErrorTypes): (Error) => never {
   return inner => {
     throw new ErrorResult(type, inner);
   };

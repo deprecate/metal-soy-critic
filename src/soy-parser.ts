@@ -1,5 +1,5 @@
-import * as P from 'parsimmon';
 import {parseTemplateName} from './util';
+import * as P from 'parsimmon';
 
 /* Parsers */
 

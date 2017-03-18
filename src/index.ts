@@ -1,7 +1,7 @@
+import {Result} from './util';
 import * as chalk from 'chalk';
 import * as program from 'commander';
 import validateFile from './validate-file';
-import {Result} from './util';
 const pkg = require('../package.json');
 
 function main() {

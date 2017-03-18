@@ -1,14 +1,14 @@
+import {joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
-import * as soyHelpers from './soy-helpers';
-import {joinErrors, toResult, Result} from './util';
-import * as T from 'babel-types';
 import * as S from './soy-parser';
+import * as soyHelpers from './soy-helpers';
+import * as T from 'babel-types';
 
 function getJSParams(ast: T.Node): Array<string> | null {
   const params = jsHelpers.getParams(ast);
   if (params) {
-    return params.map(prop => (<T.Identifier>prop.key).name);
+    return params.map(prop => jsHelpers.getKeyName(prop.key));
   }
 
   return null;

@@ -1,5 +1,5 @@
-import soyParser from '../soy-parser';
 import {getFixture} from '../../test/util';
+import soyParser from '../soy-parser';
 
 describe('Soy Parser', () => {
   test('should parse file correctly', () => {

@@ -1,5 +1,5 @@
-import visit from './soy-traverse';
 import * as S from './soy-parser';
+import visit from './soy-traverse';
 
 export function getSoyParams(ast: S.Program): Array<S.ParamDeclaration> {
   return visit(ast, {
