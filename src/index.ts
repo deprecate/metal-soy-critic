@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {Result} from './util';
 import * as chalk from 'chalk';
 import * as program from 'commander';
