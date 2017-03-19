@@ -34,4 +34,9 @@ describe('Validate file', () => {
       expect(result.status).toBe(false);
       expect(result.messages).toMatchSnapshot();
   }));
+
+  test('should fail; missing render', () => validate('MissingRender.soy').then(result => {
+      expect(result.status).toBe(false);
+      expect(result.messages).toMatchSnapshot();
+  }));
 });

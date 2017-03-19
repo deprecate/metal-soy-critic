@@ -104,7 +104,7 @@ function cmd(name: string, ...inter: Array<string>): P.Parser<Node> {
   );
 }
 
-function bodyFor(name: string, ...inter: Array<String>) {
+function bodyFor(name: string, ...inter: Array<String>): P.Parser<Body> {
   const bodyParser: P.Parser<Body> = P.lazy(() =>
     html.then(P.alt(
       closeCmd(name).result([]),

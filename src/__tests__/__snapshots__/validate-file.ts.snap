@@ -30,6 +30,14 @@ Array [
 ]
 `;
 
+exports[`Validate file should fail; missing render 1`] = `
+Array [
+  "Cannot find a [33m.render[39m template, do you have a typo?
+
+[31mrander[39m",
+]
+`;
+
 exports[`Validate file should fail; missing required 1`] = `
 Array [
   "These attributes are [33mrequired[39m in your Soy Template but not in your Component:

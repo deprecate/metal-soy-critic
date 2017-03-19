@@ -6,6 +6,7 @@ import * as T from 'babel-types';
 import parseSoy from './soy-parser';
 
 /* Validators */
+import validateRenderTemplate from './validate-render-template';
 import validateCallImports from './validate-call-imports';
 import validateParams from './validate-params';
 import validateInternal from './validate-internal';
@@ -18,6 +19,7 @@ import validateRequiredParams from './validate-required-params';
 type Validator = (soyAst: S.Program, jsAst: T.Node) => Result;
 
 const validators: Array<Validator> = [
+  validateRenderTemplate,
   validateCallImports,
   validateParams,
   validateInternal,

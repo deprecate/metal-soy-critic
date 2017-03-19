@@ -42,21 +42,27 @@ export function getParams(ast: T.Node): Array<T.ObjectProperty> | null {
         return;
       }
 
-      path
+      const defaultNode = path
         .findParent(path => path.isProgram())
-        .scope.bindings[defaultName].referencePaths.forEach(path => {
-          const {parentPath} = path;
+        .scope.bindings[defaultName];
 
-          if (T.isMemberExpression(parentPath.node) &&
-            T.isIdentifier(parentPath.node.property) &&
-            parentPath.node.property.name === 'STATE' &&
-            T.isAssignmentExpression(parentPath.parentPath.node) &&
-            T.isObjectExpression(parentPath.parentPath.node.right)
-          ) {
-            node = parentPath.parentPath.node.right.properties;
-          }
-        });
+      if (!defaultNode) {
+        return;
+      }
 
+      for (let i = 0; i < defaultNode.referencePaths.length; i++) {
+        const {parentPath} = defaultNode.referencePaths[i];
+
+        if (T.isMemberExpression(parentPath.node) &&
+          T.isIdentifier(parentPath.node.property) &&
+          parentPath.node.property.name === 'STATE' &&
+          T.isAssignmentExpression(parentPath.parentPath.node) &&
+          T.isObjectExpression(parentPath.parentPath.node.right)
+        ) {
+          node = parentPath.parentPath.node.right.properties;
+          break;
+        }
+      }
       path.stop();
     }
   });
