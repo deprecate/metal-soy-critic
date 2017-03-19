@@ -3,7 +3,7 @@ import * as babylon from 'babylon';
 import * as fs from 'fs';
 import * as S from './soy-parser';
 import * as T from 'babel-types';
-import parseSoy from './soy-parser';
+import parseSoy, {SoyParseError} from './soy-parser';
 
 /* Validators */
 import validateRenderTemplate from './validate-render-template';
@@ -26,30 +26,6 @@ const validators: Array<Validator> = [
   validateRequiredParams
 ];
 
-const enum ErrorTypes {
-  JSParse,
-  JSRead,
-  SoyParse,
-  SoyRead
-}
-
-class ErrorResult extends Error {
-  type: ErrorTypes;
-  inner: Error;
-
-  constructor(type: ErrorTypes, inner: Error) {
-    super();
-    this.type = type;
-    this.inner = inner;
-  }
-}
-
-function toError(type: ErrorTypes): (err: Error) => never {
-  return inner => {
-    throw new ErrorResult(type, inner);
-  };
-}
-
 function readFile(filePath: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, (err, data) => {
@@ -65,32 +41,14 @@ function getJSPath(filePath: string): string {
   return filePath.replace('.soy', '.js');
 }
 
-function getSoyAst(filePath: string): Promise<S.Program> {
-  return readFile(filePath)
-    .then(
-      buffer => {
-        try {
-          return parseSoy(buffer.toString('utf8'));
-        } catch (e) {
-          throw new ErrorResult(ErrorTypes.SoyParse, e);
-        }
-      },
-      toError(ErrorTypes.SoyRead)
-    );
+async function getSoyAst(filePath: string): Promise<S.Program> {
+  const buffer = await readFile(filePath);
+  return parseSoy(buffer.toString('utf8'));
 }
 
-function getJSAst(filePath: string): Promise<T.Node> {
-  return readFile(filePath)
-    .then(
-      buffer => {
-        try {
-          return babylon.parse(buffer.toString('utf8'), {allowImportExportEverywhere: true});
-        } catch (e) {
-          throw new ErrorResult(ErrorTypes.JSParse, e);
-        }
-      },
-      toError(ErrorTypes.JSRead)
-    );
+async function getJSAst(filePath: string): Promise<T.Node> {
+  const buffer = await readFile(filePath);
+  return babylon.parse(buffer.toString('utf8'), {allowImportExportEverywhere: true});
 }
 
 function runValidations(soyAst: S.Program, jsAst: T.Node): Result {
@@ -99,24 +57,23 @@ function runValidations(soyAst: S.Program, jsAst: T.Node): Result {
     .reduce(combineResults);
 }
 
-export default function validateFile(filePath: string): Promise<Result> {
-  return getSoyAst(filePath)
-    .then(soyAst => getJSAst(getJSPath(filePath))
-    .then(jsAst => runValidations(soyAst, jsAst)))
-    .catch(error => {
-      if (error instanceof ErrorResult) {
-        switch (error.type) {
-          case ErrorTypes.JSRead:
-            return toResult(true);
-          case ErrorTypes.JSParse:
-            return toResult(false, 'Failed to parse component');
-          case ErrorTypes.SoyRead:
-            return toResult(false, 'Unable to read soy template');
-          case ErrorTypes.SoyParse:
-            return toResult(false, 'Failed to parse soy template');
-        }
-      }
+export default async function validateFile(filePath: string): Promise<Result> {
+  try {
+    const soyAst = await getSoyAst(filePath);
+    const jsAst = await getJSAst(getJSPath(filePath));
 
-      return toResult(false, 'Something went wrong validating soy file');
-    });
+    return runValidations(soyAst, jsAst);
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      if (err.path.endsWith('.js')) {
+        return toResult(true);
+      }
+      return toResult(false, 'Failed to open soy file, does it exist?');
+    } else if (err instanceof SoyParseError) {
+      return toResult(false, err.message);
+    } else if (err instanceof SyntaxError) {
+      return toResult(false, 'Failed to parse component (javascript) file');
+    }
+    return toResult(false, 'Something went wrong validating this soy file');
+  }
 }

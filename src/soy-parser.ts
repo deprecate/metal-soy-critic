@@ -307,10 +307,12 @@ function MakeCmd(name: string, body: Body = []): Node {
   };
 }
 
+export class SoyParseError extends Error {}
+
 export default function parse(input: string): Program {
   const result = parser.parse(input);
   if (!result.status) {
-    throw result;
+    throw new SoyParseError('Failed to parse soy template');
   }
   return result.value;
 };
