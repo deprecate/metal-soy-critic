@@ -3,6 +3,9 @@
   "version": "1.4.0",
   "description": "A metal-soy code validation utility.",
   "repository": "https://github.com/mthadley/metal-soy-critic",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "jest",
     "compile": "tsc",
