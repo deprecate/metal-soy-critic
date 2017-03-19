@@ -39,4 +39,9 @@ describe('Validate file', () => {
       expect(result.status).toBe(false);
       expect(result.messages).toMatchSnapshot();
   }));
+
+  test('should fail; invalid javascript', () => validate('InvalidJS.soy').then(result => {
+      expect(result.status).toBe(false);
+      expect(result.messages).toMatchSnapshot();
+  }));
 });

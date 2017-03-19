@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Validate file should fail; invalid javascript 1`] = `
+Array [
+  "Failed to parse component (javascript) file",
+]
+`;
+
 exports[`Validate file should fail; invalid namespace 1`] = `
 Array [
   "Failed to parse soy template",
