@@ -15,7 +15,7 @@ async function main(): Promise<void> {
   }
 
   const validations = await Promise.all(program.args.map(validate));
-  const failed = validations.filter(validation => !validation.result.status);
+  const failed = validations.filter(([_, result]) => !result.status);
 
   if (!failed.length) {
     process.exit(0);
@@ -29,10 +29,10 @@ async function main(): Promise<void> {
   process.exit(1);
 }
 
-function printValidation(validation: Validation): void {
-  const {messages} = validation.result;
+function printValidation([filePath, result]: [string, Result]): void {
+  const {messages} = result;
 
-  printHeader(`File - ${validation.filePath}`);
+  printHeader(`File - ${filePath}`);
   messages.forEach(message => printIndented(message));
 }
 
@@ -52,18 +52,10 @@ function printHeader(content = '', symbol = '/'): void {
     chalk.yellow(content));
 }
 
-interface Validation {
-  filePath: string,
-  result: Result
-}
-
-async function validate(filePath: string): Promise<Validation> {
+async function validate(filePath: string): Promise<[string, Result]> {
   const result = await validateFile(filePath);
 
-  return {
-    filePath,
-    result
-  };
+  return [filePath, result];
 }
 
 main();
