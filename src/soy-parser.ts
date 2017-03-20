@@ -11,7 +11,7 @@ const html = P.noneOf('{}').many().desc("Html Char");
 const namespace = joined(P.letter, P.digit, P.string('.'));
 const paramName = joined(P.letter, P.digit, P.string('_'));
 const templateName = joined(P.letter, P.digit, P.string('.'));
-const typeName = joined(P.letter, P.digit, P.oneOf('<>?'));
+const typeName = joined(P.letter, P.digit, P.oneOf('<>?|'));
 
 const boolean = P.alt(
   P.string('true').result(true),

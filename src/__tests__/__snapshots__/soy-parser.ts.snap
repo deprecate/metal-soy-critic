@@ -343,6 +343,65 @@ Object {
 }
 `;
 
+exports[`Soy Parser should parse param declarations 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "body": Array [
+            Object {
+              "content": "$title",
+              "type": "Interpolation",
+            },
+          ],
+          "type": "Foreach",
+        },
+        Object {
+          "content": "$name",
+          "type": "Interpolation",
+        },
+        Object {
+          "body": Array [
+            Object {
+              "content": "$optionalInfo",
+              "type": "Interpolation",
+            },
+          ],
+          "type": "If",
+        },
+      ],
+      "name": "render",
+      "namespace": null,
+      "params": Array [
+        Object {
+          "name": "name",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "titles",
+          "paramType": "list<string>",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "name": "optionalInfo",
+          "paramType": "html|string",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "private": false,
+      "type": "Template",
+    },
+  ],
+  "namespace": "Test",
+  "type": "Program",
+}
+`;
+
 exports[`Soy Parser should parse param names with underscores 1`] = `
 Object {
   "body": Array [

@@ -37,4 +37,10 @@ describe('Soy Parser', () => {
 
     expect(soyParser(input)).toMatchSnapshot();
   });
+
+  test('should parse param declarations', () => {
+    const input = getFixture('ParamDeclarations.soy');
+
+    expect(soyParser(input)).toMatchSnapshot();
+  });
 });
