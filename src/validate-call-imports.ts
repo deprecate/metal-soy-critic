@@ -7,14 +7,14 @@ import jsTraverse from 'babel-traverse';
 import soyVisit from './soy-traverse';
 
 function getExternalSoyCalls(ast: S.Program): Array<string> {
-  const {calls} = soyVisit(ast, {
-    Call(node, state) {
+  const calls: Set<string> = new Set();
+  soyVisit(ast, {
+    Call(node) {
       if (node.namespace) {
-        state.calls.add(node.namespace);
+        calls.add(node.namespace);
       }
     }
-  }, {calls: new Set()});
-
+  });
   return [...calls];
 }
 

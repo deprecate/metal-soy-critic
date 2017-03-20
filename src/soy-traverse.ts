@@ -1,6 +1,6 @@
 import * as S from './soy-parser';
 
-export type VisitFunction<T> = (node: T, state: any) => void;
+export type VisitFunction<T> = (node: T) => void;
 
 export interface VisitObject<T> {
   enter?: VisitFunction<T>;
@@ -35,16 +35,14 @@ function getExit<T>(handler: Visit<T> | undefined): VisitFunction<T> {
   return noop;
 }
 
-export default function visit<T>(node: S.Node, visitor: Visitor, state: T): T {
+export default function visit(node: S.Node, visitor: Visitor): void {
   const handler = visitor[node.type];
 
-  getEnter(handler)(node, state);
+  getEnter(handler)(node);
 
   if (node.body) {
-    node.body.forEach(node => visit(node, visitor, state))
+    node.body.forEach(node => visit(node, visitor));
   }
 
-  getExit(handler)(node, state);
-
-  return state;
+  getExit(handler)(node);
 }

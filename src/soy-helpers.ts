@@ -2,11 +2,13 @@ import * as S from './soy-parser';
 import visit from './soy-traverse';
 
 export function getSoyParams(ast: S.Program): Array<S.ParamDeclaration> {
-  return visit(ast, {
-    Template(node, state) {
+  let params: Array<S.ParamDeclaration> = [];
+  visit(ast, {
+    Template(node) {
       if (node.namespace === null && node.name === 'render') {
-        state.params = node.params;
+        params = node.params;
       }
     }
-  }, {params: []}).params;
+  });
+  return params;
 }
