@@ -12,12 +12,12 @@ export type Visit<T> = VisitFunction<T> | VisitObject<T>;
 export interface Visitor {
   Call?: Visit<S.Call>;
   Template?: Visit<S.Template>;
-  [propName: string]: any;
+  [propName: string]: Visit<S.Node> | undefined;
 }
 
 function noop() {}
 
-function getEnter<T>(handler: Visit<T>): VisitFunction<T> {
+function getEnter<T>(handler: Visit<T> | undefined): VisitFunction<T> {
   if (typeof handler === 'function') {
     return handler;
   } else if (handler && handler.enter) {
@@ -27,7 +27,7 @@ function getEnter<T>(handler: Visit<T>): VisitFunction<T> {
   return noop;
 }
 
-function getExit<T>(handler: Visit<T>): VisitFunction<T> {
+function getExit<T>(handler: Visit<T> | undefined): VisitFunction<T> {
   if (typeof handler === 'object' && handler.exit) {
     return handler.exit;
   }

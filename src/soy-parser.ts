@@ -180,7 +180,8 @@ export interface Node {
 
 export interface Program extends Node {
   body: Array<Template>,
-  namespace: string
+  namespace: string,
+  type: 'Program',
 }
 
 function Program(namespace: string, body: Array<Template>): Program {
@@ -196,7 +197,8 @@ export interface Template extends Node {
   name: string,
   namespace: string | null,
   params: Array<ParamDeclaration>,
-  private: boolean
+  private: boolean,
+  type: 'Template'
 }
 
 function Template(
@@ -221,7 +223,8 @@ export interface DelTemplate extends Node {
   name: string,
   namespace: string | null,
   params: Array<ParamDeclaration>,
-  variant: Interpolation | null
+  variant: Interpolation | null,
+  type: 'DelTemplate'
 }
 
 function DelTemplate(
@@ -242,7 +245,8 @@ function DelTemplate(
 }
 
 export interface Interpolation extends Node {
-  content: string
+  content: string,
+  type: 'Interpolation'
 }
 
 function Interpolation(content: string): Interpolation {
@@ -254,7 +258,8 @@ function Interpolation(content: string): Interpolation {
 
 export interface Param extends Node {
   body: Body,
-  name: string
+  name: string,
+  type: 'Param'
 }
 
 function Param(name: string, body: Body = []) {
@@ -268,7 +273,8 @@ function Param(name: string, body: Body = []) {
 export interface ParamDeclaration extends Node {
   name: string,
   paramType: string,
-  required: boolean
+  required: boolean,
+  type: 'ParamDeclaration'
 }
 
 function ParamDeclaration(
@@ -286,7 +292,8 @@ function ParamDeclaration(
 export interface Call extends Node {
   body: Body,
   name: string,
-  namespace: string | null
+  namespace: string | null,
+  type: 'Call'
 }
 
 function Call(rawName: string, body: Body = []): Call {
