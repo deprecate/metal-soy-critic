@@ -343,6 +343,35 @@ Object {
 }
 `;
 
+exports[`Soy Parser should parse param names with underscores 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "body": Array [
+        Object {
+          "content": "$_name",
+          "type": "Interpolation",
+        },
+      ],
+      "name": "render",
+      "namespace": null,
+      "params": Array [
+        Object {
+          "name": "_name",
+          "paramType": "string",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "private": false,
+      "type": "Template",
+    },
+  ],
+  "namespace": "UnderscoreParam",
+  "type": "Program",
+}
+`;
+
 exports[`Soy Parser should parse private templates 1`] = `
 Object {
   "body": Array [

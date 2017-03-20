@@ -31,4 +31,10 @@ describe('Soy Parser', () => {
 
     expect(soyParser(input)).toMatchSnapshot();
   });
+
+  test('should parse param names with underscores', () => {
+    const input = getFixture('UnderscoreParam.soy');
+
+    expect(soyParser(input)).toMatchSnapshot();
+  });
 });
