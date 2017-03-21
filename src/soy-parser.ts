@@ -98,7 +98,7 @@ function interpolation(start: string, end: string = start): P.Parser<Interpolati
   return P.string(start).then(withAny(P.string(end))).map(Interpolation);
 }
 
-function cmd(name: string, ...inter: Array<string>): P.Parser<Node> {
+function cmd(name: string, ...inter: Array<string>): P.Parser<OtherCmd> {
   return openCmd(name).then(
     bodyFor(name, ...inter).map(body => MakeCmd(name, body))
   );
@@ -171,7 +171,7 @@ function openCmd(name: string): P.Parser<string> {
 
 /* Nodes */
 
-export type Body = Array<Node>;
+export type Body = Array<Call | Interpolation | OtherCmd>;
 
 export interface Node {
   body?: Body,
@@ -307,7 +307,11 @@ function Call(rawName: string, body: Array<Param> = []): Call {
   };
 }
 
-function MakeCmd(name: string, body: Body = []): Node {
+export interface OtherCmd extends Node {
+  body: Body
+}
+
+function MakeCmd(name: string, body: Body = []): OtherCmd {
   return {
     body,
     type: name.charAt(0).toUpperCase() + name.slice(1)
