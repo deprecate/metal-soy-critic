@@ -55,4 +55,12 @@ Array [
 ]
 `;
 
+exports[`Validate file should fail; noop events 1`] = `
+Array [
+  "These calls are not components, so their [33mevents[39m param will do nothing:
+
+[31mOtherComponent.Helper[39m",
+]
+`;
+
 exports[`Validate file should pass; method param 1`] = `Array []`;

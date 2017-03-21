@@ -11,6 +11,7 @@ import validateCallImports from './validate-call-imports';
 import validateParams from './validate-params';
 import validateInternal from './validate-internal';
 import validateRequiredParams from './validate-required-params';
+import validateNoopEvents from './validate-noop-events';
 
 /**
  * Validators should be added here. Each validator is a function that should
@@ -23,7 +24,8 @@ const validators: Array<Validator> = [
   validateCallImports,
   validateParams,
   validateInternal,
-  validateRequiredParams
+  validateRequiredParams,
+  validateNoopEvents
 ];
 
 function readFile(filePath: string): Promise<Buffer> {

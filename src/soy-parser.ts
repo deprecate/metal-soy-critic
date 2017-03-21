@@ -262,7 +262,7 @@ export interface Param extends Node {
   type: 'Param'
 }
 
-function Param(name: string, body: Body = []) {
+function Param(name: string, body: Body = []): Param {
   return {
     body,
     name,
@@ -290,13 +290,13 @@ function ParamDeclaration(
 }
 
 export interface Call extends Node {
-  body: Body,
+  body: Array<Param>,
   name: string,
   namespace: string | null,
   type: 'Call'
 }
 
-function Call(rawName: string, body: Body = []): Call {
+function Call(rawName: string, body: Array<Param> = []): Call {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {

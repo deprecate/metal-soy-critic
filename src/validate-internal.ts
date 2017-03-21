@@ -1,6 +1,6 @@
+import {joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
-import {joinErrors, toResult, Result} from './util';
 import * as S from './soy-parser';
 import * as T from 'babel-types';
 

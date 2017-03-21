@@ -1,0 +1,15 @@
+{namespace Test}
+
+/**
+ * Test
+ */
+{template .render}
+  {@param? _handleClick: any}
+
+  <div>
+    {call OtherComponent.Helper}
+      {param events: ['click': $_handleClick] /}
+      {param foo: 'bar' /}
+    {/call}
+  </div>
+{/template}
