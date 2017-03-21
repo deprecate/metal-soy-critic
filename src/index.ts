@@ -37,20 +37,18 @@ function printValidation([filePath, result]: [string, Result]): void {
   messages.forEach(message => printIndented(message));
 }
 
-function printIndented(message = '', indentSize = 2, symbol = '/'): void {
+function printIndented(message = '', indentSize = 2, symbol = ' '): void {
   const indentStr = chalk.black(symbol.repeat(indentSize));
 
-  console.log(indentStr);
+  console.log();
   message
     .split('\n')
     .forEach(line => console.log(indentStr, ' ', line));
-  console.log(indentStr);
+  console.log('\n');
 }
 
-function printHeader(content = '', symbol = '/'): void {
-  console.log(
-    chalk.black(symbol.repeat(10) + ' '),
-    chalk.yellow(content));
+function printHeader(content = ''): void {
+  console.log(chalk.yellow(content));
 }
 
 async function validate(filePath: string): Promise<[string, Result]> {
