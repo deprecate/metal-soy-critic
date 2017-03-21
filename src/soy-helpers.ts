@@ -12,3 +12,11 @@ export function getSoyParams(ast: S.Program): Array<S.ParamDeclaration> {
   });
   return params;
 }
+
+export function isCall(node: S.Node): node is S.Call {
+  return node.type === 'Call';
+}
+
+export function isInterpolation(node: S.Node): node is S.Interpolation {
+  return node.type === 'Interpolation';
+}
