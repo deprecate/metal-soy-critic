@@ -11,10 +11,6 @@ function isInternalName(name: string): boolean {
 export default function validateInternal(_: S.Program, jsAst: T.Node): Result {
   const params = jsHelpers.getParams(jsAst);
 
-  if (!params) {
-    return toResult(true);
-  }
-
   const missingInternal = params
     .filter(node => {
       const name = jsHelpers.getKeyName(node.key);

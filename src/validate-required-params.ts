@@ -6,12 +6,7 @@ import * as T from 'babel-types';
 import * as S from './soy-parser';
 
 export default function validateRequiredParams(soyAst: S.Program, jsAst: T.Node): Result {
-  let jsParams = jsHelpers.getParams(jsAst);
-
-  if (!jsParams) {
-    return toResult(true);
-  }
-
+  const jsParams = jsHelpers.getParams(jsAst);
   const soyParams = soyHelpers.getSoyParams(soyAst);
   const soyParamNames = soyParams.map(param => param.name);
 

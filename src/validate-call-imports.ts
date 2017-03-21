@@ -25,7 +25,6 @@ function getImportPaths(ast: T.Node): Array<string> {
       importPaths.push(path.node.source.value);
     }
   });
-
   return importPaths;
 }
 

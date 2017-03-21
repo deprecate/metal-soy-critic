@@ -10,6 +10,11 @@ describe('Validate file', () => {
       expect(result.status).toBe(true);
   }));
 
+  test('should pass; method param', () => validate('MethodParam.soy').then(result => {
+      expect(result.status).toBe(true);
+      expect(result.messages).toMatchSnapshot();
+  }));
+
   test('should fail; missing params', () => validate('MissingParams.soy').then(result => {
       expect(result.status).toBe(false);
       expect(result.messages).toMatchSnapshot();

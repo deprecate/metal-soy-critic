@@ -5,30 +5,18 @@ import * as S from './soy-parser';
 import * as soyHelpers from './soy-helpers';
 import * as T from 'babel-types';
 
-function getJSParams(ast: T.Node): Array<string> | null {
-  const params = jsHelpers.getParams(ast);
-  if (params) {
-    return params.map(prop => jsHelpers.getKeyName(prop.key));
-  }
-
-  return null;
-}
-
 export default function validateParams(soyAst: S.Program, jsAst: T.Node): Result {
-  const jsParams = getJSParams(jsAst);
-
-  if (!jsParams) {
-    return toResult(true);
-  }
+  const jsParams = jsHelpers.getParamNames(jsAst);
+  const classMethods = jsHelpers.getClassMethodNames(jsAst);
 
   const missingParams = soyHelpers.getSoyParams(soyAst)
     .map(param => param.name)
-    .filter(param => !jsParams.includes(param));
+    .filter(param => !jsParams.includes(param) && !classMethods.includes(param));
 
   if (missingParams.length) {
     return toResult(
       false,
-      `The following params should be included in ${chalk.yellow('STATE')}:\n\n` +
+      `These params can't be found in ${chalk.yellow('STATE')} or your ${chalk.yellow('Class')}:\n\n` +
       joinErrors(missingParams));
   }
 

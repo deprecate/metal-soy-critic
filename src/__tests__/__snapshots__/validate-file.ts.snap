@@ -30,7 +30,7 @@ Array [
 
 exports[`Validate file should fail; missing params 1`] = `
 Array [
-  "The following params should be included in [33mSTATE[39m:
+  "These params can't be found in [33mSTATE[39m or your [33mClass[39m:
 
 [31moptionalInfo[39m",
 ]
@@ -54,3 +54,5 @@ Array [
 [31mdescription[39m",
 ]
 `;
+
+exports[`Validate file should pass; method param 1`] = `Array []`;
