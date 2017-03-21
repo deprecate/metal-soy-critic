@@ -10,7 +10,7 @@ function fullName(call: S.Call): string {
 }
 
 function hasEventsParam(params: Array<S.Param>): boolean {
-  return !!params.find(param => param.name === 'events')  ;
+  return !!params.find(param => param.name === 'events');
 }
 
 export default function validateNoopEvents(ast: S.Program, _: T.Node): Result {
