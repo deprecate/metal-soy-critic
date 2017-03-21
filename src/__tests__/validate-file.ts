@@ -50,7 +50,7 @@ describe('Validate file', () => {
     expect(result.messages).toMatchSnapshot();
   }));
 
-  test.only('should fail; noop events', () => validate('NoopEvents.soy').then(result => {
+  test('should fail; noop events', () => validate('NoopEvents.soy').then(result => {
     expect(result.status).toBe(false);
     expect(result.messages).toMatchSnapshot();
   }));
