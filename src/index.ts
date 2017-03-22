@@ -9,32 +9,51 @@ async function main(): Promise<void> {
   program
     .version(pkg.version)
     .usage('mcritic [options] <file ...>')
+    .option('-v, --verbose', 'output for all files')
     .parse(process.argv);
 
   if (!program.args.length) {
+    console.log(chalk.red('No arguments were passed.'));
+    printIndented('Run \'mcritic -h\' for help.');
+
     process.exit(0);
   }
 
   const validations = await Promise.all(program.args.map(validate));
   const failed = validations.filter(([_, result]) => !result.status);
+  const passed = validations.filter(([_, result]) => result.status);
 
-  if (!failed.length) {
+  const {verbose} = program;
+
+  console.log(chalk[failed.length ? 'red' : 'green'](`${failed.length} out of ${validations.length} file(s) have problems:\n`));
+
+  if (!verbose && !failed.length) {
     process.exit(0);
   }
 
-  console.log(chalk.red(`The following ${failed.length} file(s) have problems:\n`));
+  if (verbose && passed.length) {
+    passed.forEach(printValidation);
+  }
 
-  failed.forEach(printValidation);
+  if (failed.length) {
+    failed.forEach(printValidation);
+  }
+
   printHeader();
 
   process.exit(1);
 }
 
 function printValidation([filePath, result]: [string, Result]): void {
-  const {messages} = result;
+  const {messages, status} = result;
 
   printHeader(`File - ${filePath}`);
-  messages.forEach(message => printIndented(message));
+  if (status) {
+    printIndented('No problems were found.');
+  }
+  else {
+    messages.forEach(message => printIndented(message));
+  }
 }
 
 function printIndented(message = '', indentSize = 2, symbol = ' '): void {
