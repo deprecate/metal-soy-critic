@@ -1,6 +1,6 @@
 {
   "name": "metal-soy-critic",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A metal-soy code validation utility.",
   "repository": "https://github.com/mthadley/metal-soy-critic",
   "main": "./lib/index.js",
