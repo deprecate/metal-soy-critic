@@ -12,7 +12,12 @@ describe('Validate file', () => {
 
   test('should pass; method param', () => validate('MethodParam.soy').then(result => {
     expect(result.status).toBe(true);
-    expect(result.messages).toMatchSnapshot();
+    expect(result.messages.length).toBe(0);
+  }));
+
+  test('should pass; ignores subclasses', () => validate('IgnoreSubclass.soy').then(result => {
+    expect(result.status).toBe(true);
+    expect(result.messages.length).toBe(0);
   }));
 
   test('should fail; missing params', () => validate('MissingParams.soy').then(result => {

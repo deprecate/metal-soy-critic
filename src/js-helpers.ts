@@ -30,6 +30,43 @@ export function getKeyName(node: T.Node): string {
   throw new Error('Unable to parse key name');
 }
 
+export function getSuperClassImportPath(ast: T.Node): string | null {
+  let importPath = null;
+
+  const parentClassName = getParentClassName(ast);
+  if (parentClassName) {
+    jsTraverse(ast, {
+      Program(path) {
+        const binding = path.scope.getBinding(parentClassName);
+
+        if (binding && T.isImportDeclaration(binding.path.parentPath.node)) {
+          importPath = binding.path.parentPath.node.source.value;
+        }
+      }
+    });
+  }
+
+  return importPath;
+}
+
+export function getNameOrMemberName(node: T.Node): string | null {
+  if (T.isIdentifier(node)) {
+    return node.name;
+  } else if (T.isMemberExpression(node)) {
+    return getKeyName(node.property);
+  }
+  return null;
+}
+
+export function getParentClassName(node: T.Node): string | null {
+  const defaultBinding = getDefaultBinding(node) ;
+  if (defaultBinding && T.isClassDeclaration(defaultBinding.path.node)) {
+    return getNameOrMemberName(defaultBinding.path.node.superClass);
+  }
+
+  return null;
+}
+
 export function hasAttribute(node: T.Node, name: string): boolean {
   if (T.isIdentifier(node) && node.name === 'Config') {
     return false;

@@ -73,5 +73,3 @@ Array [
 [31mroo[39m",
 ]
 `;
-
-exports[`Validate file should pass; method param 1`] = `Array []`;
