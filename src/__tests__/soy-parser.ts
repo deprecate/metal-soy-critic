@@ -43,4 +43,10 @@ describe('Soy Parser', () => {
 
     expect(soyParser(input)).toMatchSnapshot();
   });
+
+  test('should parse all template attributes', () => {
+    const input = getFixture('TemplateAttributes.soy');
+
+    expect(soyParser(input)).toMatchSnapshot();
+  });
 });

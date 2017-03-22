@@ -1,5 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Soy Parser should parse all template attributes 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "attributes": Array [],
+      "body": Array [
+        Object {
+          "content": "call .helper data=\\"all\\" /",
+          "type": "Interpolation",
+        },
+      ],
+      "name": "render",
+      "namespace": null,
+      "params": Array [
+        Object {
+          "name": "test",
+          "paramType": "string",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "type": "Template",
+    },
+    Object {
+      "attributes": Array [
+        Object {
+          "name": "kind",
+          "type": "Attribute",
+          "value": "attributes",
+        },
+        Object {
+          "name": "private",
+          "type": "Attribute",
+          "value": "true",
+        },
+      ],
+      "body": Array [
+        Object {
+          "content": "$test ?: ''",
+          "type": "Interpolation",
+        },
+      ],
+      "name": "helper",
+      "namespace": null,
+      "params": Array [
+        Object {
+          "name": "test",
+          "paramType": "asdasd",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "type": "Template",
+    },
+  ],
+  "namespace": "Test",
+  "type": "Program",
+}
+`;
+
 exports[`Soy Parser should parse deltemplates 1`] = `
 Object {
   "body": Array [
@@ -142,6 +202,7 @@ exports[`Soy Parser should parse file correctly 1`] = `
 Object {
   "body": Array [
     Object {
+      "attributes": Array [],
       "body": Array [
         Object {
           "content": "$title",
@@ -201,10 +262,10 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
-      "private": false,
       "type": "Template",
     },
     Object {
+      "attributes": Array [],
       "body": Array [],
       "name": "helper",
       "namespace": null,
@@ -216,7 +277,6 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
-      "private": false,
       "type": "Template",
     },
   ],
@@ -229,6 +289,7 @@ exports[`Soy Parser should parse nested calls 1`] = `
 Object {
   "body": Array [
     Object {
+      "attributes": Array [],
       "body": Array [
         Object {
           "content": "$title",
@@ -319,10 +380,10 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
-      "private": false,
       "type": "Template",
     },
     Object {
+      "attributes": Array [],
       "body": Array [],
       "name": "helper",
       "namespace": null,
@@ -334,7 +395,6 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
-      "private": false,
       "type": "Template",
     },
   ],
@@ -347,6 +407,7 @@ exports[`Soy Parser should parse param declarations 1`] = `
 Object {
   "body": Array [
     Object {
+      "attributes": Array [],
       "body": Array [
         Object {
           "body": Array [
@@ -393,7 +454,6 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
-      "private": false,
       "type": "Template",
     },
   ],
@@ -406,6 +466,7 @@ exports[`Soy Parser should parse param names with underscores 1`] = `
 Object {
   "body": Array [
     Object {
+      "attributes": Array [],
       "body": Array [
         Object {
           "content": "$_name",
@@ -422,7 +483,6 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
-      "private": false,
       "type": "Template",
     },
   ],
@@ -435,6 +495,7 @@ exports[`Soy Parser should parse private templates 1`] = `
 Object {
   "body": Array [
     Object {
+      "attributes": Array [],
       "body": Array [
         Object {
           "content": "$title",
@@ -467,10 +528,16 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
-      "private": false,
       "type": "Template",
     },
     Object {
+      "attributes": Array [
+        Object {
+          "name": "private",
+          "type": "Attribute",
+          "value": "true",
+        },
+      ],
       "body": Array [
         Object {
           "content": "$test ?: ''",
@@ -487,7 +554,6 @@ Object {
           "type": "ParamDeclaration",
         },
       ],
-      "private": true,
       "type": "Template",
     },
   ],

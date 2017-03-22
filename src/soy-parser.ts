@@ -3,20 +3,16 @@ import * as P from 'parsimmon';
 
 /* Parsers */
 
-const rb = P.string('}');
 const cb = P.string('/}');
 const dquote = P.string('"');
+const rb = P.string('}');
 
+const attributeName = joined(P.letter, P.string('-'));
 const html = P.noneOf('{}').many().desc("Html Char");
 const namespace = joined(P.letter, P.digit, P.string('.'));
 const paramName = joined(P.letter, P.digit, P.string('_'));
 const templateName = joined(P.letter, P.digit, P.string('.'));
 const typeName = joined(P.letter, P.digit, P.oneOf('<>?|'));
-
-const boolean = P.alt(
-  P.string('true').result(true),
-  P.string('false').result(false)
-);
 
 const namespaceCmd = P.string('{namespace')
   .skip(P.whitespace)
@@ -54,14 +50,17 @@ const call = P.seqMap(
   Call
 );
 
+const attribute = P.seqMap(
+  attributeName.skip(P.string('="')),
+  withAny(dquote),
+  Attribute
+);
+
 const template = P.seqMap(
   orAny(P.string('{template'))
     .skip(P.whitespace)
     .then(templateName),
-  P.seq(P.whitespace, P.string('private="'))
-    .then(boolean)
-    .skip(dquote)
-    .fallback(false),
+  spaced(attribute).many(),
   spaced(rb).then(spaced(paramDeclaration).many()),
   bodyFor('template'),
   Template
@@ -192,28 +191,43 @@ function Program(namespace: string, body: Array<Template>): Program {
   };
 }
 
+export interface Attribute extends Node {
+  name: string,
+  value: string,
+  type: 'Attribute'
+}
+
+function Attribute(name: string, value: string): Attribute {
+  return {
+    name,
+    value,
+    type: 'Attribute'
+  };
+}
+
 export interface Template extends Node {
+  attributes: Array<Attribute>,
   body: Body,
   name: string,
   namespace: string | null,
   params: Array<ParamDeclaration>,
-  private: boolean,
   type: 'Template'
 }
 
 function Template(
   rawName: string,
-  isPrivate: boolean,
+  attributes: Array<Attribute>,
   params: Array<ParamDeclaration> = [],
-  body: Body = []): Template {
+  body: Body = [])
+  : Template {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
+    attributes,
     body,
     name,
     namespace,
     params,
-    private: isPrivate,
     type: 'Template'
   };
 }
@@ -231,7 +245,8 @@ function DelTemplate(
   rawName: string,
   variant: Interpolation | null,
   params: Array<ParamDeclaration> = [],
-  body: Body = []): DelTemplate {
+  body: Body = [])
+  : DelTemplate {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
@@ -280,7 +295,8 @@ export interface ParamDeclaration extends Node {
 function ParamDeclaration(
   required: boolean,
   name: string,
-  paramType: string): ParamDeclaration {
+  paramType: string)
+  : ParamDeclaration {
   return {
     name,
     paramType,
