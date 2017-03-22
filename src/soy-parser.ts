@@ -89,6 +89,24 @@ const parser = program;
 
 /* Higher-order Parsers */
 
+export interface Loc {
+  start: P.Index;
+  end: P.Index;
+}
+
+function locMap<T, U>(mapper: (loc: Loc, a1: T) => U, p1: P.Parser<T>): P.Parser<U>;
+function locMap<T, U, V>(mapper: (loc: Loc, a1: T, a2: U) => V, p1: P.Parser<T>, p2: P.Parser<U>): P.Parser<V>;
+function locMap(mapper: any, ...parsers: Array<any>) {
+  return P.seq(...parsers)
+    .mark()
+    .map(({start, value, end}) => {
+      return mapper({
+        start,
+        end
+      }, ...value);
+    });
+}
+
 function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
   return parser.atMost(1).map(values => values[0] || null);
 }
@@ -306,16 +324,18 @@ function ParamDeclaration(
 }
 
 export interface Call extends Node {
+  loc: Loc;
   body: Array<Param>,
   name: string,
   namespace: string | null,
   type: 'Call'
 }
 
-function Call(rawName: string, body: Array<Param> = []): Call {
+function Call(loc: Loc, rawName: string, body: Array<Param> = []): Call {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
+    loc,
     body,
     name,
     namespace,
