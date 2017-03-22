@@ -19,3 +19,9 @@ Then pass it a list of soy files that you would like to check:
 ```
 $ mcritic src/**/*.soy
 ```
+
+If your shell does not support the `globstar` feature, you can use `find` instead:
+
+```
+$ find src -name "*.soy" | xargs mcritic
+```
