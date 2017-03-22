@@ -1,6 +1,11 @@
 import * as S from './soy-parser';
 import visit from './soy-traverse';
 
+export function fullName(call: S.Call): string {
+  const namespace = call.namespace || '';
+  return `${namespace}.${call.name}`;
+}
+
 export function getSoyParams(ast: S.Program): Array<S.ParamDeclaration> {
   let params: Array<S.ParamDeclaration> = [];
   visit(ast, {

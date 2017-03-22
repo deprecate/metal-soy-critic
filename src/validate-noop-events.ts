@@ -1,13 +1,9 @@
+import {fullName} from './soy-helpers';
 import {toResult, Result, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-parser';
 import * as T from 'babel-types';
 import visit from './soy-traverse';
-
-function fullName(call: S.Call): string {
-  const namespace = call.namespace || '';
-  return `${namespace}.${call.name}`;
-}
 
 function hasEventsParam(params: Array<S.Param>): boolean {
   return !!params.find(param => param.name === 'events');
