@@ -19,84 +19,86 @@ const namespaceCmd = P.string('{namespace')
   .then(namespace)
   .skip(rb);
 
-const param = P.lazy(() => P.seqMap(
+const param = P.lazy(() => nodeMap(
+  Param,
   P.string('{param')
     .then(spaced(paramName)),
   orAny(P.alt(
     cb.result([]),
-    rb.then(bodyFor('param')))),
-  Param
+    rb.then(bodyFor('param'))))
 ));
 
-const paramDeclaration = P.seqMap(
+const paramDeclaration = nodeMap(
+  ParamDeclaration,
   P.string('{@param')
     .then(optional(P.string('?')))
     .map(value => !value),
   spaced(paramName),
   spaced(P.string(':'))
     .then(spaced(typeName))
-    .skip(rb),
-  ParamDeclaration
+    .skip(rb)
 );
 
-const call = P.seqMap(
+const call = nodeMap(
+  Call,
   P.string('{call')
     .skip(P.whitespace)
     .then(templateName),
   P.alt(
     spaced(cb).result([]),
     rb.then(spaced(param).many())
-      .skip(spaced(closeCmd('call')))),
-  Call
+      .skip(spaced(closeCmd('call'))))
 );
 
-const attribute = P.seqMap(
+const attribute = nodeMap(
+  Attribute,
   attributeName.skip(P.string('="')),
-  withAny(dquote),
-  Attribute
+  withAny(dquote)
 );
 
-const template = P.seqMap(
+const template = nodeMap(
+  Template,
   orAny(P.string('{template'))
     .skip(P.whitespace)
     .then(templateName),
   spaced(attribute).many(),
   spaced(rb).then(spaced(paramDeclaration).many()),
-  bodyFor('template'),
-  Template
+  bodyFor('template')
 );
 
-const delTemplate = P.seqMap(
+const delTemplate = nodeMap(
+  DelTemplate,
   orAny(P.string('{deltemplate'))
     .skip(P.whitespace)
     .then(templateName),
   optional(P.seq(P.whitespace, P.string('variant='))
     .then(interpolation('"'))),
   rb.then(spaced(paramDeclaration).many()),
-  bodyFor('deltemplate'),
-  DelTemplate
+  bodyFor('deltemplate')
 );
 
-const program = P.seqMap(
+const program = nodeMap(
+  Program,
   namespaceCmd,
   P.alt(template, delTemplate)
     .atLeast(1)
-    .skip(spaced(P.eof)),
-  Program
+    .skip(spaced(P.eof))
 );
 
 const parser = program;
 
 /* Higher-order Parsers */
 
-export interface Loc {
+export interface Mark {
   start: P.Index;
   end: P.Index;
 }
 
-function locMap<T, U>(mapper: (loc: Loc, a1: T) => U, p1: P.Parser<T>): P.Parser<U>;
-function locMap<T, U, V>(mapper: (loc: Loc, a1: T, a2: U) => V, p1: P.Parser<T>, p2: P.Parser<U>): P.Parser<V>;
-function locMap(mapper: any, ...parsers: Array<any>) {
+function nodeMap<T, U>(mapper: (mark: Mark, a1: T) => U, p1: P.Parser<T>): P.Parser<U>;
+function nodeMap<T, U, V>(mapper: (mark: Mark, a1: T, a2: U) => V, p1: P.Parser<T>, p2: P.Parser<U>): P.Parser<V>;
+function nodeMap<T, U, V, W>(mapper: (mark: Mark, a1: T, a2: U, a3: V) => W, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>): P.Parser<W>;
+function nodeMap<T, U, V, W, X>(mapper: (mark: Mark, a1: T, a2: U, a3: V, a4: W) => X, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>, p4: P.Parser<W>): P.Parser<X>;
+function nodeMap(mapper: any, ...parsers: Array<any>) {
   return P.seq(...parsers)
     .mark()
     .map(({start, value, end}) => {
@@ -112,12 +114,16 @@ function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
 }
 
 function interpolation(start: string, end: string = start): P.Parser<Interpolation> {
-  return P.string(start).then(withAny(P.string(end))).map(Interpolation);
+  return nodeMap(
+    Interpolation,
+    P.string(start).then(withAny(P.string(end)))
+  );
 }
 
 function cmd(name: string, ...inter: Array<string>): P.Parser<OtherCmd> {
-  return openCmd(name).then(
-    bodyFor(name, ...inter).map(body => MakeCmd(name, body))
+  return nodeMap(
+    (mark, body) => MakeCmd(mark, name, body),
+    openCmd(name).then(bodyFor(name, ...inter))
   );
 }
 
@@ -192,6 +198,7 @@ export type Body = Array<Call | Interpolation | OtherCmd>;
 
 export interface Node {
   body?: Body,
+  mark: Mark,
   type: string
 }
 
@@ -201,9 +208,10 @@ export interface Program extends Node {
   type: 'Program',
 }
 
-function Program(namespace: string, body: Array<Template>): Program {
+function Program(mark: Mark, namespace: string, body: Array<Template>): Program {
   return {
     body,
+    mark,
     namespace,
     type: 'Program'
   };
@@ -215,8 +223,9 @@ export interface Attribute extends Node {
   type: 'Attribute'
 }
 
-function Attribute(name: string, value: string): Attribute {
+function Attribute(mark: Mark, name: string, value: string): Attribute {
   return {
+    mark,
     name,
     value,
     type: 'Attribute'
@@ -233,6 +242,7 @@ export interface Template extends Node {
 }
 
 function Template(
+  mark: Mark,
   rawName: string,
   attributes: Array<Attribute>,
   params: Array<ParamDeclaration> = [],
@@ -243,6 +253,7 @@ function Template(
   return {
     attributes,
     body,
+    mark,
     name,
     namespace,
     params,
@@ -260,6 +271,7 @@ export interface DelTemplate extends Node {
 }
 
 function DelTemplate(
+  mark: Mark,
   rawName: string,
   variant: Interpolation | null,
   params: Array<ParamDeclaration> = [],
@@ -269,6 +281,7 @@ function DelTemplate(
 
   return {
     body,
+    mark,
     name,
     namespace,
     params,
@@ -282,22 +295,25 @@ export interface Interpolation extends Node {
   type: 'Interpolation'
 }
 
-function Interpolation(content: string): Interpolation {
+function Interpolation(mark: Mark, content: string): Interpolation {
   return {
     content,
+    mark,
     type: 'Interpolation'
   };
 }
 
 export interface Param extends Node {
   body: Body,
+  mark: Mark,
   name: string,
   type: 'Param'
 }
 
-function Param(name: string, body: Body = []): Param {
+function Param(mark: Mark, name: string, body: Body = []): Param {
   return {
     body,
+    mark,
     name,
     type: 'Param'
   };
@@ -311,11 +327,13 @@ export interface ParamDeclaration extends Node {
 }
 
 function ParamDeclaration(
+  mark: Mark,
   required: boolean,
   name: string,
   paramType: string)
   : ParamDeclaration {
   return {
+    mark,
     name,
     paramType,
     required,
@@ -324,18 +342,18 @@ function ParamDeclaration(
 }
 
 export interface Call extends Node {
-  loc: Loc;
+  mark: Mark;
   body: Array<Param>,
   name: string,
   namespace: string | null,
   type: 'Call'
 }
 
-function Call(loc: Loc, rawName: string, body: Array<Param> = []): Call {
+function Call(mark: Mark, rawName: string, body: Array<Param> = []): Call {
   const {name, namespace} = parseTemplateName(rawName);
 
   return {
-    loc,
+    mark,
     body,
     name,
     namespace,
@@ -347,9 +365,10 @@ export interface OtherCmd extends Node {
   body: Body
 }
 
-function MakeCmd(name: string, body: Body = []): OtherCmd {
+function MakeCmd(mark: Mark, name: string, body: Body = []): OtherCmd {
   return {
     body,
+    mark,
     type: name.charAt(0).toUpperCase() + name.slice(1)
   };
 }
