@@ -6,17 +6,14 @@ import validateFile from './validate-file';
 const pkg = require('../package.json');
 
 async function main(): Promise<void> {
-  program
+  const cli = program
     .version(pkg.version)
     .usage('mcritic [options] <file ...>')
     .option('-v, --verbose', 'output for all files')
     .parse(process.argv);
 
   if (!program.args.length) {
-    console.log(chalk.red('No arguments were passed.'));
-    printIndented('Run \'mcritic -h\' for help.');
-
-    process.exit(0);
+    cli.help();
   }
 
   const validations = await Promise.all(program.args.map(validate));
