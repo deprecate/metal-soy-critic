@@ -54,6 +54,32 @@ Object {
       ],
       "type": "Template",
     },
+    Object {
+      "attributes": Array [
+        Object {
+          "name": "kind",
+          "type": "Attribute",
+          "value": "attributes",
+        },
+      ],
+      "body": Array [
+        Object {
+          "content": "$test ?: ''",
+          "type": "Interpolation",
+        },
+      ],
+      "name": "helperOther",
+      "namespace": null,
+      "params": Array [
+        Object {
+          "name": "test",
+          "paramType": "asdasd",
+          "required": false,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "type": "Template",
+    },
   ],
   "namespace": "Test",
   "type": "Program",
