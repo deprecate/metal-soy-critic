@@ -8,13 +8,49 @@ Object {
       "body": Array [
         Object {
           "content": "call .helper data=\\"all\\" /",
+          "mark": Object {
+            "end": Object {
+              "column": 39,
+              "line": 10,
+              "offset": 125,
+            },
+            "start": Object {
+              "column": 12,
+              "line": 10,
+              "offset": 98,
+            },
+          },
           "type": "Interpolation",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 12,
+          "offset": 149,
+        },
+        "start": Object {
+          "column": 17,
+          "line": 1,
+          "offset": 16,
+        },
+      },
       "name": "render",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 7,
+              "offset": 77,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 7,
+              "offset": 55,
+            },
+          },
           "name": "test",
           "paramType": "string",
           "required": false,
@@ -26,11 +62,35 @@ Object {
     Object {
       "attributes": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 36,
+              "line": 14,
+              "offset": 186,
+            },
+            "start": Object {
+              "column": 19,
+              "line": 14,
+              "offset": 169,
+            },
+          },
           "name": "kind",
           "type": "Attribute",
           "value": "attributes",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 51,
+              "line": 14,
+              "offset": 201,
+            },
+            "start": Object {
+              "column": 37,
+              "line": 14,
+              "offset": 187,
+            },
+          },
           "name": "private",
           "type": "Attribute",
           "value": "true",
@@ -39,13 +99,49 @@ Object {
       "body": Array [
         Object {
           "content": "$test ?: ''",
+          "mark": Object {
+            "end": Object {
+              "column": 23,
+              "line": 17,
+              "offset": 251,
+            },
+            "start": Object {
+              "column": 10,
+              "line": 17,
+              "offset": 238,
+            },
+          },
           "type": "Interpolation",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 18,
+          "offset": 263,
+        },
+        "start": Object {
+          "column": 12,
+          "line": 12,
+          "offset": 149,
+        },
+      },
       "name": "helper",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 15,
+              "offset": 227,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 15,
+              "offset": 205,
+            },
+          },
           "name": "test",
           "paramType": "asdasd",
           "required": false,
@@ -57,6 +153,18 @@ Object {
     Object {
       "attributes": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 41,
+              "line": 20,
+              "offset": 305,
+            },
+            "start": Object {
+              "column": 24,
+              "line": 20,
+              "offset": 288,
+            },
+          },
           "name": "kind",
           "type": "Attribute",
           "value": "attributes",
@@ -65,13 +173,49 @@ Object {
       "body": Array [
         Object {
           "content": "$test ?: ''",
+          "mark": Object {
+            "end": Object {
+              "column": 23,
+              "line": 23,
+              "offset": 355,
+            },
+            "start": Object {
+              "column": 10,
+              "line": 23,
+              "offset": 342,
+            },
+          },
           "type": "Interpolation",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 24,
+          "offset": 367,
+        },
+        "start": Object {
+          "column": 12,
+          "line": 18,
+          "offset": 263,
+        },
+      },
       "name": "helperOther",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 21,
+              "offset": 331,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 21,
+              "offset": 309,
+            },
+          },
           "name": "test",
           "paramType": "asdasd",
           "required": false,
@@ -81,6 +225,18 @@ Object {
       "type": "Template",
     },
   ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 25,
+      "offset": 368,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
   "namespace": "Test",
   "type": "Program",
 }
@@ -93,23 +249,83 @@ Object {
       "body": Array [
         Object {
           "content": "$title",
+          "mark": Object {
+            "end": Object {
+              "column": 17,
+              "line": 12,
+              "offset": 166,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 12,
+              "offset": 158,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "content": "$name",
+          "mark": Object {
+            "end": Object {
+              "column": 16,
+              "line": 13,
+              "offset": 187,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 13,
+              "offset": 180,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "body": Array [
             Object {
               "content": "$optionalInfo",
+              "mark": Object {
+                "end": Object {
+                  "column": 25,
+                  "line": 16,
+                  "offset": 251,
+                },
+                "start": Object {
+                  "column": 10,
+                  "line": 16,
+                  "offset": 236,
+                },
+              },
               "type": "Interpolation",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 10,
+              "line": 17,
+              "offset": 265,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 15,
+              "offset": 198,
+            },
+          },
           "type": "If",
         },
         Object {
           "body": Array [],
+          "mark": Object {
+            "end": Object {
+              "column": 5,
+              "line": 21,
+              "offset": 293,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 19,
+              "offset": 271,
+            },
+          },
           "name": "helper",
           "namespace": null,
           "type": "Call",
@@ -118,31 +334,103 @@ Object {
           "body": Array [
             Object {
               "body": Array [],
+              "mark": Object {
+                "end": Object {
+                  "column": 27,
+                  "line": 22,
+                  "offset": 348,
+                },
+                "start": Object {
+                  "column": 7,
+                  "line": 22,
+                  "offset": 328,
+                },
+              },
               "name": "foo",
               "type": "Param",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 3,
+              "line": 24,
+              "offset": 363,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 21,
+              "offset": 293,
+            },
+          },
           "name": "render",
           "namespace": "OtherComponent",
           "type": "Call",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 15,
+          "line": 25,
+          "offset": 384,
+        },
+        "start": Object {
+          "column": 17,
+          "line": 1,
+          "offset": 16,
+        },
+      },
       "name": "First",
       "namespace": "Test",
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 24,
+              "line": 7,
+              "offset": 82,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 7,
+              "offset": 61,
+            },
+          },
           "name": "name",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 8,
+              "offset": 107,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 8,
+              "offset": 85,
+            },
+          },
           "name": "title",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 33,
+              "line": 9,
+              "offset": 140,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 9,
+              "offset": 110,
+            },
+          },
           "name": "optionalInfo",
           "paramType": "string",
           "required": false,
@@ -156,23 +444,83 @@ Object {
       "body": Array [
         Object {
           "content": "$title",
+          "mark": Object {
+            "end": Object {
+              "column": 17,
+              "line": 33,
+              "offset": 547,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 33,
+              "offset": 539,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "content": "$name",
+          "mark": Object {
+            "end": Object {
+              "column": 16,
+              "line": 34,
+              "offset": 568,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 34,
+              "offset": 561,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "body": Array [
             Object {
               "content": "$optionalInfo",
+              "mark": Object {
+                "end": Object {
+                  "column": 25,
+                  "line": 37,
+                  "offset": 632,
+                },
+                "start": Object {
+                  "column": 10,
+                  "line": 37,
+                  "offset": 617,
+                },
+              },
               "type": "Interpolation",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 10,
+              "line": 38,
+              "offset": 646,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 36,
+              "offset": 579,
+            },
+          },
           "type": "If",
         },
         Object {
           "body": Array [],
+          "mark": Object {
+            "end": Object {
+              "column": 5,
+              "line": 42,
+              "offset": 674,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 40,
+              "offset": 652,
+            },
+          },
           "name": "helper",
           "namespace": null,
           "type": "Call",
@@ -181,31 +529,103 @@ Object {
           "body": Array [
             Object {
               "body": Array [],
+              "mark": Object {
+                "end": Object {
+                  "column": 27,
+                  "line": 43,
+                  "offset": 729,
+                },
+                "start": Object {
+                  "column": 7,
+                  "line": 43,
+                  "offset": 709,
+                },
+              },
               "name": "foo",
               "type": "Param",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 3,
+              "line": 45,
+              "offset": 744,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 42,
+              "offset": 674,
+            },
+          },
           "name": "render",
           "namespace": "OtherComponent",
           "type": "Call",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 15,
+          "line": 46,
+          "offset": 765,
+        },
+        "start": Object {
+          "column": 15,
+          "line": 25,
+          "offset": 384,
+        },
+      },
       "name": "Second",
       "namespace": "Othernamespace",
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 24,
+              "line": 28,
+              "offset": 463,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 28,
+              "offset": 442,
+            },
+          },
           "name": "name",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 29,
+              "offset": 488,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 29,
+              "offset": 466,
+            },
+          },
           "name": "title",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 33,
+              "line": 30,
+              "offset": 521,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 30,
+              "offset": 491,
+            },
+          },
           "name": "optionalInfo",
           "paramType": "string",
           "required": false,
@@ -215,10 +635,34 @@ Object {
       "type": "DelTemplate",
       "variant": Object {
         "content": "'neato'",
+        "mark": Object {
+          "end": Object {
+            "column": 53,
+            "line": 27,
+            "offset": 438,
+          },
+          "start": Object {
+            "column": 44,
+            "line": 27,
+            "offset": 429,
+          },
+        },
         "type": "Interpolation",
       },
     },
   ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 47,
+      "offset": 766,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
   "namespace": "Test",
   "type": "Program",
 }
@@ -232,23 +676,83 @@ Object {
       "body": Array [
         Object {
           "content": "$title",
+          "mark": Object {
+            "end": Object {
+              "column": 17,
+              "line": 12,
+              "offset": 160,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 12,
+              "offset": 152,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "content": "$name",
+          "mark": Object {
+            "end": Object {
+              "column": 16,
+              "line": 13,
+              "offset": 181,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 13,
+              "offset": 174,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "body": Array [
             Object {
               "content": "$optionalInfo",
+              "mark": Object {
+                "end": Object {
+                  "column": 25,
+                  "line": 16,
+                  "offset": 245,
+                },
+                "start": Object {
+                  "column": 10,
+                  "line": 16,
+                  "offset": 230,
+                },
+              },
               "type": "Interpolation",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 10,
+              "line": 17,
+              "offset": 259,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 15,
+              "offset": 192,
+            },
+          },
           "type": "If",
         },
         Object {
           "body": Array [],
+          "mark": Object {
+            "end": Object {
+              "column": 5,
+              "line": 21,
+              "offset": 287,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 19,
+              "offset": 265,
+            },
+          },
           "name": "helper",
           "namespace": null,
           "type": "Call",
@@ -257,31 +761,103 @@ Object {
           "body": Array [
             Object {
               "body": Array [],
+              "mark": Object {
+                "end": Object {
+                  "column": 27,
+                  "line": 22,
+                  "offset": 342,
+                },
+                "start": Object {
+                  "column": 7,
+                  "line": 22,
+                  "offset": 322,
+                },
+              },
               "name": "foo",
               "type": "Param",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 3,
+              "line": 24,
+              "offset": 357,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 21,
+              "offset": 287,
+            },
+          },
           "name": "render",
           "namespace": "OtherComponent",
           "type": "Call",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 25,
+          "offset": 375,
+        },
+        "start": Object {
+          "column": 17,
+          "line": 1,
+          "offset": 16,
+        },
+      },
       "name": "render",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 24,
+              "line": 7,
+              "offset": 76,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 7,
+              "offset": 55,
+            },
+          },
           "name": "name",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 8,
+              "offset": 101,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 8,
+              "offset": 79,
+            },
+          },
           "name": "title",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 33,
+              "line": 9,
+              "offset": 134,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 9,
+              "offset": 104,
+            },
+          },
           "name": "optionalInfo",
           "paramType": "string",
           "required": false,
@@ -293,10 +869,34 @@ Object {
     Object {
       "attributes": Array [],
       "body": Array [],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 30,
+          "offset": 452,
+        },
+        "start": Object {
+          "column": 12,
+          "line": 25,
+          "offset": 375,
+        },
+      },
       "name": "helper",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 28,
+              "offset": 420,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 28,
+              "offset": 398,
+            },
+          },
           "name": "test",
           "paramType": "asdasd",
           "required": false,
@@ -306,6 +906,18 @@ Object {
       "type": "Template",
     },
   ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 31,
+      "offset": 453,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
   "namespace": "Test",
   "type": "Program",
 }
@@ -319,38 +931,134 @@ Object {
       "body": Array [
         Object {
           "content": "$title",
+          "mark": Object {
+            "end": Object {
+              "column": 17,
+              "line": 12,
+              "offset": 160,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 12,
+              "offset": 152,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "content": "$name",
+          "mark": Object {
+            "end": Object {
+              "column": 16,
+              "line": 13,
+              "offset": 181,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 13,
+              "offset": 174,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "body": Array [
             Object {
               "content": "$optionalInfo",
+              "mark": Object {
+                "end": Object {
+                  "column": 25,
+                  "line": 16,
+                  "offset": 245,
+                },
+                "start": Object {
+                  "column": 10,
+                  "line": 16,
+                  "offset": 230,
+                },
+              },
               "type": "Interpolation",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 10,
+              "line": 17,
+              "offset": 259,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 15,
+              "offset": 192,
+            },
+          },
           "type": "If",
         },
         Object {
           "body": Array [
             Object {
               "content": "$name",
+              "mark": Object {
+                "end": Object {
+                  "column": 17,
+                  "line": 20,
+                  "offset": 310,
+                },
+                "start": Object {
+                  "column": 10,
+                  "line": 20,
+                  "offset": 303,
+                },
+              },
               "type": "Interpolation",
             },
             Object {
               "content": "$title",
+              "mark": Object {
+                "end": Object {
+                  "column": 18,
+                  "line": 22,
+                  "offset": 345,
+                },
+                "start": Object {
+                  "column": 10,
+                  "line": 22,
+                  "offset": 337,
+                },
+              },
               "type": "Interpolation",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 10,
+              "line": 25,
+              "offset": 389,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 19,
+              "offset": 265,
+            },
+          },
           "type": "If",
         },
         Object {
           "body": Array [
             Object {
               "body": Array [],
+              "mark": Object {
+                "end": Object {
+                  "column": 27,
+                  "line": 28,
+                  "offset": 450,
+                },
+                "start": Object {
+                  "column": 7,
+                  "line": 28,
+                  "offset": 430,
+                },
+              },
               "name": "foo",
               "type": "Param",
             },
@@ -358,48 +1066,156 @@ Object {
               "body": Array [
                 Object {
                   "body": Array [],
+                  "mark": Object {
+                    "end": Object {
+                      "column": 9,
+                      "line": 31,
+                      "offset": 518,
+                    },
+                    "start": Object {
+                      "column": 9,
+                      "line": 30,
+                      "offset": 493,
+                    },
+                  },
                   "name": "helper",
                   "namespace": null,
                   "type": "Call",
                 },
                 Object {
                   "body": Array [],
+                  "mark": Object {
+                    "end": Object {
+                      "column": 7,
+                      "line": 32,
+                      "offset": 541,
+                    },
+                    "start": Object {
+                      "column": 9,
+                      "line": 31,
+                      "offset": 518,
+                    },
+                  },
                   "name": "helper",
                   "namespace": null,
                   "type": "Call",
                 },
               ],
+              "mark": Object {
+                "end": Object {
+                  "column": 15,
+                  "line": 32,
+                  "offset": 549,
+                },
+                "start": Object {
+                  "column": 7,
+                  "line": 29,
+                  "offset": 457,
+                },
+              },
               "name": "content",
               "type": "Param",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 5,
+              "line": 35,
+              "offset": 567,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 27,
+              "offset": 395,
+            },
+          },
           "name": "render",
           "namespace": "OtherComponent",
           "type": "Call",
         },
         Object {
           "body": Array [],
+          "mark": Object {
+            "end": Object {
+              "column": 3,
+              "line": 36,
+              "offset": 586,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 35,
+              "offset": 567,
+            },
+          },
           "name": "helper",
           "namespace": null,
           "type": "Call",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 37,
+          "offset": 604,
+        },
+        "start": Object {
+          "column": 17,
+          "line": 1,
+          "offset": 16,
+        },
+      },
       "name": "render",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 24,
+              "line": 7,
+              "offset": 76,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 7,
+              "offset": 55,
+            },
+          },
           "name": "name",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 8,
+              "offset": 101,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 8,
+              "offset": 79,
+            },
+          },
           "name": "title",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 33,
+              "line": 9,
+              "offset": 134,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 9,
+              "offset": 104,
+            },
+          },
           "name": "optionalInfo",
           "paramType": "string",
           "required": false,
@@ -411,10 +1227,34 @@ Object {
     Object {
       "attributes": Array [],
       "body": Array [],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 42,
+          "offset": 681,
+        },
+        "start": Object {
+          "column": 12,
+          "line": 37,
+          "offset": 604,
+        },
+      },
       "name": "helper",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 40,
+              "offset": 649,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 40,
+              "offset": 627,
+            },
+          },
           "name": "test",
           "paramType": "asdasd",
           "required": false,
@@ -424,6 +1264,18 @@ Object {
       "type": "Template",
     },
   ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 43,
+      "offset": 682,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
   "namespace": "Test",
   "type": "Program",
 }
@@ -439,41 +1291,149 @@ Object {
           "body": Array [
             Object {
               "content": "$title",
+              "mark": Object {
+                "end": Object {
+                  "column": 19,
+                  "line": 13,
+                  "offset": 206,
+                },
+                "start": Object {
+                  "column": 11,
+                  "line": 13,
+                  "offset": 198,
+                },
+              },
               "type": "Interpolation",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 15,
+              "line": 14,
+              "offset": 226,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 12,
+              "offset": 160,
+            },
+          },
           "type": "Foreach",
         },
         Object {
           "content": "$name",
+          "mark": Object {
+            "end": Object {
+              "column": 16,
+              "line": 16,
+              "offset": 243,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 16,
+              "offset": 236,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "body": Array [
             Object {
               "content": "$optionalInfo",
+              "mark": Object {
+                "end": Object {
+                  "column": 25,
+                  "line": 19,
+                  "offset": 307,
+                },
+                "start": Object {
+                  "column": 10,
+                  "line": 19,
+                  "offset": 292,
+                },
+              },
               "type": "Interpolation",
             },
           ],
+          "mark": Object {
+            "end": Object {
+              "column": 10,
+              "line": 20,
+              "offset": 321,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 18,
+              "offset": 254,
+            },
+          },
           "type": "If",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 22,
+          "offset": 342,
+        },
+        "start": Object {
+          "column": 17,
+          "line": 1,
+          "offset": 16,
+        },
+      },
       "name": "render",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 24,
+              "line": 7,
+              "offset": 76,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 7,
+              "offset": 55,
+            },
+          },
           "name": "name",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 32,
+              "line": 8,
+              "offset": 108,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 8,
+              "offset": 79,
+            },
+          },
           "name": "titles",
           "paramType": "list<string>",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 38,
+              "line": 9,
+              "offset": 146,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 9,
+              "offset": 111,
+            },
+          },
           "name": "optionalInfo",
           "paramType": "html|string",
           "required": false,
@@ -483,6 +1443,18 @@ Object {
       "type": "Template",
     },
   ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 23,
+      "offset": 343,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
   "namespace": "Test",
   "type": "Program",
 }
@@ -496,13 +1468,49 @@ Object {
       "body": Array [
         Object {
           "content": "$_name",
+          "mark": Object {
+            "end": Object {
+              "column": 17,
+              "line": 10,
+              "offset": 126,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 10,
+              "offset": 118,
+            },
+          },
           "type": "Interpolation",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 13,
+          "offset": 153,
+        },
+        "start": Object {
+          "column": 28,
+          "line": 1,
+          "offset": 27,
+        },
+      },
       "name": "render",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 26,
+              "line": 7,
+              "offset": 100,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 7,
+              "offset": 77,
+            },
+          },
           "name": "_name",
           "paramType": "string",
           "required": false,
@@ -512,6 +1520,18 @@ Object {
       "type": "Template",
     },
   ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 14,
+      "offset": 154,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
   "namespace": "UnderscoreParam",
   "type": "Program",
 }
@@ -525,29 +1545,101 @@ Object {
       "body": Array [
         Object {
           "content": "$title",
+          "mark": Object {
+            "end": Object {
+              "column": 17,
+              "line": 11,
+              "offset": 127,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 11,
+              "offset": 119,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "content": "$name",
+          "mark": Object {
+            "end": Object {
+              "column": 16,
+              "line": 12,
+              "offset": 148,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 12,
+              "offset": 141,
+            },
+          },
           "type": "Interpolation",
         },
         Object {
           "body": Array [],
+          "mark": Object {
+            "end": Object {
+              "column": 3,
+              "line": 15,
+              "offset": 178,
+            },
+            "start": Object {
+              "column": 5,
+              "line": 14,
+              "offset": 159,
+            },
+          },
           "name": "helper",
           "namespace": null,
           "type": "Call",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 16,
+          "offset": 196,
+        },
+        "start": Object {
+          "column": 17,
+          "line": 1,
+          "offset": 16,
+        },
+      },
       "name": "render",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 24,
+              "line": 7,
+              "offset": 76,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 7,
+              "offset": 55,
+            },
+          },
           "name": "name",
           "paramType": "string",
           "required": true,
           "type": "ParamDeclaration",
         },
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 8,
+              "offset": 101,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 8,
+              "offset": 79,
+            },
+          },
           "name": "title",
           "paramType": "string",
           "required": true,
@@ -559,6 +1651,18 @@ Object {
     Object {
       "attributes": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 33,
+              "line": 18,
+              "offset": 230,
+            },
+            "start": Object {
+              "column": 19,
+              "line": 18,
+              "offset": 216,
+            },
+          },
           "name": "private",
           "type": "Attribute",
           "value": "true",
@@ -567,13 +1671,49 @@ Object {
       "body": Array [
         Object {
           "content": "$test ?: ''",
+          "mark": Object {
+            "end": Object {
+              "column": 29,
+              "line": 20,
+              "offset": 285,
+            },
+            "start": Object {
+              "column": 16,
+              "line": 20,
+              "offset": 272,
+            },
+          },
           "type": "Interpolation",
         },
       ],
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 21,
+          "offset": 303,
+        },
+        "start": Object {
+          "column": 12,
+          "line": 16,
+          "offset": 196,
+        },
+      },
       "name": "helper",
       "namespace": null,
       "params": Array [
         Object {
+          "mark": Object {
+            "end": Object {
+              "column": 25,
+              "line": 19,
+              "offset": 256,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 19,
+              "offset": 234,
+            },
+          },
           "name": "test",
           "paramType": "asdasd",
           "required": false,
@@ -583,6 +1723,18 @@ Object {
       "type": "Template",
     },
   ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 22,
+      "offset": 304,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
   "namespace": "Test",
   "type": "Program",
 }
