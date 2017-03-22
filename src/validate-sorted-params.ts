@@ -1,30 +1,22 @@
+import {fullName} from './soy-helpers';
 import {toResult, Result, joinErrors} from './util';
+import * as chalk from 'chalk';
 import * as S from './soy-parser';
 import * as T from 'babel-types';
 import visit from './soy-traverse';
 
-export interface paramObj extends Object {
-  namespace: string,
-  paramNames: Array<string>
-}
-
 export default function validateSortedParams(ast: S.Program, _: T.Node): Result {
-  const calls: Array<paramObj> = new Array();
+  const calls: Array<[string, Array<string>]> = [];
   visit(ast, {
     Call(node) {
       const paramNames = node.body.map(param => param.name);
 
       const sortedParamNames = paramNames.slice(0, paramNames.length);
       
-      sortedParamNames.sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1);
+      sortedParamNames.sort((a, b) => a.localeCompare(b));
 
       if (sortedParamNames.join(' ') !== paramNames.join(' ')) {
-        calls.push(
-            {
-                namespace: node.namespace || '',
-                paramNames
-            }
-        );
+        calls.push([fullName(node), paramNames]);
       }
     }
   });
@@ -35,7 +27,7 @@ export default function validateSortedParams(ast: S.Program, _: T.Node): Result 
 
   return toResult(
     false,
-    calls.map(
-        call => `Please sort the following params in ${call.namespace}:\n\n${joinErrors(call.paramNames)}`
-    ).join('\n\n'));
+    ...calls.map(
+        ([fullName, paramNames]) => `Please ${chalk.yellow('sort')} the following params in ${chalk.yellow(fullName)}:\n\n${joinErrors(paramNames)}`
+    ));
 }
