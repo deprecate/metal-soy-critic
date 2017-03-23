@@ -65,11 +65,8 @@ Array [
 
 exports[`Validate file should fail; sorted params 1`] = `
 Array [
-  "Please [33msort[39m the following params in [33mOtherComponent.render[39m:
+  "Please [33msort[39m the params in these [33mcalls[39m:
 
-[31mfoo[39m
-[31mgoo[39m
-[31mdoo[39m
-[31mroo[39m",
+[31mOtherComponent.render - Lines 8 to 11[39m",
 ]
 `;

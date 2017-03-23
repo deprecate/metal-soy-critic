@@ -5,18 +5,25 @@ import * as S from './soy-parser';
 import * as T from 'babel-types';
 import visit from './soy-traverse';
 
+function formatMessage(node: S.Call): string {
+  const firstLine = node.body[0].mark.start.line;
+  const lastLine = node.body[node.body.length - 1].mark.end.line;
+
+  return `${fullName(node)} - Lines ${firstLine} to ${lastLine}`;
+}
+
 export default function validateSortedParams(ast: S.Program, _: T.Node): Result {
-  const calls: Array<[string, Array<string>]> = [];
+  const calls: Array<string> = [];
   visit(ast, {
     Call(node) {
       const paramNames = node.body.map(param => param.name);
 
       const sortedParamNames = paramNames.slice(0, paramNames.length);
-      
+
       sortedParamNames.sort((a, b) => a.localeCompare(b));
 
       if (sortedParamNames.join(' ') !== paramNames.join(' ')) {
-        calls.push([fullName(node), paramNames]);
+        calls.push(formatMessage(node));
       }
     }
   });
@@ -27,7 +34,6 @@ export default function validateSortedParams(ast: S.Program, _: T.Node): Result 
 
   return toResult(
     false,
-    ...calls.map(
-        ([fullName, paramNames]) => `Please ${chalk.yellow('sort')} the following params in ${chalk.yellow(fullName)}:\n\n${joinErrors(paramNames)}`
-    ));
+    `Please ${chalk.yellow('sort')} the params in these ${chalk.yellow('calls')}:\n\n` +
+    joinErrors(calls));
 }
