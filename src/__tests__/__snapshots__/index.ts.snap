@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cli should print status when no errors 1`] = `
+"0 out of 1 file(s) have problems:
+
+"
+`;
+
+exports[`cli should print usage without args 1`] = `
+"
+  Usage: index mcritic [options] <file ...>
+
+  Options:
+
+    -h, --help     output usage information
+    -V, --version  output the version number
+    -v, --verbose  output for all files
+
+"
+`;
+
+exports[`cli should validate file 1`] = `
+"1 out of 1 file(s) have problems:
+
+File - test/fixtures/MissingInternal.soy
+
+     Based on their name, these attributes should have the .internal() config added:
+     
+     count_
+
+
+
+"
+`;
