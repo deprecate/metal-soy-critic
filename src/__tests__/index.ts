@@ -16,31 +16,31 @@ describe('cli', () => {
     });
   }
 
-  test('should print usage without args', () => {
-    return runCli().then(([exitCode, output]) => {
-      expect(exitCode).toBe(0);
-      expect(output).toMatchSnapshot();
-    });
+  test('should print usage without args', async () => {
+    const [exitCode, output] = await runCli();
+
+    expect(exitCode).toBe(0);
+    expect(output).toMatchSnapshot();
   });
 
-  test('should validate file', () => {
-    return runCli('test/fixtures/MissingInternal.soy').then(([exitCode, output]) => {
-      expect(exitCode).toBe(1);
-      expect(output).toMatchSnapshot();
-    });
+  test('should validate file', async () => {
+    const [exitCode, output] = await runCli('test/fixtures/MissingInternal.soy');
+
+    expect(exitCode).toBe(1);
+    expect(output).toMatchSnapshot();
   });
 
-  test('should print status when no errors', () => {
-    return runCli('test/fixtures/Test.soy').then(([exitCode, output]) => {
-      expect(exitCode).toBe(0);
-      expect(output).toMatchSnapshot();
-    });
+  test('should print status when no errors', async () => {
+    const [exitCode, output] = await runCli('test/fixtures/Test.soy');
+
+    expect(exitCode).toBe(0);
+    expect(output).toMatchSnapshot();
   });
 
-  test('should print more with verbose flag', () => {
-    return runCli('-v', 'test/fixtures/Test.soy').then(([exitCode, output]) => {
-      expect(exitCode).toBe(0);
-      expect(output).toMatchSnapshot();
-    });
+  test('should print more with verbose flag', async () => {
+    const [exitCode, output] = await runCli('-v', 'test/fixtures/Test.soy');
+
+    expect(exitCode).toBe(0);
+    expect(output).toMatchSnapshot();
   });
 });
