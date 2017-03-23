@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cli should print more with verbose flag 1`] = `
+"0 out of 1 file(s) have problems:
+
+File - test/fixtures/Test.soy
+
+     No problems were found.
+
+
+"
+`;
+
 exports[`cli should print status when no errors 1`] = `
 "0 out of 1 file(s) have problems:
 
@@ -27,7 +38,6 @@ File - test/fixtures/MissingInternal.soy
      Based on their name, these attributes should have the .internal() config added:
      
      count_
-
 
 
 "

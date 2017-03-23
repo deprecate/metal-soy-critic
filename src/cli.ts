@@ -23,21 +23,16 @@ export async function main(argv: Array<string>): Promise<void> {
 
   console.log(chalk[failed.length ? 'red' : 'green'](`${failed.length} out of ${validations.length} file(s) have problems:\n`));
 
-  if (!verbose && !failed.length) {
-    process.exit(0);
-  }
-
   if (verbose && passed.length) {
     passed.forEach(printValidation);
   }
 
   if (failed.length) {
     failed.forEach(printValidation);
+    process.exit(1);
   }
 
-  printHeader();
-
-  process.exit(1);
+  process.exit(0);
 }
 
 function printValidation([filePath, result]: [string, Result]): void {
