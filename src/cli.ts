@@ -19,11 +19,9 @@ export async function main(argv: Array<string>): Promise<void> {
   const failed = validations.filter(([_, result]) => !result.status);
   const passed = validations.filter(([_, result]) => result.status);
 
-  const {verbose} = program;
-
   console.log(chalk[failed.length ? 'red' : 'green'](`${failed.length} out of ${validations.length} file(s) have problems:\n`));
 
-  if (verbose && passed.length) {
+  if (program.verbose && passed.length) {
     passed.forEach(printValidation);
   }
 

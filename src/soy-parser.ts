@@ -203,7 +203,7 @@ export interface Node {
 }
 
 export interface Program extends Node {
-  body: Array<Template>,
+  body: Array<Template | DelTemplate>,
   namespace: string,
   type: 'Program',
 }

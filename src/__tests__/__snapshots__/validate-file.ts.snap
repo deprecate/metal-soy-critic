@@ -63,6 +63,14 @@ Array [
 ]
 `;
 
+exports[`Validate file should fail; sorted param declarations 1`] = `
+Array [
+  "These templates need their [33mparam[39m declarations [33msorted[39m:
+
+[31m.render[39m",
+]
+`;
+
 exports[`Validate file should fail; sorted params 1`] = `
 Array [
   "Please [33msort[39m the params in these [33mcalls[39m:

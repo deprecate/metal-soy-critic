@@ -18,11 +18,11 @@ export default function validateSortedParams(ast: S.Program, _: T.Node): Result 
     Call(node) {
       const paramNames = node.body.map(param => param.name);
 
-      const sortedParamNames = paramNames.slice(0, paramNames.length);
+      const sortedParamNames = paramNames
+        .concat()
+        .sort((a, b) => a.localeCompare(b));
 
-      sortedParamNames.sort((a, b) => a.localeCompare(b));
-
-      if (sortedParamNames.join(' ') !== paramNames.join(' ')) {
+      if (sortedParamNames.join() !== paramNames.join()) {
         calls.push(formatMessage(node));
       }
     }

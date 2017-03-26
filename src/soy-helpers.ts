@@ -1,9 +1,9 @@
 import * as S from './soy-parser';
 import visit from './soy-traverse';
 
-export function fullName(call: S.Call): string {
-  const namespace = call.namespace || '';
-  return `${namespace}.${call.name}`;
+export function fullName(node: S.Call | S.Template | S.DelTemplate): string {
+  const namespace = node.namespace || '';
+  return `${namespace}.${node.name}`;
 }
 
 export function getSoyParams(ast: S.Program): Array<S.ParamDeclaration> {
