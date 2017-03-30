@@ -1332,13 +1332,13 @@ Object {
               "mark": Object {
                 "end": Object {
                   "column": 19,
-                  "line": 13,
-                  "offset": 206,
+                  "line": 17,
+                  "offset": 268,
                 },
                 "start": Object {
                   "column": 11,
-                  "line": 13,
-                  "offset": 198,
+                  "line": 17,
+                  "offset": 260,
                 },
               },
               "type": "Interpolation",
@@ -1347,13 +1347,13 @@ Object {
           "mark": Object {
             "end": Object {
               "column": 15,
-              "line": 14,
-              "offset": 226,
+              "line": 18,
+              "offset": 288,
             },
             "start": Object {
               "column": 5,
-              "line": 12,
-              "offset": 160,
+              "line": 16,
+              "offset": 222,
             },
           },
           "type": "Foreach",
@@ -1363,13 +1363,13 @@ Object {
           "mark": Object {
             "end": Object {
               "column": 16,
-              "line": 16,
-              "offset": 243,
+              "line": 20,
+              "offset": 305,
             },
             "start": Object {
               "column": 9,
-              "line": 16,
-              "offset": 236,
+              "line": 20,
+              "offset": 298,
             },
           },
           "type": "Interpolation",
@@ -1381,13 +1381,13 @@ Object {
               "mark": Object {
                 "end": Object {
                   "column": 25,
-                  "line": 19,
-                  "offset": 307,
+                  "line": 23,
+                  "offset": 369,
                 },
                 "start": Object {
                   "column": 10,
-                  "line": 19,
-                  "offset": 292,
+                  "line": 23,
+                  "offset": 354,
                 },
               },
               "type": "Interpolation",
@@ -1396,13 +1396,13 @@ Object {
           "mark": Object {
             "end": Object {
               "column": 10,
-              "line": 20,
-              "offset": 321,
+              "line": 24,
+              "offset": 383,
             },
             "start": Object {
               "column": 5,
-              "line": 18,
-              "offset": 254,
+              "line": 22,
+              "offset": 316,
             },
           },
           "type": "If",
@@ -1415,8 +1415,8 @@ Object {
       "mark": Object {
         "end": Object {
           "column": 12,
-          "line": 22,
-          "offset": 342,
+          "line": 26,
+          "offset": 404,
         },
         "start": Object {
           "column": 17,
@@ -1446,14 +1446,35 @@ Object {
         Object {
           "mark": Object {
             "end": Object {
-              "column": 32,
-              "line": 8,
-              "offset": 108,
+              "column": 5,
+              "line": 11,
+              "offset": 138,
             },
             "start": Object {
               "column": 3,
               "line": 8,
               "offset": 79,
+            },
+          },
+          "name": "someRecord",
+          "paramType": "[
+    name: string,
+    count: int
+  ]",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+        Object {
+          "mark": Object {
+            "end": Object {
+              "column": 32,
+              "line": 12,
+              "offset": 170,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 12,
+              "offset": 141,
             },
           },
           "name": "titles",
@@ -1465,13 +1486,13 @@ Object {
           "mark": Object {
             "end": Object {
               "column": 38,
-              "line": 9,
-              "offset": 146,
+              "line": 13,
+              "offset": 208,
             },
             "start": Object {
               "column": 3,
-              "line": 9,
-              "offset": 111,
+              "line": 13,
+              "offset": 173,
             },
           },
           "name": "optionalInfo",
@@ -1486,8 +1507,8 @@ Object {
   "mark": Object {
     "end": Object {
       "column": 1,
-      "line": 23,
-      "offset": 343,
+      "line": 27,
+      "offset": 405,
     },
     "start": Object {
       "column": 1,

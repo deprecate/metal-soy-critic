@@ -11,7 +11,6 @@ const attributeName = joined(P.letter, P.string('-'));
 const html = P.noneOf('{}').many().desc("Html Char");
 const namespace = joined(P.letter, P.digit, P.string('.'));
 const paramName = joined(P.letter, P.digit, P.string('_'));
-const typeName = joined(P.letter, P.digit, P.oneOf('<>?|'));
 
 const templateName = namespace.map(parseTemplateName);
 
@@ -36,8 +35,7 @@ const paramDeclaration = nodeMap(
     .map(value => !value),
   spaced(paramName),
   spaced(P.string(':'))
-    .then(spaced(typeName))
-    .skip(rb)
+    .then(withAny(rb))
 );
 
 const call = nodeMap(
