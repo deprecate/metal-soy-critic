@@ -10,8 +10,8 @@ function getExternalSoyCalls(ast: S.Program): Array<string> {
   const calls: Set<string> = new Set();
   soyVisit(ast, {
     Call(node) {
-      if (node.namespace) {
-        calls.add(node.namespace);
+      if (node.id.namespace) {
+        calls.add(node.id.namespace);
       }
     }
   });

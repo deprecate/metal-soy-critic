@@ -1,4 +1,4 @@
-import {parseTemplateName} from './util';
+import {parseTemplateName, TemplateName} from './util';
 import * as P from 'parsimmon';
 
 /* Parsers */
@@ -11,8 +11,9 @@ const attributeName = joined(P.letter, P.string('-'));
 const html = P.noneOf('{}').many().desc("Html Char");
 const namespace = joined(P.letter, P.digit, P.string('.'));
 const paramName = joined(P.letter, P.digit, P.string('_'));
-const templateName = joined(P.letter, P.digit, P.string('.'));
 const typeName = joined(P.letter, P.digit, P.oneOf('<>?|'));
+
+const templateName = namespace.map(parseTemplateName);
 
 const namespaceCmd = P.string('{namespace')
   .skip(P.whitespace)
@@ -145,7 +146,7 @@ function bodyFor(name: string, ...inter: Array<String>): P.Parser<Body> {
           cmd('literal'),
           interpolation('{', '}')),
         bodyParser,
-        (left, right: Body) => [left, ...right])))
+        (left, right) => [left, ...right])))
   );
 
   return bodyParser;
@@ -235,27 +236,24 @@ function Attribute(mark: Mark, name: string, value: string): Attribute {
 export interface Template extends Node {
   attributes: Array<Attribute>,
   body: Body,
-  name: string,
-  namespace: string | null,
+  id: TemplateName,
   params: Array<ParamDeclaration>,
   type: 'Template'
 }
 
 function Template(
   mark: Mark,
-  rawName: string,
+  id: TemplateName,
   attributes: Array<Attribute>,
   params: Array<ParamDeclaration> = [],
   body: Body = [])
   : Template {
-  const {name, namespace} = parseTemplateName(rawName);
 
   return {
     attributes,
     body,
     mark,
-    name,
-    namespace,
+    id,
     params,
     type: 'Template'
   };
@@ -263,8 +261,7 @@ function Template(
 
 export interface DelTemplate extends Node {
   body: Body,
-  name: string,
-  namespace: string | null,
+  id: TemplateName,
   params: Array<ParamDeclaration>,
   variant: Interpolation | null,
   type: 'DelTemplate'
@@ -272,18 +269,16 @@ export interface DelTemplate extends Node {
 
 function DelTemplate(
   mark: Mark,
-  rawName: string,
+  id: TemplateName,
   variant: Interpolation | null,
   params: Array<ParamDeclaration> = [],
   body: Body = [])
   : DelTemplate {
-  const {name, namespace} = parseTemplateName(rawName);
 
   return {
     body,
     mark,
-    name,
-    namespace,
+    id,
     params,
     variant,
     type: 'DelTemplate'
@@ -344,19 +339,15 @@ function ParamDeclaration(
 export interface Call extends Node {
   mark: Mark;
   body: Array<Param>,
-  name: string,
-  namespace: string | null,
+  id: TemplateName,
   type: 'Call'
 }
 
-function Call(mark: Mark, rawName: string, body: Array<Param> = []): Call {
-  const {name, namespace} = parseTemplateName(rawName);
-
+function Call(mark: Mark, id: TemplateName, body: Array<Param> = []): Call {
   return {
     mark,
     body,
-    name,
-    namespace,
+    id,
     type: 'Call'
   };
 }

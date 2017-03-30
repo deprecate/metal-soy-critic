@@ -13,7 +13,7 @@ export default function validateNoopEvents(ast: S.Program, _: T.Node): Result {
   const calls: Set<string> = new Set();
   visit(ast, {
     Call(node) {
-      if (node.name !== 'render' && hasEventsParam(node.body)) {
+      if (node.id.name !== 'render' && hasEventsParam(node.body)) {
         calls.add(fullName(node));
       }
     }

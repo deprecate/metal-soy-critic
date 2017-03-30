@@ -19,12 +19,12 @@ export function toResult(status: boolean, ...messages: Array<string>): Result {
   };
 }
 
-interface ParsedNamespace {
+export interface TemplateName {
   name: string,
   namespace: string | null
 }
 
-export function parseTemplateName(rawName: string): ParsedNamespace {
+export function parseTemplateName(rawName: string): TemplateName {
   const segments = rawName.split('.');
   const namespace = segments
     .slice(0, segments.length - 1)

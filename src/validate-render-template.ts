@@ -3,7 +3,7 @@ import * as S from './soy-parser';
 import {joinErrors, toResult, Result} from './util';
 
 export default function validateRenderTemplate(soyAst: S.Program): Result {
-  const templateNames = soyAst.body.map(({name}) => name);
+  const templateNames = soyAst.body.map(node => node.id.name);
 
   const renderFound = !!templateNames.find(name => name === 'render');
 
