@@ -23,6 +23,10 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "id": Object {
+        "name": "render",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -35,8 +39,6 @@ Object {
           "offset": 16,
         },
       },
-      "name": "render",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -114,6 +116,10 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "id": Object {
+        "name": "helper",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -126,8 +132,6 @@ Object {
           "offset": 149,
         },
       },
-      "name": "helper",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -188,6 +192,10 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "id": Object {
+        "name": "helperOther",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -200,8 +208,6 @@ Object {
           "offset": 263,
         },
       },
-      "name": "helperOther",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -314,6 +320,10 @@ Object {
         },
         Object {
           "body": Array [],
+          "id": Object {
+            "name": "helper",
+            "namespace": null,
+          },
           "mark": Object {
             "end": Object {
               "column": 5,
@@ -326,8 +336,6 @@ Object {
               "offset": 271,
             },
           },
-          "name": "helper",
-          "namespace": null,
           "type": "Call",
         },
         Object {
@@ -350,6 +358,10 @@ Object {
               "type": "Param",
             },
           ],
+          "id": Object {
+            "name": "render",
+            "namespace": "OtherComponent",
+          },
           "mark": Object {
             "end": Object {
               "column": 3,
@@ -362,11 +374,13 @@ Object {
               "offset": 293,
             },
           },
-          "name": "render",
-          "namespace": "OtherComponent",
           "type": "Call",
         },
       ],
+      "id": Object {
+        "name": "First",
+        "namespace": "Test",
+      },
       "mark": Object {
         "end": Object {
           "column": 15,
@@ -379,8 +393,6 @@ Object {
           "offset": 16,
         },
       },
-      "name": "First",
-      "namespace": "Test",
       "params": Array [
         Object {
           "mark": Object {
@@ -509,6 +521,10 @@ Object {
         },
         Object {
           "body": Array [],
+          "id": Object {
+            "name": "helper",
+            "namespace": null,
+          },
           "mark": Object {
             "end": Object {
               "column": 5,
@@ -521,8 +537,6 @@ Object {
               "offset": 652,
             },
           },
-          "name": "helper",
-          "namespace": null,
           "type": "Call",
         },
         Object {
@@ -545,6 +559,10 @@ Object {
               "type": "Param",
             },
           ],
+          "id": Object {
+            "name": "render",
+            "namespace": "OtherComponent",
+          },
           "mark": Object {
             "end": Object {
               "column": 3,
@@ -557,11 +575,13 @@ Object {
               "offset": 674,
             },
           },
-          "name": "render",
-          "namespace": "OtherComponent",
           "type": "Call",
         },
       ],
+      "id": Object {
+        "name": "Second",
+        "namespace": "Othernamespace",
+      },
       "mark": Object {
         "end": Object {
           "column": 15,
@@ -574,8 +594,6 @@ Object {
           "offset": 384,
         },
       },
-      "name": "Second",
-      "namespace": "Othernamespace",
       "params": Array [
         Object {
           "mark": Object {
@@ -741,6 +759,10 @@ Object {
         },
         Object {
           "body": Array [],
+          "id": Object {
+            "name": "helper",
+            "namespace": null,
+          },
           "mark": Object {
             "end": Object {
               "column": 5,
@@ -753,8 +775,6 @@ Object {
               "offset": 265,
             },
           },
-          "name": "helper",
-          "namespace": null,
           "type": "Call",
         },
         Object {
@@ -777,6 +797,10 @@ Object {
               "type": "Param",
             },
           ],
+          "id": Object {
+            "name": "render",
+            "namespace": "OtherComponent",
+          },
           "mark": Object {
             "end": Object {
               "column": 3,
@@ -789,11 +813,13 @@ Object {
               "offset": 287,
             },
           },
-          "name": "render",
-          "namespace": "OtherComponent",
           "type": "Call",
         },
       ],
+      "id": Object {
+        "name": "render",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -806,8 +832,6 @@ Object {
           "offset": 16,
         },
       },
-      "name": "render",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -869,6 +893,10 @@ Object {
     Object {
       "attributes": Array [],
       "body": Array [],
+      "id": Object {
+        "name": "helper",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -881,8 +909,6 @@ Object {
           "offset": 375,
         },
       },
-      "name": "helper",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -1066,6 +1092,10 @@ Object {
               "body": Array [
                 Object {
                   "body": Array [],
+                  "id": Object {
+                    "name": "helper",
+                    "namespace": null,
+                  },
                   "mark": Object {
                     "end": Object {
                       "column": 9,
@@ -1078,12 +1108,14 @@ Object {
                       "offset": 493,
                     },
                   },
-                  "name": "helper",
-                  "namespace": null,
                   "type": "Call",
                 },
                 Object {
                   "body": Array [],
+                  "id": Object {
+                    "name": "helper",
+                    "namespace": null,
+                  },
                   "mark": Object {
                     "end": Object {
                       "column": 7,
@@ -1096,8 +1128,6 @@ Object {
                       "offset": 518,
                     },
                   },
-                  "name": "helper",
-                  "namespace": null,
                   "type": "Call",
                 },
               ],
@@ -1117,6 +1147,10 @@ Object {
               "type": "Param",
             },
           ],
+          "id": Object {
+            "name": "render",
+            "namespace": "OtherComponent",
+          },
           "mark": Object {
             "end": Object {
               "column": 5,
@@ -1129,12 +1163,14 @@ Object {
               "offset": 395,
             },
           },
-          "name": "render",
-          "namespace": "OtherComponent",
           "type": "Call",
         },
         Object {
           "body": Array [],
+          "id": Object {
+            "name": "helper",
+            "namespace": null,
+          },
           "mark": Object {
             "end": Object {
               "column": 3,
@@ -1147,11 +1183,13 @@ Object {
               "offset": 567,
             },
           },
-          "name": "helper",
-          "namespace": null,
           "type": "Call",
         },
       ],
+      "id": Object {
+        "name": "render",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -1164,8 +1202,6 @@ Object {
           "offset": 16,
         },
       },
-      "name": "render",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -1227,6 +1263,10 @@ Object {
     Object {
       "attributes": Array [],
       "body": Array [],
+      "id": Object {
+        "name": "helper",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -1239,8 +1279,6 @@ Object {
           "offset": 604,
         },
       },
-      "name": "helper",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -1370,6 +1408,10 @@ Object {
           "type": "If",
         },
       ],
+      "id": Object {
+        "name": "render",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -1382,8 +1424,6 @@ Object {
           "offset": 16,
         },
       },
-      "name": "render",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -1483,6 +1523,10 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "id": Object {
+        "name": "render",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -1495,8 +1539,6 @@ Object {
           "offset": 27,
         },
       },
-      "name": "render",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -1577,6 +1619,10 @@ Object {
         },
         Object {
           "body": Array [],
+          "id": Object {
+            "name": "helper",
+            "namespace": null,
+          },
           "mark": Object {
             "end": Object {
               "column": 3,
@@ -1589,11 +1635,13 @@ Object {
               "offset": 159,
             },
           },
-          "name": "helper",
-          "namespace": null,
           "type": "Call",
         },
       ],
+      "id": Object {
+        "name": "render",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -1606,8 +1654,6 @@ Object {
           "offset": 16,
         },
       },
-      "name": "render",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
@@ -1686,6 +1732,10 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "id": Object {
+        "name": "helper",
+        "namespace": null,
+      },
       "mark": Object {
         "end": Object {
           "column": 12,
@@ -1698,8 +1748,6 @@ Object {
           "offset": 196,
         },
       },
-      "name": "helper",
-      "namespace": null,
       "params": Array [
         Object {
           "mark": Object {
