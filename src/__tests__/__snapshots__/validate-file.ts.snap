@@ -63,6 +63,15 @@ Array [
 ]
 `;
 
+exports[`Validate file should fail; sorted map keys 1`] = `
+Array [
+  "These [33mmap keys[39m should be [33msorted[39m:
+
+[31mLines 10 to 12[39m
+[31mLines 18 to 20[39m",
+]
+`;
+
 exports[`Validate file should fail; sorted param declarations 1`] = `
 Array [
   "These templates need their [33mparam[39m declarations [33msorted[39m:

@@ -122,3 +122,31 @@ describe('parseTemplateName', () => {
     });
   })
 });
+
+describe('reverseJoin', () => {
+  test('should combine two elements', () => {
+    const result = Util.reverseJoin(1, 2);
+
+    expect(result).toEqual([1, 2]);
+  });
+
+  test('should combine an element and an array of elements', () => {
+    const result = Util.reverseJoin(1, [2, 3, 4]);
+
+    expect(result).toEqual([1, 2, 3, 4,]);
+  });
+});
+
+describe('isSorted', () => {
+  test('should return false', () => {
+    const word = ['one', 'two', 'three'];
+
+    expect(Util.isSorted(word)).toBe(false);
+  });
+
+  test('should return true', () => {
+    const word = ['one', 'three', 'two'];
+
+    expect(Util.isSorted(word)).toBe(true);
+  });
+});

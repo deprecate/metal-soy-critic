@@ -1,5 +1,5 @@
 import {fullName} from './soy-helpers';
-import {toResult, Result, joinErrors} from './util';
+import {toResult, Result, isSorted, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-parser';
 import * as T from 'babel-types';
@@ -18,11 +18,7 @@ export default function validateSortedParams(ast: S.Program, _: T.Node): Result 
     Call(node) {
       const paramNames = node.body.map(param => param.name);
 
-      const sortedParamNames = paramNames
-        .concat()
-        .sort((a, b) => a.localeCompare(b));
-
-      if (sortedParamNames.join() !== paramNames.join()) {
+      if (!isSorted(paramNames)) {
         calls.push(formatMessage(node));
       }
     }

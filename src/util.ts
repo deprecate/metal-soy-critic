@@ -52,10 +52,17 @@ export function joinErrors(lines: Array<string>): string {
     .join('\n');
 }
 
-
 export function reverseJoin<T>(left: T, right: Array<T> | T): Array<T> {
   if (Array.isArray(right)) {
     return [left, ...right];
   }
   return [left, right]
+}
+
+export function isSorted(items: Array<string>): boolean {
+  const sortedItems = items
+    .concat()
+    .sort((a, b) => a.localeCompare(b));
+
+  return sortedItems.join() === items.join();
 }

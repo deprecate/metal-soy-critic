@@ -11,6 +11,7 @@ export type Visit<T> = VisitFunction<T> | VisitObject<T>;
 
 export interface Visitor {
   Call?: Visit<S.Call>;
+  MapLiteral?: Visit<S.MapLiteral>,
   Template?: Visit<S.Template>;
   [propName: string]: Visit<S.Node> | undefined;
 }

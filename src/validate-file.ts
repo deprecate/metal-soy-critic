@@ -14,6 +14,7 @@ import validateRequiredParams from './validate-required-params';
 import validateNoopEvents from './validate-noop-events';
 import validateSortedParams from './validate-sorted-params';
 import validateSortedParamDeclarations from './validate-sorted-param-declarations';
+import validateSortedMaps from './validate-sorted-maps';
 
 /**
  * Validators should be added here. Each validator is a function that should
@@ -29,7 +30,8 @@ const validators: Array<Validator> = [
   validateRequiredParams,
   validateNoopEvents,
   validateSortedParams,
-  validateSortedParamDeclarations
+  validateSortedParamDeclarations,
+  validateSortedMaps
 ];
 
 function readFile(filePath: string): Promise<Buffer> {

@@ -69,4 +69,9 @@ describe('Validate file', () => {
     expect(result.status).toBe(false);
     expect(result.messages).toMatchSnapshot();
   }));
+
+  test('should fail; sorted map keys', () => validate('UnsortedMap.soy').then(result => {
+    expect(result.status).toBe(false);
+    expect(result.messages).toMatchSnapshot();
+  }));
 });
