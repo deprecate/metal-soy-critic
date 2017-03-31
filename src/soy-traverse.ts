@@ -41,7 +41,11 @@ export default function visit(node: S.Node, visitor: Visitor): void {
   getEnter(handler)(node);
 
   if (node.body) {
-    node.body.forEach(node => visit(node, visitor));
+    if (Array.isArray(node.body)) {
+      node.body.forEach(node => visit(node, visitor));
+    } else {
+      visit(node.body, visitor);
+    }
   }
 
   getExit(handler)(node);

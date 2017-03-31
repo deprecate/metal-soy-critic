@@ -51,3 +51,11 @@ export function joinErrors(lines: Array<string>): string {
     .map(line => chalk.red(line))
     .join('\n');
 }
+
+
+export function reverseJoin<T>(left: T, right: Array<T> | T): Array<T> {
+  if (Array.isArray(right)) {
+    return [left, ...right];
+  }
+  return [left, right]
+}

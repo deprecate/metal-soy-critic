@@ -1,0 +1,17 @@
+{namespace Test}
+
+/**
+ * Test
+ */
+{template .render}
+  <div>
+    {call OtherComponent.render}
+      {param foo: 'bar' /}
+      {param myMap: [
+        'biff': 'boof',
+        'bong': 3
+      ] /}
+      {param biz: 'buzz' /}
+    {/call}
+  </div>
+{/template}

@@ -49,4 +49,10 @@ describe('Soy Parser', () => {
 
     expect(soyParser(input)).toMatchSnapshot();
   });
+
+  test('should parse maps in params', () => {
+    const input = getFixture('MapParam.soy');
+
+    expect(soyParser(input)).toMatchSnapshot();
+  });
 });

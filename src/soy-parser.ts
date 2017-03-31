@@ -1,11 +1,16 @@
-import {parseTemplateName, TemplateName} from './util';
+import {parseTemplateName, reverseJoin, TemplateName} from './util';
 import * as P from 'parsimmon';
 
 /* Parsers */
 
-const cb = P.string('/}');
+const closingBrace = P.string('/}');
+const colon = P.string(':');
+const comma = P.string(',');
 const dquote = P.string('"');
-const rb = P.string('}');
+const lbracket = P.string('[');
+const squote = P.string('\'');
+const rbracket = P.string(']');
+const rightBrace = P.string('}');
 
 const attributeName = joined(P.letter, P.string('-'));
 const html = P.noneOf('{}').many().desc("Html Char");
@@ -17,25 +22,28 @@ const templateName = namespace.map(parseTemplateName);
 const namespaceCmd = P.string('{namespace')
   .skip(P.whitespace)
   .then(namespace)
-  .skip(rb);
+  .skip(rightBrace);
 
 const param = P.lazy(() => nodeMap(
   Param,
   P.string('{param')
     .then(spaced(paramName)),
-  orAny(P.alt(
-    cb.result([]),
-    rb.then(bodyFor('param'))))
+  P.alt(
+    spaced(attribute.many()).skip(rightBrace).then(bodyFor('param')),
+    spaced(colon).then(expression(closingBrace)))
 ));
 
-const paramDeclaration = nodeMap(
-  ParamDeclaration,
-  P.string('{@param')
-    .then(optional(P.string('?')))
-    .map(value => !value),
-  spaced(paramName),
-  spaced(P.string(':'))
-    .then(withAny(rb))
+const mapItem = nodeMap(
+  MapItem,
+  squote.then(withAny(squote)),
+  spaced(colon).then(expression(P.alt(comma, rbracket)))
+);
+
+const mapLiteral = nodeMap(
+  MapLiteral,
+  lbracket.then(P.alt(
+    spaced(mapItem).many(),
+    P.string(']').result([])))
 );
 
 const call = nodeMap(
@@ -44,8 +52,8 @@ const call = nodeMap(
     .skip(P.whitespace)
     .then(templateName),
   P.alt(
-    spaced(cb).result([]),
-    rb.then(spaced(param).many())
+    spaced(closingBrace).result([]),
+    rightBrace.then(spaced(param).many())
       .skip(spaced(closeCmd('call'))))
 );
 
@@ -55,13 +63,23 @@ const attribute = nodeMap(
   withAny(dquote)
 );
 
+const paramDeclaration = nodeMap(
+  ParamDeclaration,
+  P.string('{@param')
+    .then(optional(P.string('?')))
+    .map(value => !value),
+  spaced(paramName),
+  spaced(colon)
+    .then(withAny(rightBrace))
+);
+
 const template = nodeMap(
   Template,
   orAny(P.string('{template'))
     .skip(P.whitespace)
     .then(templateName),
   spaced(attribute).many(),
-  spaced(rb).then(spaced(paramDeclaration).many()),
+  spaced(rightBrace).then(spaced(paramDeclaration).many()),
   bodyFor('template')
 );
 
@@ -72,7 +90,7 @@ const delTemplate = nodeMap(
     .then(templateName),
   optional(P.seq(P.whitespace, P.string('variant='))
     .then(interpolation('"'))),
-  rb.then(spaced(paramDeclaration).many()),
+  rightBrace.then(spaced(paramDeclaration).many()),
   bodyFor('deltemplate')
 );
 
@@ -112,6 +130,20 @@ function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
   return parser.atMost(1).map(values => values[0] || null);
 }
 
+function expression<T>(end: P.Parser<T>): P.Parser<Expression> {
+  const spacedEnd = P.optWhitespace.then(end);
+  return P.lazy(() =>
+    P.alt(mapLiteral.skip(spacedEnd), otherExpression(spacedEnd))
+  );
+}
+
+function otherExpression<T>(end: P.Parser<T>): P.Parser<OtherExpression> {
+  return nodeMap(
+    OtherExpression,
+    withAny(end)
+  );
+}
+
 function interpolation(start: string, end: string = start): P.Parser<Interpolation> {
   return nodeMap(
     Interpolation,
@@ -144,7 +176,7 @@ function bodyFor(name: string, ...inter: Array<String>): P.Parser<Body> {
           cmd('literal'),
           interpolation('{', '}')),
         bodyParser,
-        (left, right) => [left, ...right])))
+        reverseJoin)))
   );
 
   return bodyParser;
@@ -188,12 +220,14 @@ function closeCmd(name: string): P.Parser<string> {
 }
 
 function openCmd(name: string): P.Parser<string> {
-  return P.string(`{${name}`).skip(orAny(rb));
+  return P.string(`{${name}`).skip(orAny(rightBrace));
 }
 
 /* Nodes */
 
-export type Body = Array<Call | Interpolation | OtherCmd>;
+export type Body = Array<Call | Interpolation | OtherCmd> | Expression;
+
+export type Expression = MapLiteral | OtherExpression;
 
 export interface Node {
   body?: Body,
@@ -228,6 +262,47 @@ function Attribute(mark: Mark, name: string, value: string): Attribute {
     name,
     value,
     type: 'Attribute'
+  };
+}
+
+export interface OtherExpression extends Node {
+  type: 'OtherExpression';
+  content: string;
+}
+
+function OtherExpression(mark: Mark, content: string): OtherExpression {
+  return {
+    content,
+    mark,
+    type: 'OtherExpression'
+  };
+}
+
+export interface MapLiteral extends Node {
+  items: Array<MapItem>;
+  type: 'MapLiteral';
+}
+
+function MapLiteral(mark:Mark, items: Array<MapItem>): MapLiteral {
+  return {
+    items,
+    mark,
+    type: 'MapLiteral'
+  };
+}
+
+export interface MapItem extends Node {
+  type: 'MapItem';
+  key: string;
+  value: Expression;
+}
+
+function MapItem(mark: Mark, key: string, value: Expression): MapItem {
+  return {
+    mark,
+    key,
+    value,
+    type: 'MapItem'
   };
 }
 
@@ -300,10 +375,10 @@ export interface Param extends Node {
   body: Body,
   mark: Mark,
   name: string,
-  type: 'Param'
+  type: 'Param',
 }
 
-function Param(mark: Mark, name: string, body: Body = []): Param {
+function Param(mark: Mark, name: string, body: Body): Param {
   return {
     body,
     mark,
