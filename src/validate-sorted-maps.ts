@@ -15,7 +15,7 @@ export default function validateSortedParams(ast: S.Program, _: T.Node): Result 
   const messages: Array<string> = [];
   visit(ast, {
     MapLiteral(node) {
-      const keys = node.items.map(item => item.key);
+      const keys = node.items.map(item => item.key.value);
 
       if (!isSorted(keys)) {
         messages.push(formatMessage(node));

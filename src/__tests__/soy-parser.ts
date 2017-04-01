@@ -55,4 +55,10 @@ describe('Soy Parser', () => {
 
     expect(soyParser(input)).toMatchSnapshot();
   });
+
+  test('should parse let statements in params', () => {
+    const input = getFixture('LetStatements.soy');
+
+    expect(soyParser(input)).toMatchSnapshot();
+  });
 });

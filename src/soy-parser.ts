@@ -8,34 +8,65 @@ const colon = P.string(':');
 const comma = P.string(',');
 const dquote = P.string('"');
 const lbracket = P.string('[');
-const squote = P.string('\'');
+const rbrace = P.string('}');
 const rbracket = P.string(']');
-const rightBrace = P.string('}');
+const squote = P.string('\'');
 
 const attributeName = joined(P.letter, P.string('-'));
 const html = P.noneOf('{}').many().desc("Html Char");
+const identifierName = joined(P.letter, P.digit, P.string('_'));
 const namespace = joined(P.letter, P.digit, P.string('.'));
-const paramName = joined(P.letter, P.digit, P.string('_'));
 
 const templateName = namespace.map(parseTemplateName);
 
 const namespaceCmd = P.string('{namespace')
   .skip(P.whitespace)
   .then(namespace)
-  .skip(rightBrace);
+  .skip(rbrace);
+
+const stringLiteral = nodeMap(
+  StringLiteral,
+  squote.then(withAny(squote))
+);
+
+const booleanLiteral = nodeMap(
+  BooleanLiteral,
+  P.alt(
+    P.string('true').result(true),
+    P.string('false').result(false))
+);
+
+const numberLiteral = nodeMap(
+  NumberLiteral,
+  P.seq(
+    P.oneOf('+-').fallback(''),
+    joined(P.digit, P.string('.'))
+  ).map(([sign, number]) => parseFloat(sign + number))
+);
 
 const param = P.lazy(() => nodeMap(
   Param,
   P.string('{param')
-    .then(spaced(paramName)),
+    .then(spaced(identifierName)),
   P.alt(
-    spaced(attribute.many()).skip(rightBrace).then(bodyFor('param')),
+    spaced(attribute.many()).skip(rbrace).then(bodyFor('param')),
+    spaced(colon).then(expression(closingBrace)))
+));
+
+const letStatement = P.lazy(() => nodeMap(
+  LetStatement,
+  P.string('{let')
+    .skip(P.whitespace)
+    .skip(P.string('$'))
+    .then(identifierName),
+  P.alt(
+    spaced(attribute.many()).skip(rbrace).then(bodyFor('let')),
     spaced(colon).then(expression(closingBrace)))
 ));
 
 const mapItem = nodeMap(
   MapItem,
-  squote.then(withAny(squote)),
+  stringLiteral,
   spaced(colon).then(expression(P.alt(comma, rbracket)))
 );
 
@@ -53,7 +84,7 @@ const call = nodeMap(
     .then(templateName),
   P.alt(
     spaced(closingBrace).result([]),
-    rightBrace.then(spaced(param).many())
+    rbrace.then(spaced(param).many())
       .skip(spaced(closeCmd('call'))))
 );
 
@@ -68,9 +99,9 @@ const paramDeclaration = nodeMap(
   P.string('{@param')
     .then(optional(P.string('?')))
     .map(value => !value),
-  spaced(paramName),
+  spaced(identifierName),
   spaced(colon)
-    .then(withAny(rightBrace))
+    .then(withAny(rbrace))
 );
 
 const template = nodeMap(
@@ -79,7 +110,7 @@ const template = nodeMap(
     .skip(P.whitespace)
     .then(templateName),
   spaced(attribute).many(),
-  spaced(rightBrace).then(spaced(paramDeclaration).many()),
+  spaced(rbrace).then(spaced(paramDeclaration).many()),
   bodyFor('template')
 );
 
@@ -90,7 +121,7 @@ const delTemplate = nodeMap(
     .then(templateName),
   optional(P.seq(P.whitespace, P.string('variant='))
     .then(interpolation('"'))),
-  rightBrace.then(spaced(paramDeclaration).many()),
+  rbrace.then(spaced(paramDeclaration).many()),
   bodyFor('deltemplate')
 );
 
@@ -132,8 +163,13 @@ function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
 
 function expression<T>(end: P.Parser<T>): P.Parser<Expression> {
   const spacedEnd = P.optWhitespace.then(end);
-  return P.lazy(() =>
-    P.alt(mapLiteral.skip(spacedEnd), otherExpression(spacedEnd))
+  return P.lazy(() => P.alt(
+    P.alt(
+      stringLiteral,
+      booleanLiteral,
+      mapLiteral,
+      numberLiteral).skip(spacedEnd),
+    otherExpression(spacedEnd))
   );
 }
 
@@ -151,7 +187,7 @@ function interpolation(start: string, end: string = start): P.Parser<Interpolati
   );
 }
 
-function cmd(name: string, ...inter: Array<string>): P.Parser<OtherCmd> {
+function otherCmd(name: string, ...inter: Array<string>): P.Parser<OtherCmd> {
   return nodeMap(
     (mark, body) => MakeCmd(mark, name, body),
     openCmd(name).then(bodyFor(name, ...inter))
@@ -168,12 +204,12 @@ function bodyFor(name: string, ...inter: Array<String>): P.Parser<Body> {
       P.seqMap(
         P.alt(
           call,
-          cmd('if', 'elseif', 'else'),
-          cmd('foreach', 'ifempty'),
-          cmd('msg', 'fallbackmsg'),
-          cmd('switch'),
-          cmd('let'),
-          cmd('literal'),
+          letStatement,
+          otherCmd('if', 'elseif', 'else'),
+          otherCmd('foreach', 'ifempty'),
+          otherCmd('msg', 'fallbackmsg'),
+          otherCmd('switch'),
+          otherCmd('literal'),
           interpolation('{', '}')),
         bodyParser,
         reverseJoin)))
@@ -220,14 +256,27 @@ function closeCmd(name: string): P.Parser<string> {
 }
 
 function openCmd(name: string): P.Parser<string> {
-  return P.string(`{${name}`).skip(orAny(rightBrace));
+  return P.string(`{${name}`).skip(orAny(rbrace));
 }
 
 /* Nodes */
 
-export type Body = Array<Call | Interpolation | OtherCmd> | Expression;
+export type Cmd
+  = Call
+  | Interpolation
+  | LetStatement
+  | OtherCmd;
 
-export type Expression = MapLiteral | OtherExpression;
+export type Body
+  = Array<Cmd>
+  | Expression;
+
+export type Expression
+  = MapLiteral
+  | StringLiteral
+  | NumberLiteral
+  | BooleanLiteral
+  | OtherExpression;
 
 export interface Node {
   body?: Body,
@@ -293,16 +342,55 @@ function MapLiteral(mark:Mark, items: Array<MapItem>): MapLiteral {
 
 export interface MapItem extends Node {
   type: 'MapItem';
-  key: string;
+  key: StringLiteral;
   value: Expression;
 }
 
-function MapItem(mark: Mark, key: string, value: Expression): MapItem {
+function MapItem(mark: Mark, key: StringLiteral, value: Expression): MapItem {
   return {
     mark,
     key,
     value,
     type: 'MapItem'
+  };
+}
+
+export interface BooleanLiteral extends Node {
+  type: 'BooleanLiteral';
+  value: boolean
+}
+
+function BooleanLiteral(mark: Mark, value: boolean): BooleanLiteral {
+  return {
+    mark,
+    type: 'BooleanLiteral',
+    value
+  };
+}
+
+export interface StringLiteral extends Node {
+  type: 'StringLiteral';
+  value: string;
+}
+
+function StringLiteral(mark: Mark, value: string): StringLiteral {
+  return {
+    mark,
+    type: 'StringLiteral',
+    value
+  };
+}
+
+export interface NumberLiteral extends Node {
+  type: 'NumberLiteral';
+  value: number;
+}
+
+function NumberLiteral(mark: Mark, value: number): NumberLiteral {
+  return {
+    mark,
+    type: 'NumberLiteral',
+    value
   };
 }
 
@@ -373,7 +461,6 @@ function Interpolation(mark: Mark, content: string): Interpolation {
 
 export interface Param extends Node {
   body: Body,
-  mark: Mark,
   name: string,
   type: 'Param',
 }
@@ -409,8 +496,22 @@ function ParamDeclaration(
   };
 }
 
+export interface LetStatement extends Node {
+  type: 'LetStatement';
+  body: Body;
+  name: string;
+}
+
+function LetStatement(mark: Mark, name: string, body: Body): LetStatement {
+  return {
+    body,
+    mark,
+    name,
+    type: 'LetStatement'
+  };
+}
+
 export interface Call extends Node {
-  mark: Mark;
   body: Array<Param>,
   id: TemplateName,
   type: 'Call'

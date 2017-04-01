@@ -342,12 +342,11 @@ Object {
           "body": Array [
             Object {
               "body": Object {
-                "content": "'bar'",
                 "mark": Object {
                   "end": Object {
-                    "column": 27,
+                    "column": 24,
                     "line": 22,
-                    "offset": 348,
+                    "offset": 345,
                   },
                   "start": Object {
                     "column": 19,
@@ -355,7 +354,8 @@ Object {
                     "offset": 340,
                   },
                 },
-                "type": "OtherExpression",
+                "type": "StringLiteral",
+                "value": "bar",
               },
               "mark": Object {
                 "end": Object {
@@ -558,12 +558,11 @@ Object {
           "body": Array [
             Object {
               "body": Object {
-                "content": "'bar'",
                 "mark": Object {
                   "end": Object {
-                    "column": 27,
+                    "column": 24,
                     "line": 43,
-                    "offset": 729,
+                    "offset": 726,
                   },
                   "start": Object {
                     "column": 19,
@@ -571,7 +570,8 @@ Object {
                     "offset": 721,
                   },
                 },
-                "type": "OtherExpression",
+                "type": "StringLiteral",
+                "value": "bar",
               },
               "mark": Object {
                 "end": Object {
@@ -811,12 +811,11 @@ Object {
           "body": Array [
             Object {
               "body": Object {
-                "content": "'bar'",
                 "mark": Object {
                   "end": Object {
-                    "column": 27,
+                    "column": 24,
                     "line": 22,
-                    "offset": 342,
+                    "offset": 339,
                   },
                   "start": Object {
                     "column": 19,
@@ -824,7 +823,8 @@ Object {
                     "offset": 334,
                   },
                 },
-                "type": "OtherExpression",
+                "type": "StringLiteral",
+                "value": "bar",
               },
               "mark": Object {
                 "end": Object {
@@ -994,6 +994,243 @@ Object {
 }
 `;
 
+exports[`Soy Parser should parse let statements in params 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "attributes": Array [],
+      "body": Array [
+        Object {
+          "body": Object {
+            "mark": Object {
+              "end": Object {
+                "column": 17,
+                "line": 7,
+                "offset": 69,
+              },
+              "start": Object {
+                "column": 16,
+                "line": 7,
+                "offset": 68,
+              },
+            },
+            "type": "NumberLiteral",
+            "value": 3,
+          },
+          "mark": Object {
+            "end": Object {
+              "column": 20,
+              "line": 7,
+              "offset": 72,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 7,
+              "offset": 55,
+            },
+          },
+          "name": "count",
+          "type": "LetStatement",
+        },
+        Object {
+          "body": Object {
+            "mark": Object {
+              "end": Object {
+                "column": 19,
+                "line": 8,
+                "offset": 91,
+              },
+              "start": Object {
+                "column": 15,
+                "line": 8,
+                "offset": 87,
+              },
+            },
+            "type": "BooleanLiteral",
+            "value": true,
+          },
+          "mark": Object {
+            "end": Object {
+              "column": 22,
+              "line": 8,
+              "offset": 94,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 8,
+              "offset": 75,
+            },
+          },
+          "name": "show",
+          "type": "LetStatement",
+        },
+        Object {
+          "body": Array [],
+          "mark": Object {
+            "end": Object {
+              "column": 9,
+              "line": 12,
+              "offset": 149,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 10,
+              "offset": 98,
+            },
+          },
+          "name": "content",
+          "type": "LetStatement",
+        },
+        Object {
+          "body": Object {
+            "items": Array [
+              Object {
+                "key": Object {
+                  "mark": Object {
+                    "end": Object {
+                      "column": 10,
+                      "line": 15,
+                      "offset": 177,
+                    },
+                    "start": Object {
+                      "column": 5,
+                      "line": 15,
+                      "offset": 172,
+                    },
+                  },
+                  "type": "StringLiteral",
+                  "value": "foo",
+                },
+                "mark": Object {
+                  "end": Object {
+                    "column": 4,
+                    "line": 16,
+                    "offset": 190,
+                  },
+                  "start": Object {
+                    "column": 5,
+                    "line": 15,
+                    "offset": 172,
+                  },
+                },
+                "type": "MapItem",
+                "value": Object {
+                  "mark": Object {
+                    "end": Object {
+                      "column": 19,
+                      "line": 15,
+                      "offset": 186,
+                    },
+                    "start": Object {
+                      "column": 12,
+                      "line": 15,
+                      "offset": 179,
+                    },
+                  },
+                  "type": "StringLiteral",
+                  "value": "neato",
+                },
+              },
+            ],
+            "mark": Object {
+              "end": Object {
+                "column": 5,
+                "line": 16,
+                "offset": 191,
+              },
+              "start": Object {
+                "column": 16,
+                "line": 14,
+                "offset": 166,
+              },
+            },
+            "type": "MapLiteral",
+          },
+          "mark": Object {
+            "end": Object {
+              "column": 7,
+              "line": 16,
+              "offset": 193,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 14,
+              "offset": 153,
+            },
+          },
+          "name": "myMap",
+          "type": "LetStatement",
+        },
+        Object {
+          "body": Object {
+            "mark": Object {
+              "end": Object {
+                "column": 20,
+                "line": 17,
+                "offset": 213,
+              },
+              "start": Object {
+                "column": 15,
+                "line": 17,
+                "offset": 208,
+              },
+            },
+            "type": "StringLiteral",
+            "value": "foo",
+          },
+          "mark": Object {
+            "end": Object {
+              "column": 23,
+              "line": 17,
+              "offset": 216,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 17,
+              "offset": 196,
+            },
+          },
+          "name": "name",
+          "type": "LetStatement",
+        },
+      ],
+      "id": Object {
+        "name": "render",
+        "namespace": null,
+      },
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 22,
+          "offset": 271,
+        },
+        "start": Object {
+          "column": 17,
+          "line": 1,
+          "offset": 16,
+        },
+      },
+      "params": Array [],
+      "type": "Template",
+    },
+  ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 23,
+      "offset": 272,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "namespace": "Test",
+  "type": "Program",
+}
+`;
+
 exports[`Soy Parser should parse maps in params 1`] = `
 Object {
   "body": Array [
@@ -1004,12 +1241,11 @@ Object {
           "body": Array [
             Object {
               "body": Object {
-                "content": "'bar'",
                 "mark": Object {
                   "end": Object {
-                    "column": 27,
+                    "column": 24,
                     "line": 9,
-                    "offset": 120,
+                    "offset": 117,
                   },
                   "start": Object {
                     "column": 19,
@@ -1017,7 +1253,8 @@ Object {
                     "offset": 112,
                   },
                 },
-                "type": "OtherExpression",
+                "type": "StringLiteral",
+                "value": "bar",
               },
               "mark": Object {
                 "end": Object {
@@ -1038,7 +1275,22 @@ Object {
               "body": Object {
                 "items": Array [
                   Object {
-                    "key": "biff",
+                    "key": Object {
+                      "mark": Object {
+                        "end": Object {
+                          "column": 15,
+                          "line": 11,
+                          "offset": 157,
+                        },
+                        "start": Object {
+                          "column": 9,
+                          "line": 11,
+                          "offset": 151,
+                        },
+                      },
+                      "type": "StringLiteral",
+                      "value": "biff",
+                    },
                     "mark": Object {
                       "end": Object {
                         "column": 24,
@@ -1053,12 +1305,11 @@ Object {
                     },
                     "type": "MapItem",
                     "value": Object {
-                      "content": "'boof'",
                       "mark": Object {
                         "end": Object {
-                          "column": 24,
+                          "column": 23,
                           "line": 11,
-                          "offset": 166,
+                          "offset": 165,
                         },
                         "start": Object {
                           "column": 17,
@@ -1066,16 +1317,32 @@ Object {
                           "offset": 159,
                         },
                       },
-                      "type": "OtherExpression",
+                      "type": "StringLiteral",
+                      "value": "boof",
                     },
                   },
                   Object {
-                    "key": "bong",
+                    "key": Object {
+                      "mark": Object {
+                        "end": Object {
+                          "column": 15,
+                          "line": 12,
+                          "offset": 181,
+                        },
+                        "start": Object {
+                          "column": 9,
+                          "line": 12,
+                          "offset": 175,
+                        },
+                      },
+                      "type": "StringLiteral",
+                      "value": "bong",
+                    },
                     "mark": Object {
                       "end": Object {
-                        "column": 8,
-                        "line": 13,
-                        "offset": 192,
+                        "column": 19,
+                        "line": 12,
+                        "offset": 185,
                       },
                       "start": Object {
                         "column": 9,
@@ -1085,12 +1352,11 @@ Object {
                     },
                     "type": "MapItem",
                     "value": Object {
-                      "content": "3",
                       "mark": Object {
                         "end": Object {
-                          "column": 8,
-                          "line": 13,
-                          "offset": 192,
+                          "column": 18,
+                          "line": 12,
+                          "offset": 184,
                         },
                         "start": Object {
                           "column": 17,
@@ -1098,15 +1364,63 @@ Object {
                           "offset": 183,
                         },
                       },
-                      "type": "OtherExpression",
+                      "type": "NumberLiteral",
+                      "value": 3,
+                    },
+                  },
+                  Object {
+                    "key": Object {
+                      "mark": Object {
+                        "end": Object {
+                          "column": 15,
+                          "line": 13,
+                          "offset": 200,
+                        },
+                        "start": Object {
+                          "column": 9,
+                          "line": 13,
+                          "offset": 194,
+                        },
+                      },
+                      "type": "StringLiteral",
+                      "value": "bing",
+                    },
+                    "mark": Object {
+                      "end": Object {
+                        "column": 8,
+                        "line": 14,
+                        "offset": 214,
+                      },
+                      "start": Object {
+                        "column": 9,
+                        "line": 13,
+                        "offset": 194,
+                      },
+                    },
+                    "type": "MapItem",
+                    "value": Object {
+                      "mark": Object {
+                        "end": Object {
+                          "column": 21,
+                          "line": 13,
+                          "offset": 206,
+                        },
+                        "start": Object {
+                          "column": 17,
+                          "line": 13,
+                          "offset": 202,
+                        },
+                      },
+                      "type": "BooleanLiteral",
+                      "value": true,
                     },
                   },
                 ],
                 "mark": Object {
                   "end": Object {
                     "column": 9,
-                    "line": 13,
-                    "offset": 193,
+                    "line": 14,
+                    "offset": 215,
                   },
                   "start": Object {
                     "column": 21,
@@ -1119,8 +1433,8 @@ Object {
               "mark": Object {
                 "end": Object {
                   "column": 11,
-                  "line": 13,
-                  "offset": 195,
+                  "line": 14,
+                  "offset": 217,
                 },
                 "start": Object {
                   "column": 7,
@@ -1133,31 +1447,31 @@ Object {
             },
             Object {
               "body": Object {
-                "content": "'buzz'",
                 "mark": Object {
                   "end": Object {
-                    "column": 28,
-                    "line": 14,
-                    "offset": 223,
+                    "column": 25,
+                    "line": 15,
+                    "offset": 242,
                   },
                   "start": Object {
                     "column": 19,
-                    "line": 14,
-                    "offset": 214,
+                    "line": 15,
+                    "offset": 236,
                   },
                 },
-                "type": "OtherExpression",
+                "type": "StringLiteral",
+                "value": "buzz",
               },
               "mark": Object {
                 "end": Object {
                   "column": 28,
-                  "line": 14,
-                  "offset": 223,
+                  "line": 15,
+                  "offset": 245,
                 },
                 "start": Object {
                   "column": 7,
-                  "line": 14,
-                  "offset": 202,
+                  "line": 15,
+                  "offset": 224,
                 },
               },
               "name": "biz",
@@ -1171,8 +1485,8 @@ Object {
           "mark": Object {
             "end": Object {
               "column": 3,
-              "line": 16,
-              "offset": 238,
+              "line": 17,
+              "offset": 260,
             },
             "start": Object {
               "column": 5,
@@ -1190,8 +1504,8 @@ Object {
       "mark": Object {
         "end": Object {
           "column": 12,
-          "line": 17,
-          "offset": 256,
+          "line": 18,
+          "offset": 278,
         },
         "start": Object {
           "column": 17,
@@ -1206,8 +1520,8 @@ Object {
   "mark": Object {
     "end": Object {
       "column": 1,
-      "line": 18,
-      "offset": 257,
+      "line": 19,
+      "offset": 279,
     },
     "start": Object {
       "column": 1,
@@ -1344,12 +1658,11 @@ Object {
           "body": Array [
             Object {
               "body": Object {
-                "content": "'bar'",
                 "mark": Object {
                   "end": Object {
-                    "column": 27,
+                    "column": 24,
                     "line": 28,
-                    "offset": 450,
+                    "offset": 447,
                   },
                   "start": Object {
                     "column": 19,
@@ -1357,7 +1670,8 @@ Object {
                     "offset": 442,
                   },
                 },
-                "type": "OtherExpression",
+                "type": "StringLiteral",
+                "value": "bar",
               },
               "mark": Object {
                 "end": Object {
