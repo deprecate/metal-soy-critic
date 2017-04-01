@@ -1,6 +1,6 @@
 import {toResult, Result, isSorted, joinErrors} from './util';
 import * as chalk from 'chalk';
-import * as S from './soy-parser';
+import * as S from './soy-types';
 import * as T from 'babel-types';
 import visit from './soy-traverse';
 

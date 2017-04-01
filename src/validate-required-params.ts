@@ -3,7 +3,7 @@ import * as jsHelpers from './js-helpers';
 import * as soyHelpers from './soy-helpers';
 import {difference, joinErrors, toResult, Result} from './util';
 import * as T from 'babel-types';
-import * as S from './soy-parser';
+import * as S from './soy-types';
 
 export default function validateRequiredParams(soyAst: S.Program, jsAst: T.Node): Result {
   const jsParams = jsHelpers.getParams(jsAst);

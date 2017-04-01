@@ -1,7 +1,7 @@
 import {joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
-import * as S from './soy-parser';
+import * as S from './soy-types';
 import * as soyHelpers from './soy-helpers';
 import * as T from 'babel-types';
 

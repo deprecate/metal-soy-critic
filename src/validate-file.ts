@@ -1,7 +1,7 @@
 import {combineResults, toResult, Result} from './util';
 import * as babylon from 'babylon';
 import * as fs from 'fs';
-import * as S from './soy-parser';
+import * as S from './soy-types';
 import * as T from 'babel-types';
 import parseSoy, {SoyParseError} from './soy-parser';
 

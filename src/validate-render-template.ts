@@ -1,5 +1,5 @@
 import * as chalk from 'chalk';
-import * as S from './soy-parser';
+import * as S from './soy-types';
 import {joinErrors, toResult, Result} from './util';
 
 export default function validateRenderTemplate(soyAst: S.Program): Result {

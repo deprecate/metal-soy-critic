@@ -1,4 +1,4 @@
-import * as S from './soy-parser';
+import * as S from './soy-types';
 import visit from './soy-traverse';
 
 export function fullName(node: S.Call | S.Template | S.DelTemplate): string {

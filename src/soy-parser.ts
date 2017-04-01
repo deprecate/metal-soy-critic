@@ -1,5 +1,6 @@
-import {parseTemplateName, reverseJoin, TemplateName} from './util';
+import {parseTemplateName, reverseJoin} from './util';
 import * as P from 'parsimmon';
+import * as S from './soy-types';
 
 /* Parsers */
 
@@ -25,19 +26,19 @@ const namespaceCmd = P.string('{namespace')
   .skip(rbrace);
 
 const stringLiteral = nodeMap(
-  StringLiteral,
+  S.StringLiteral,
   squote.then(withAny(squote))
 );
 
 const booleanLiteral = nodeMap(
-  BooleanLiteral,
+  S.BooleanLiteral,
   P.alt(
     P.string('true').result(true),
     P.string('false').result(false))
 );
 
 const numberLiteral = nodeMap(
-  NumberLiteral,
+  S.NumberLiteral,
   P.seq(
     P.oneOf('+-').fallback(''),
     joined(P.digit, P.string('.'))
@@ -45,7 +46,7 @@ const numberLiteral = nodeMap(
 );
 
 const param = P.lazy(() => nodeMap(
-  Param,
+  S.Param,
   P.string('{param')
     .then(spaced(identifierName)),
   P.alt(
@@ -54,7 +55,7 @@ const param = P.lazy(() => nodeMap(
 ));
 
 const letStatement = P.lazy(() => nodeMap(
-  LetStatement,
+  S.LetStatement,
   P.string('{let')
     .skip(P.whitespace)
     .skip(P.string('$'))
@@ -65,20 +66,20 @@ const letStatement = P.lazy(() => nodeMap(
 ));
 
 const mapItem = nodeMap(
-  MapItem,
+  S.MapItem,
   stringLiteral,
   spaced(colon).then(expression(P.alt(comma, rbracket)))
 );
 
 const mapLiteral = nodeMap(
-  MapLiteral,
+  S.MapLiteral,
   lbracket.then(P.alt(
     spaced(mapItem).many(),
     P.string(']').result([])))
 );
 
 const call = nodeMap(
-  Call,
+  S.Call,
   P.string('{call')
     .skip(P.whitespace)
     .then(templateName),
@@ -89,13 +90,13 @@ const call = nodeMap(
 );
 
 const attribute = nodeMap(
-  Attribute,
+  S.Attribute,
   attributeName.skip(P.string('="')),
   withAny(dquote)
 );
 
 const paramDeclaration = nodeMap(
-  ParamDeclaration,
+  S.ParamDeclaration,
   P.string('{@param')
     .then(optional(P.string('?')))
     .map(value => !value),
@@ -105,7 +106,7 @@ const paramDeclaration = nodeMap(
 );
 
 const template = nodeMap(
-  Template,
+  S.Template,
   orAny(P.string('{template'))
     .skip(P.whitespace)
     .then(templateName),
@@ -115,7 +116,7 @@ const template = nodeMap(
 );
 
 const delTemplate = nodeMap(
-  DelTemplate,
+  S.DelTemplate,
   orAny(P.string('{deltemplate'))
     .skip(P.whitespace)
     .then(templateName),
@@ -126,7 +127,7 @@ const delTemplate = nodeMap(
 );
 
 const program = nodeMap(
-  Program,
+  S.Program,
   namespaceCmd,
   P.alt(template, delTemplate)
     .atLeast(1)
@@ -137,15 +138,10 @@ const parser = program;
 
 /* Higher-order Parsers */
 
-export interface Mark {
-  start: P.Index;
-  end: P.Index;
-}
-
-function nodeMap<T, U>(mapper: (mark: Mark, a1: T) => U, p1: P.Parser<T>): P.Parser<U>;
-function nodeMap<T, U, V>(mapper: (mark: Mark, a1: T, a2: U) => V, p1: P.Parser<T>, p2: P.Parser<U>): P.Parser<V>;
-function nodeMap<T, U, V, W>(mapper: (mark: Mark, a1: T, a2: U, a3: V) => W, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>): P.Parser<W>;
-function nodeMap<T, U, V, W, X>(mapper: (mark: Mark, a1: T, a2: U, a3: V, a4: W) => X, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>, p4: P.Parser<W>): P.Parser<X>;
+function nodeMap<T, U>(mapper: (mark: S.Mark, a1: T) => U, p1: P.Parser<T>): P.Parser<U>;
+function nodeMap<T, U, V>(mapper: (mark: S.Mark, a1: T, a2: U) => V, p1: P.Parser<T>, p2: P.Parser<U>): P.Parser<V>;
+function nodeMap<T, U, V, W>(mapper: (mark: S.Mark, a1: T, a2: U, a3: V) => W, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>): P.Parser<W>;
+function nodeMap<T, U, V, W, X>(mapper: (mark: S.Mark, a1: T, a2: U, a3: V, a4: W) => X, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>, p4: P.Parser<W>): P.Parser<X>;
 function nodeMap(mapper: any, ...parsers: Array<any>) {
   return P.seq(...parsers)
     .mark()
@@ -161,7 +157,7 @@ function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
   return parser.atMost(1).map(values => values[0] || null);
 }
 
-function expression<T>(end: P.Parser<T>): P.Parser<Expression> {
+function expression<T>(end: P.Parser<T>): P.Parser<S.Expression> {
   const spacedEnd = P.optWhitespace.then(end);
   return P.lazy(() => P.alt(
     P.alt(
@@ -173,29 +169,29 @@ function expression<T>(end: P.Parser<T>): P.Parser<Expression> {
   );
 }
 
-function otherExpression<T>(end: P.Parser<T>): P.Parser<OtherExpression> {
+function otherExpression<T>(end: P.Parser<T>): P.Parser<S.OtherExpression> {
   return nodeMap(
-    OtherExpression,
+    S.OtherExpression,
     withAny(end)
   );
 }
 
-function interpolation(start: string, end: string = start): P.Parser<Interpolation> {
+function interpolation(start: string, end: string = start): P.Parser<S.Interpolation> {
   return nodeMap(
-    Interpolation,
+    S.Interpolation,
     P.string(start).then(withAny(P.string(end)))
   );
 }
 
-function otherCmd(name: string, ...inter: Array<string>): P.Parser<OtherCmd> {
+function otherCmd(name: string, ...inter: Array<string>): P.Parser<S.OtherCmd> {
   return nodeMap(
-    (mark, body) => MakeCmd(mark, name, body),
+    (mark, body) => S.OtherCmd(mark, name, body),
     openCmd(name).then(bodyFor(name, ...inter))
   );
 }
 
-function bodyFor(name: string, ...inter: Array<String>): P.Parser<Body> {
-  const bodyParser: P.Parser<Body> = P.lazy(() =>
+function bodyFor(name: string, ...inter: Array<String>): P.Parser<S.Body> {
+  const bodyParser: P.Parser<S.Body> = P.lazy(() =>
     html.then(P.alt(
       closeCmd(name).result([]),
       P.alt(...inter.map(openCmd))
@@ -259,288 +255,11 @@ function openCmd(name: string): P.Parser<string> {
   return P.string(`{${name}`).skip(orAny(rbrace));
 }
 
-/* Nodes */
-
-export type Cmd
-  = Call
-  | Interpolation
-  | LetStatement
-  | OtherCmd;
-
-export type Body
-  = Array<Cmd>
-  | Expression;
-
-export type Expression
-  = MapLiteral
-  | StringLiteral
-  | NumberLiteral
-  | BooleanLiteral
-  | OtherExpression;
-
-export interface Node {
-  body?: Body,
-  mark: Mark,
-  type: string
-}
-
-export interface Program extends Node {
-  body: Array<Template | DelTemplate>,
-  namespace: string,
-  type: 'Program',
-}
-
-function Program(mark: Mark, namespace: string, body: Array<Template>): Program {
-  return {
-    body,
-    mark,
-    namespace,
-    type: 'Program'
-  };
-}
-
-export interface Attribute extends Node {
-  name: string,
-  value: string,
-  type: 'Attribute'
-}
-
-function Attribute(mark: Mark, name: string, value: string): Attribute {
-  return {
-    mark,
-    name,
-    value,
-    type: 'Attribute'
-  };
-}
-
-export interface OtherExpression extends Node {
-  type: 'OtherExpression';
-  content: string;
-}
-
-function OtherExpression(mark: Mark, content: string): OtherExpression {
-  return {
-    content,
-    mark,
-    type: 'OtherExpression'
-  };
-}
-
-export interface MapLiteral extends Node {
-  items: Array<MapItem>;
-  type: 'MapLiteral';
-}
-
-function MapLiteral(mark:Mark, items: Array<MapItem>): MapLiteral {
-  return {
-    items,
-    mark,
-    type: 'MapLiteral'
-  };
-}
-
-export interface MapItem extends Node {
-  type: 'MapItem';
-  key: StringLiteral;
-  value: Expression;
-}
-
-function MapItem(mark: Mark, key: StringLiteral, value: Expression): MapItem {
-  return {
-    mark,
-    key,
-    value,
-    type: 'MapItem'
-  };
-}
-
-export interface BooleanLiteral extends Node {
-  type: 'BooleanLiteral';
-  value: boolean
-}
-
-function BooleanLiteral(mark: Mark, value: boolean): BooleanLiteral {
-  return {
-    mark,
-    type: 'BooleanLiteral',
-    value
-  };
-}
-
-export interface StringLiteral extends Node {
-  type: 'StringLiteral';
-  value: string;
-}
-
-function StringLiteral(mark: Mark, value: string): StringLiteral {
-  return {
-    mark,
-    type: 'StringLiteral',
-    value
-  };
-}
-
-export interface NumberLiteral extends Node {
-  type: 'NumberLiteral';
-  value: number;
-}
-
-function NumberLiteral(mark: Mark, value: number): NumberLiteral {
-  return {
-    mark,
-    type: 'NumberLiteral',
-    value
-  };
-}
-
-export interface Template extends Node {
-  attributes: Array<Attribute>,
-  body: Body,
-  id: TemplateName,
-  params: Array<ParamDeclaration>,
-  type: 'Template'
-}
-
-function Template(
-  mark: Mark,
-  id: TemplateName,
-  attributes: Array<Attribute>,
-  params: Array<ParamDeclaration> = [],
-  body: Body = [])
-  : Template {
-
-  return {
-    attributes,
-    body,
-    mark,
-    id,
-    params,
-    type: 'Template'
-  };
-}
-
-export interface DelTemplate extends Node {
-  body: Body,
-  id: TemplateName,
-  params: Array<ParamDeclaration>,
-  variant: Interpolation | null,
-  type: 'DelTemplate'
-}
-
-function DelTemplate(
-  mark: Mark,
-  id: TemplateName,
-  variant: Interpolation | null,
-  params: Array<ParamDeclaration> = [],
-  body: Body = [])
-  : DelTemplate {
-
-  return {
-    body,
-    mark,
-    id,
-    params,
-    variant,
-    type: 'DelTemplate'
-  };
-}
-
-export interface Interpolation extends Node {
-  content: string,
-  type: 'Interpolation'
-}
-
-function Interpolation(mark: Mark, content: string): Interpolation {
-  return {
-    content,
-    mark,
-    type: 'Interpolation'
-  };
-}
-
-export interface Param extends Node {
-  body: Body,
-  name: string,
-  type: 'Param',
-}
-
-function Param(mark: Mark, name: string, body: Body): Param {
-  return {
-    body,
-    mark,
-    name,
-    type: 'Param'
-  };
-}
-
-export interface ParamDeclaration extends Node {
-  name: string,
-  paramType: string,
-  required: boolean,
-  type: 'ParamDeclaration'
-}
-
-function ParamDeclaration(
-  mark: Mark,
-  required: boolean,
-  name: string,
-  paramType: string)
-  : ParamDeclaration {
-  return {
-    mark,
-    name,
-    paramType,
-    required,
-    type: 'ParamDeclaration'
-  };
-}
-
-export interface LetStatement extends Node {
-  type: 'LetStatement';
-  body: Body;
-  name: string;
-}
-
-function LetStatement(mark: Mark, name: string, body: Body): LetStatement {
-  return {
-    body,
-    mark,
-    name,
-    type: 'LetStatement'
-  };
-}
-
-export interface Call extends Node {
-  body: Array<Param>,
-  id: TemplateName,
-  type: 'Call'
-}
-
-function Call(mark: Mark, id: TemplateName, body: Array<Param> = []): Call {
-  return {
-    mark,
-    body,
-    id,
-    type: 'Call'
-  };
-}
-
-export interface OtherCmd extends Node {
-  body: Body
-}
-
-function MakeCmd(mark: Mark, name: string, body: Body = []): OtherCmd {
-  return {
-    body,
-    mark,
-    type: name.charAt(0).toUpperCase() + name.slice(1)
-  };
-}
+/* API */
 
 export class SoyParseError extends Error {}
 
-export default function parse(input: string): Program {
+export default function parse(input: string): S.Program {
   const result = parser.parse(input);
   if (!result.status) {
     throw new SoyParseError('Failed to parse soy template');

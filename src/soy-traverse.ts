@@ -1,4 +1,4 @@
-import * as S from './soy-parser';
+import * as S from './soy-types';
 
 export type VisitFunction<T> = (node: T) => void;
 
