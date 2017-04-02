@@ -84,7 +84,7 @@ async function validateWithSoy(soyAst: S.Program, filePath: string): Promise<Res
       runValidators(soyAst, jsAst));
   } catch (err) {
     if (err.code === 'ENOENT') {
-      return runSoyValidators(soyAst)      ;
+      return runSoyValidators(soyAst);
     } else if (err instanceof SyntaxError) {
       return toResult(false, 'Failed to parse component (javascript) file');
     }
