@@ -18,16 +18,20 @@ import validateSortedMaps from './validate-sorted-maps';
 
 /**
  * Validators should be added here. Each validator is a function that should
- * have the following signature.
+ * have one of the following signatures.
  */
 type Validator = (soyAst: S.Program, jsAst: T.Node) => Result;
+type SoyValidator = (ast: S.Program) => Result;
 
 const validators: Array<Validator> = [
-  validateRenderTemplate,
   validateCallImports,
   validateParams,
   validateInternal,
   validateRequiredParams,
+];
+
+const soyValidators: Array<SoyValidator> = [
+  validateRenderTemplate,
   validateNoopEvents,
   validateSortedParams,
   validateSortedParamDeclarations,
@@ -59,28 +63,45 @@ async function getJSAst(filePath: string): Promise<T.Node> {
   return babylon.parse(buffer.toString('utf8'), {allowImportExportEverywhere: true});
 }
 
-function runValidations(soyAst: S.Program, jsAst: T.Node): Result {
+function runValidators(soyAst: S.Program, jsAst: T.Node): Result {
   return validators
     .map(validator => validator(soyAst, jsAst))
     .reduce(combineResults);
 }
 
+function runSoyValidators(ast: S.Program): Result {
+  return soyValidators
+    .map(validator => validator(ast))
+    .reduce(combineResults);
+}
+
+async function validateWithSoy(soyAst: S.Program, filePath: string): Promise<Result> {
+  try {
+    const jsAst = await getJSAst(getJSPath(filePath));
+
+    return combineResults(
+      runSoyValidators(soyAst),
+      runValidators(soyAst, jsAst));
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      return runSoyValidators(soyAst)      ;
+    } else if (err instanceof SyntaxError) {
+      return toResult(false, 'Failed to parse component (javascript) file');
+    }
+    throw new Error();
+  }
+}
+
 export default async function validateFile(filePath: string): Promise<Result> {
   try {
     const soyAst = await getSoyAst(filePath);
-    const jsAst = await getJSAst(getJSPath(filePath));
 
-    return runValidations(soyAst, jsAst);
+    return validateWithSoy(soyAst, filePath);
   } catch (err) {
     if (err.code === 'ENOENT') {
-      if (err.path.endsWith('.js')) {
-        return toResult(true);
-      }
       return toResult(false, 'Failed to open soy file, does it exist?');
     } else if (err instanceof SoyParseError) {
       return toResult(false, err.message);
-    } else if (err instanceof SyntaxError) {
-      return toResult(false, 'Failed to parse component (javascript) file');
     }
     return toResult(false, 'Something went wrong validating this soy file');
   }

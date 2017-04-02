@@ -2,7 +2,6 @@ import {fullName} from './soy-helpers';
 import {toResult, Result, isSorted, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-types';
-import * as T from 'babel-types';
 import visit from './soy-traverse';
 
 function formatMessage(node: S.Call): string {
@@ -12,7 +11,7 @@ function formatMessage(node: S.Call): string {
   return `${fullName(node)} - Lines ${firstLine} to ${lastLine}`;
 }
 
-export default function validateSortedParams(ast: S.Program, _: T.Node): Result {
+export default function validateSortedParams(ast: S.Program): Result {
   const calls: Array<string> = [];
   visit(ast, {
     Call(node) {

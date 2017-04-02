@@ -2,7 +2,6 @@ import {fullName} from './soy-helpers';
 import {toResult, Result, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-types';
-import * as T from 'babel-types';
 
 function shouldSort(template: S.Template | S.DelTemplate): boolean {
   const sortedparams = template.params
@@ -20,7 +19,7 @@ function shouldSort(template: S.Template | S.DelTemplate): boolean {
     template.params.map(p => p.name).join();
 }
 
-export default function validateSortedParamDeclarations(program: S.Program, _: T.Node): Result {
+export default function validateSortedParamDeclarations(program: S.Program): Result {
   const notSorted = program.body
     .filter(shouldSort)
     .map(fullName);

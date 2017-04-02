@@ -2,14 +2,13 @@ import {fullName} from './soy-helpers';
 import {toResult, Result, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-types';
-import * as T from 'babel-types';
 import visit from './soy-traverse';
 
 function hasEventsParam(params: Array<S.Param>): boolean {
   return !!params.find(param => param.name === 'events');
 }
 
-export default function validateNoopEvents(ast: S.Program, _: T.Node): Result {
+export default function validateNoopEvents(ast: S.Program): Result {
   const calls: Set<string> = new Set();
   visit(ast, {
     Call(node) {

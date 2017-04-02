@@ -1,7 +1,6 @@
 import {toResult, Result, isSorted, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-types';
-import * as T from 'babel-types';
 import visit from './soy-traverse';
 
 function formatMessage(node: S.MapLiteral): string {
@@ -11,7 +10,7 @@ function formatMessage(node: S.MapLiteral): string {
   return `Lines ${firstLine} to ${lastLine}`;
 }
 
-export default function validateSortedParams(ast: S.Program, _: T.Node): Result {
+export default function validateSortedParams(ast: S.Program): Result {
   const messages: Array<string> = [];
   visit(ast, {
     MapLiteral(node) {
