@@ -1103,9 +1103,9 @@ Object {
                 },
                 "mark": Object {
                   "end": Object {
-                    "column": 4,
-                    "line": 16,
-                    "offset": 190,
+                    "column": 20,
+                    "line": 15,
+                    "offset": 187,
                   },
                   "start": Object {
                     "column": 5,
@@ -1131,12 +1131,59 @@ Object {
                   "value": "neato",
                 },
               },
+              Object {
+                "key": Object {
+                  "mark": Object {
+                    "end": Object {
+                      "column": 13,
+                      "line": 16,
+                      "offset": 200,
+                    },
+                    "start": Object {
+                      "column": 5,
+                      "line": 16,
+                      "offset": 192,
+                    },
+                  },
+                  "type": "StringLiteral",
+                  "value": "asdasd",
+                },
+                "mark": Object {
+                  "end": Object {
+                    "column": 4,
+                    "line": 17,
+                    "offset": 209,
+                  },
+                  "start": Object {
+                    "column": 5,
+                    "line": 16,
+                    "offset": 192,
+                  },
+                },
+                "type": "MapItem",
+                "value": Object {
+                  "content": "asd",
+                  "mark": Object {
+                    "end": Object {
+                      "column": 18,
+                      "line": 16,
+                      "offset": 205,
+                    },
+                    "start": Object {
+                      "column": 15,
+                      "line": 16,
+                      "offset": 202,
+                    },
+                  },
+                  "type": "OtherExpression",
+                },
+              },
             ],
             "mark": Object {
               "end": Object {
                 "column": 5,
-                "line": 16,
-                "offset": 191,
+                "line": 17,
+                "offset": 210,
               },
               "start": Object {
                 "column": 16,
@@ -1149,8 +1196,8 @@ Object {
           "mark": Object {
             "end": Object {
               "column": 7,
-              "line": 16,
-              "offset": 193,
+              "line": 17,
+              "offset": 212,
             },
             "start": Object {
               "column": 3,
@@ -1166,13 +1213,13 @@ Object {
             "mark": Object {
               "end": Object {
                 "column": 20,
-                "line": 17,
-                "offset": 213,
+                "line": 18,
+                "offset": 232,
               },
               "start": Object {
                 "column": 15,
-                "line": 17,
-                "offset": 208,
+                "line": 18,
+                "offset": 227,
               },
             },
             "type": "StringLiteral",
@@ -1181,16 +1228,195 @@ Object {
           "mark": Object {
             "end": Object {
               "column": 23,
-              "line": 17,
-              "offset": 216,
+              "line": 18,
+              "offset": 235,
             },
             "start": Object {
               "column": 3,
-              "line": 17,
-              "offset": 196,
+              "line": 18,
+              "offset": 215,
             },
           },
           "name": "name",
+          "type": "LetStatement",
+        },
+        Object {
+          "body": Object {
+            "condition": Object {
+              "body": Array [
+                Object {
+                  "mark": Object {
+                    "end": Object {
+                      "column": 33,
+                      "line": 20,
+                      "offset": 269,
+                    },
+                    "start": Object {
+                      "column": 28,
+                      "line": 20,
+                      "offset": 264,
+                    },
+                  },
+                  "name": "name",
+                  "type": "Reference",
+                },
+              ],
+              "mark": Object {
+                "end": Object {
+                  "column": 34,
+                  "line": 20,
+                  "offset": 270,
+                },
+                "start": Object {
+                  "column": 18,
+                  "line": 20,
+                  "offset": 254,
+                },
+              },
+              "name": "isNonnull",
+              "type": "FunctionCall",
+            },
+            "left": Object {
+              "mark": Object {
+                "end": Object {
+                  "column": 42,
+                  "line": 20,
+                  "offset": 278,
+                },
+                "start": Object {
+                  "column": 37,
+                  "line": 20,
+                  "offset": 273,
+                },
+              },
+              "name": "name",
+              "type": "Reference",
+            },
+            "mark": Object {
+              "end": Object {
+                "column": 55,
+                "line": 20,
+                "offset": 291,
+              },
+              "start": Object {
+                "column": 18,
+                "line": 20,
+                "offset": 254,
+              },
+            },
+            "right": Object {
+              "mark": Object {
+                "end": Object {
+                  "column": 55,
+                  "line": 20,
+                  "offset": 291,
+                },
+                "start": Object {
+                  "column": 45,
+                  "line": 20,
+                  "offset": 281,
+                },
+              },
+              "type": "StringLiteral",
+              "value": "mthadley",
+            },
+            "type": "Ternary",
+          },
+          "mark": Object {
+            "end": Object {
+              "column": 58,
+              "line": 20,
+              "offset": 294,
+            },
+            "start": Object {
+              "column": 2,
+              "line": 20,
+              "offset": 238,
+            },
+          },
+          "name": "coolName",
+          "type": "LetStatement",
+        },
+        Object {
+          "body": Object {
+            "body": Array [
+              Object {
+                "mark": Object {
+                  "end": Object {
+                    "column": 33,
+                    "line": 21,
+                    "offset": 327,
+                  },
+                  "start": Object {
+                    "column": 28,
+                    "line": 21,
+                    "offset": 322,
+                  },
+                },
+                "name": "name",
+                "type": "Reference",
+              },
+            ],
+            "mark": Object {
+              "end": Object {
+                "column": 34,
+                "line": 21,
+                "offset": 328,
+              },
+              "start": Object {
+                "column": 18,
+                "line": 21,
+                "offset": 312,
+              },
+            },
+            "name": "isNonnull",
+            "type": "FunctionCall",
+          },
+          "mark": Object {
+            "end": Object {
+              "column": 37,
+              "line": 21,
+              "offset": 331,
+            },
+            "start": Object {
+              "column": 2,
+              "line": 21,
+              "offset": 296,
+            },
+          },
+          "name": "coolName",
+          "type": "LetStatement",
+        },
+        Object {
+          "body": Object {
+            "content": "asd",
+            "mark": Object {
+              "end": Object {
+                "column": 24,
+                "line": 22,
+                "offset": 355,
+              },
+              "start": Object {
+                "column": 21,
+                "line": 22,
+                "offset": 352,
+              },
+            },
+            "type": "OtherExpression",
+          },
+          "mark": Object {
+            "end": Object {
+              "column": 27,
+              "line": 22,
+              "offset": 358,
+            },
+            "start": Object {
+              "column": 2,
+              "line": 22,
+              "offset": 333,
+            },
+          },
+          "name": "whatIsThis",
           "type": "LetStatement",
         },
       ],
@@ -1201,8 +1427,8 @@ Object {
       "mark": Object {
         "end": Object {
           "column": 12,
-          "line": 22,
-          "offset": 271,
+          "line": 27,
+          "offset": 413,
         },
         "start": Object {
           "column": 17,
@@ -1217,8 +1443,8 @@ Object {
   "mark": Object {
     "end": Object {
       "column": 1,
-      "line": 23,
-      "offset": 272,
+      "line": 28,
+      "offset": 414,
     },
     "start": Object {
       "column": 1,

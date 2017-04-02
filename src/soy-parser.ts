@@ -12,11 +12,17 @@ const lbracket = P.string('[');
 const rbrace = P.string('}');
 const rbracket = P.string(']');
 const squote = P.string('\'');
+const underscore = P.string('_');
+const lparen = P.string('(');
+const rparen = P.string(')');
+const dollar = P.string('$');
+const qmark = P.string('?');
 
 const attributeName = joined(P.letter, P.string('-'));
 const html = P.noneOf('{}').many().desc("Html Char");
-const identifierName = joined(P.letter, P.digit, P.string('_'));
+const identifierName = joined(P.letter, P.digit, underscore);
 const namespace = joined(P.letter, P.digit, P.string('.'));
+const functionName = joined(P.letter, underscore);
 
 const templateName = namespace.map(parseTemplateName);
 
@@ -54,11 +60,28 @@ const param = P.lazy(() => nodeMap(
     spaced(colon).then(expression(closingBrace)))
 ));
 
+const functionCall = P.lazy(() => nodeMap(
+  S.FunctionCall,
+  functionName,
+  lparen.then(functionArgs)
+));
+
+const functionArgs: P.Parser<Array<S.Expression>> = P.lazy(() => P.alt(
+  P.seqMap(expression(comma), functionArgs, reverseJoin),
+  expression(rparen).map(result => [result]),
+  rparen.result([])
+));
+
+const reference = nodeMap(
+  S.Reference,
+  dollar.then(identifierName)
+);
+
 const letStatement = P.lazy(() => nodeMap(
   S.LetStatement,
   P.string('{let')
     .skip(P.whitespace)
-    .skip(P.string('$'))
+    .skip(dollar)
     .then(identifierName),
   P.alt(
     spaced(attribute.many()).skip(rbrace).then(bodyFor('let')),
@@ -75,7 +98,7 @@ const mapLiteral = nodeMap(
   S.MapLiteral,
   lbracket.then(P.alt(
     spaced(mapItem).many(),
-    P.string(']').result([])))
+    rbracket.result([])))
 );
 
 const call = nodeMap(
@@ -98,7 +121,7 @@ const attribute = nodeMap(
 const paramDeclaration = nodeMap(
   S.ParamDeclaration,
   P.string('{@param')
-    .then(optional(P.string('?')))
+    .then(optional(qmark))
     .map(value => !value),
   spaced(identifierName),
   spaced(colon)
@@ -157,21 +180,58 @@ function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
   return parser.atMost(1).map(values => values[0] || null);
 }
 
-function expression<T>(end: P.Parser<T>): P.Parser<S.Expression> {
+function expression<T>(end: P.Parser<T>, stack: Array<S.Expression> = []): P.Parser<S.Expression> {
   const spacedEnd = P.optWhitespace.then(end);
   return P.lazy(() => P.alt(
-    stringLiteral.skip(spacedEnd),
-    booleanLiteral.skip(spacedEnd),
-    mapLiteral.skip(spacedEnd),
-    numberLiteral.skip(spacedEnd),
-    otherExpression(spacedEnd)
-  ));
+    reference,
+    stringLiteral,
+    booleanLiteral,
+    mapLiteral,
+    numberLiteral,
+    functionCall,
+    otherExpression(spacedEnd),
+  ).chain(result => withOperator([...stack, result], spacedEnd)));
+}
+
+function withOperator<T>(stack: Array<S.Expression>, end: P.Parser<T>): P.Parser<S.Expression> {
+  switch(stack.length) {
+    case 1:
+      return P.alt(
+        ternaryLeft(end, stack),
+        P.succeed(stack[0])
+      ).skip(end);
+    case 2:
+      return ternaryRight(end, stack);
+    case 3:
+      const [cond, left, right] = stack;
+      return P.succeed(S.Ternary(
+        combineMark(cond.mark, right.mark),
+        cond,
+        left,
+        right));
+    default:
+      throw new SoyParseError(`Error parsing an operator of length ${stack.length}.`);
+  }
+}
+
+function ternaryLeft<T>(end: P.Parser<T>, stack: Array<S.Expression>): P.Parser<S.Expression> {
+  return P.whitespace
+    .skip(qmark)
+    .skip(P.whitespace)
+    .then(expression(end, stack));
+}
+
+function ternaryRight<T>(end: P.Parser<T>, stack: Array<S.Expression>): P.Parser<S.Expression> {
+  return P.whitespace
+    .skip(colon)
+    .skip(P.whitespace)
+    .then(expression(end, stack));
 }
 
 function otherExpression<T>(end: P.Parser<T>): P.Parser<S.OtherExpression> {
   return nodeMap(
     S.OtherExpression,
-    withAny(end)
+    withAny(end, false)
   );
 }
 
@@ -221,10 +281,10 @@ function orAny<T>(parser: P.Parser<T>): P.Parser<T> {
   return newParser;
 }
 
-function withAny<T>(parser: P.Parser<T>): P.Parser<string> {
+function withAny<T>(parser: P.Parser<T>, consumeEnd = true): P.Parser<string> {
   const newParser: P.Parser<string> = P.lazy(() =>
     P.alt(
-      parser.result(''),
+      consumeEnd ? parser.result('') : P.lookahead(parser),
       P.seqMap(
         P.any,
         newParser,
@@ -242,7 +302,7 @@ function spaced<T>(parser: P.Parser<T>): P.Parser<T> {
 
 function joined(...parsers: Array<P.Parser<string>>): P.Parser<string> {
   return P.alt(...parsers)
-    .many()
+    .atLeast(1)
     .map(values => values.join(''));
 }
 
@@ -252,6 +312,13 @@ function closeCmd(name: string): P.Parser<string> {
 
 function openCmd(name: string): P.Parser<string> {
   return P.string(`{${name}`).skip(orAny(rbrace));
+}
+
+function combineMark(start: S.Mark, end: S.Mark): S.Mark {
+  return {
+    start: start.start,
+    end: end.end
+  };
 }
 
 /* API */

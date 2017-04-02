@@ -7,16 +7,17 @@ export type Cmd
   | LetStatement
   | OtherCmd;
 
-export type Body
-  = Array<Cmd>
-  | Expression;
+export type Body = Array<Node>;
 
 export type Expression
   = MapLiteral
   | StringLiteral
   | NumberLiteral
   | BooleanLiteral
-  | OtherExpression;
+  | OtherExpression
+  | Reference
+  | Ternary
+  | FunctionCall;
 
 export interface Node {
   body?: Body,
@@ -69,6 +70,60 @@ export function OtherExpression(mark: Mark, content: string): OtherExpression {
     content,
     mark,
     type: 'OtherExpression'
+  };
+}
+
+export interface FunctionCall extends Node {
+  type: 'FunctionCall';
+  name: string;
+  body: Array<Expression>;
+}
+
+export function FunctionCall(
+  mark: Mark,
+  name: string,
+  body: Array<Expression>
+): FunctionCall {
+  return {
+    body,
+    mark,
+    name,
+    type: 'FunctionCall'
+  };
+}
+
+export interface Reference extends Node {
+  type: 'Reference';
+  name: string;
+}
+
+export function Reference(mark: Mark, name: string): Reference {
+  return {
+    mark,
+    name,
+    type: 'Reference'
+  };
+}
+
+export interface Ternary extends Node {
+  type: 'Ternary';
+  condition: Expression;
+  left: Expression;
+  right: Expression;
+}
+
+export function Ternary(
+  mark: Mark,
+  condition: Expression,
+  left: Expression,
+  right: Expression
+): Ternary {
+  return {
+    condition,
+    left,
+    mark,
+    right,
+    type: 'Ternary'
   };
 }
 
