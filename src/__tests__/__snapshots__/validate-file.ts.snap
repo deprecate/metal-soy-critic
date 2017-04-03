@@ -72,6 +72,14 @@ Array [
 ]
 `;
 
+exports[`Validate file should fail; sorted map keys 2`] = `
+Array [
+  "Use the [33mElvis (?:)[39m operator instead of a ternary for [33mdefault[39m values:
+
+[31m$optionalInfo - Line 20[39m",
+]
+`;
+
 exports[`Validate file should fail; sorted param declarations 1`] = `
 Array [
   "These templates need their [33mparam[39m declarations [33msorted[39m:

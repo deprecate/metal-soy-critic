@@ -25,3 +25,11 @@ export function isCall(node: S.Node): node is S.Call {
 export function isInterpolation(node: S.Node): node is S.Interpolation {
   return node.type === 'Interpolation';
 }
+
+export function isReference(node: S.Node): node is S.Reference {
+  return node.type === 'Reference';
+}
+
+export function isFunctionCall(node: S.Node): node is S.FunctionCall {
+  return node.type === 'FunctionCall';
+}

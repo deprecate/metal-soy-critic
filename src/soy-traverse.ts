@@ -13,6 +13,7 @@ export interface Visitor {
   Call?: Visit<S.Call>;
   MapLiteral?: Visit<S.MapLiteral>,
   Template?: Visit<S.Template>;
+  Ternary?: Visit<S.Ternary>;
   [propName: string]: Visit<S.Node> | undefined;
 }
 
