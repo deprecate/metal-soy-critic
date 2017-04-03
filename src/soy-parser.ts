@@ -160,13 +160,12 @@ function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
 function expression<T>(end: P.Parser<T>): P.Parser<S.Expression> {
   const spacedEnd = P.optWhitespace.then(end);
   return P.lazy(() => P.alt(
-    P.alt(
-      stringLiteral,
-      booleanLiteral,
-      mapLiteral,
-      numberLiteral).skip(spacedEnd),
-    otherExpression(spacedEnd))
-  );
+    stringLiteral.skip(spacedEnd),
+    booleanLiteral.skip(spacedEnd),
+    mapLiteral.skip(spacedEnd),
+    numberLiteral.skip(spacedEnd),
+    otherExpression(spacedEnd)
+  ));
 }
 
 function otherExpression<T>(end: P.Parser<T>): P.Parser<S.OtherExpression> {
