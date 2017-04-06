@@ -7,22 +7,22 @@ import * as S from './soy-types';
 const closingBrace = P.string('/}');
 const colon = P.string(':');
 const comma = P.string(',');
+const dollar = P.string('$');
 const dquote = P.string('"');
 const lbracket = P.string('[');
+const lparen = P.string('(');
+const qmark = P.string('?');
 const rbrace = P.string('}');
 const rbracket = P.string(']');
+const rparen = P.string(')');
 const squote = P.string('\'');
 const underscore = P.string('_');
-const lparen = P.string('(');
-const rparen = P.string(')');
-const dollar = P.string('$');
-const qmark = P.string('?');
 
 const attributeName = joined(P.letter, P.string('-'));
+const functionName = joined(P.letter, underscore);
 const html = P.noneOf('{}').many().desc("Html Char");
 const identifierName = joined(P.letter, P.digit, underscore);
 const namespace = joined(P.letter, P.digit, P.string('.'));
-const functionName = joined(P.letter, underscore);
 
 const templateName = namespace.map(parseTemplateName);
 
@@ -67,9 +67,9 @@ const functionCall = P.lazy(() => nodeMap(
 ));
 
 const functionArgs: P.Parser<Array<S.Expression>> = P.lazy(() => P.alt(
-  P.seqMap(expression(comma), functionArgs, reverseJoin),
+  rparen.result([]),
   expression(rparen).map(result => [result]),
-  rparen.result([])
+  P.seqMap(expression(comma), functionArgs, reverseJoin),
 ));
 
 const reference = nodeMap(
@@ -177,20 +177,41 @@ function nodeMap(mapper: any, ...parsers: Array<any>) {
 }
 
 function optional<T>(parser: P.Parser<T>): P.Parser<T | null> {
-  return parser.atMost(1).map(values => values[0] || null);
+  return parser
+    .atMost(1)
+    .map(values => values[0] || null);
 }
 
 function expression<T>(end: P.Parser<T>, stack: Array<S.Expression> = []): P.Parser<S.Expression> {
   const spacedEnd = P.optWhitespace.then(end);
+
+  return realExpression(spacedEnd, stack)
+    .or(otherExpression(spacedEnd, stack));
+}
+
+function realExpression<T>(end: P.Parser<T>, stack: Array<S.Expression>): P.Parser<S.Expression> {
   return P.lazy(() => P.alt(
     reference,
     stringLiteral,
     booleanLiteral,
     mapLiteral,
     numberLiteral,
-    functionCall,
-    otherExpression(spacedEnd),
-  ).chain(result => withOperator([...stack, result], spacedEnd)));
+    functionCall
+  ).chain(tryOperator(end, stack)));
+}
+
+function otherExpression<T>(end: P.Parser<T>, stack: Array<S.Expression>): P.Parser<S.Expression> {
+  return nodeMap(
+    S.OtherExpression,
+    withAny(end, false)
+  ).chain(tryOperator(end, stack));
+}
+
+function tryOperator<T>(
+  end: P.Parser<T>,
+  stack: Array<S.Expression>
+  ): (result: S.Expression) => P.Parser<S.Expression> {
+  return result => withOperator([...stack, result], end);
 }
 
 function withOperator<T>(stack: Array<S.Expression>, end: P.Parser<T>): P.Parser<S.Expression> {
@@ -226,13 +247,6 @@ function ternaryRight<T>(end: P.Parser<T>, stack: Array<S.Expression>): P.Parser
     .skip(colon)
     .skip(P.whitespace)
     .then(expression(end, stack));
-}
-
-function otherExpression<T>(end: P.Parser<T>): P.Parser<S.OtherExpression> {
-  return nodeMap(
-    S.OtherExpression,
-    withAny(end, false)
-  );
 }
 
 function interpolation(start: string, end: string = start): P.Parser<S.Interpolation> {
@@ -328,7 +342,7 @@ export class SoyParseError extends Error {}
 export default function parse(input: string): S.Program {
   const result = parser.parse(input);
   if (!result.status) {
-    throw new SoyParseError('Failed to parse soy template');
+    throw new SoyParseError(`Expected: ${result.expected.join('\n')}`);
   }
   return result.value;
 };
