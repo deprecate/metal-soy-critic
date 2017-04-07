@@ -17,9 +17,12 @@
   ] /}
   {let $name: 'foo' /}
 
-	{let $coolName: isNonnull($name) ? $name : 'mthadley' /}
-	{let $coolName: isNonnull($name) /}
-	{let $whatIsThis:  asd /}
+  {let $coolName: isNonnull($name) ? $name : 'mthadley' /}
+  {let $coolName: isNonnull($name) /}
+
+  {let $whatIsThis:  asd /}
+
+  {let $someThing: $myMap.foo /}
 
   <div>
     <h1>Hello World</h1>

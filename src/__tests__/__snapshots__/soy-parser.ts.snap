@@ -1247,14 +1247,14 @@ Object {
                 Object {
                   "mark": Object {
                     "end": Object {
-                      "column": 33,
+                      "column": 34,
                       "line": 20,
-                      "offset": 269,
+                      "offset": 270,
                     },
                     "start": Object {
-                      "column": 28,
+                      "column": 29,
                       "line": 20,
-                      "offset": 264,
+                      "offset": 265,
                     },
                   },
                   "name": "name",
@@ -1263,14 +1263,14 @@ Object {
               ],
               "mark": Object {
                 "end": Object {
-                  "column": 34,
+                  "column": 35,
                   "line": 20,
-                  "offset": 270,
+                  "offset": 271,
                 },
                 "start": Object {
-                  "column": 18,
+                  "column": 19,
                   "line": 20,
-                  "offset": 254,
+                  "offset": 255,
                 },
               },
               "name": "isNonnull",
@@ -1279,14 +1279,14 @@ Object {
             "left": Object {
               "mark": Object {
                 "end": Object {
-                  "column": 42,
+                  "column": 43,
                   "line": 20,
-                  "offset": 278,
+                  "offset": 279,
                 },
                 "start": Object {
-                  "column": 37,
+                  "column": 38,
                   "line": 20,
-                  "offset": 273,
+                  "offset": 274,
                 },
               },
               "name": "name",
@@ -1294,27 +1294,27 @@ Object {
             },
             "mark": Object {
               "end": Object {
-                "column": 55,
+                "column": 56,
                 "line": 20,
-                "offset": 291,
+                "offset": 292,
               },
               "start": Object {
-                "column": 18,
+                "column": 19,
                 "line": 20,
-                "offset": 254,
+                "offset": 255,
               },
             },
             "right": Object {
               "mark": Object {
                 "end": Object {
-                  "column": 55,
+                  "column": 56,
                   "line": 20,
-                  "offset": 291,
+                  "offset": 292,
                 },
                 "start": Object {
-                  "column": 45,
+                  "column": 46,
                   "line": 20,
-                  "offset": 281,
+                  "offset": 282,
                 },
               },
               "type": "StringLiteral",
@@ -1324,14 +1324,14 @@ Object {
           },
           "mark": Object {
             "end": Object {
-              "column": 58,
+              "column": 59,
               "line": 20,
-              "offset": 294,
+              "offset": 295,
             },
             "start": Object {
-              "column": 2,
+              "column": 3,
               "line": 20,
-              "offset": 238,
+              "offset": 239,
             },
           },
           "name": "coolName",
@@ -1343,14 +1343,14 @@ Object {
               Object {
                 "mark": Object {
                   "end": Object {
-                    "column": 33,
+                    "column": 34,
                     "line": 21,
-                    "offset": 327,
+                    "offset": 329,
                   },
                   "start": Object {
-                    "column": 28,
+                    "column": 29,
                     "line": 21,
-                    "offset": 322,
+                    "offset": 324,
                   },
                 },
                 "name": "name",
@@ -1359,14 +1359,14 @@ Object {
             ],
             "mark": Object {
               "end": Object {
-                "column": 34,
+                "column": 35,
                 "line": 21,
-                "offset": 328,
+                "offset": 330,
               },
               "start": Object {
-                "column": 18,
+                "column": 19,
                 "line": 21,
-                "offset": 312,
+                "offset": 314,
               },
             },
             "name": "isNonnull",
@@ -1374,14 +1374,14 @@ Object {
           },
           "mark": Object {
             "end": Object {
-              "column": 37,
+              "column": 38,
               "line": 21,
-              "offset": 331,
+              "offset": 333,
             },
             "start": Object {
-              "column": 2,
+              "column": 3,
               "line": 21,
-              "offset": 296,
+              "offset": 298,
             },
           },
           "name": "coolName",
@@ -1392,31 +1392,63 @@ Object {
             "content": "asd",
             "mark": Object {
               "end": Object {
-                "column": 24,
-                "line": 22,
-                "offset": 355,
+                "column": 25,
+                "line": 23,
+                "offset": 359,
               },
               "start": Object {
-                "column": 21,
-                "line": 22,
-                "offset": 352,
+                "column": 22,
+                "line": 23,
+                "offset": 356,
               },
             },
             "type": "OtherExpression",
           },
           "mark": Object {
             "end": Object {
-              "column": 27,
-              "line": 22,
-              "offset": 358,
+              "column": 28,
+              "line": 23,
+              "offset": 362,
             },
             "start": Object {
-              "column": 2,
-              "line": 22,
-              "offset": 333,
+              "column": 3,
+              "line": 23,
+              "offset": 337,
             },
           },
           "name": "whatIsThis",
+          "type": "LetStatement",
+        },
+        Object {
+          "body": Object {
+            "content": "$myMap.foo",
+            "mark": Object {
+              "end": Object {
+                "column": 30,
+                "line": 25,
+                "offset": 393,
+              },
+              "start": Object {
+                "column": 20,
+                "line": 25,
+                "offset": 383,
+              },
+            },
+            "type": "OtherExpression",
+          },
+          "mark": Object {
+            "end": Object {
+              "column": 33,
+              "line": 25,
+              "offset": 396,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 25,
+              "offset": 366,
+            },
+          },
+          "name": "someThing",
           "type": "LetStatement",
         },
       ],
@@ -1427,8 +1459,8 @@ Object {
       "mark": Object {
         "end": Object {
           "column": 12,
-          "line": 27,
-          "offset": 413,
+          "line": 30,
+          "offset": 451,
         },
         "start": Object {
           "column": 17,
@@ -1443,8 +1475,8 @@ Object {
   "mark": Object {
     "end": Object {
       "column": 1,
-      "line": 28,
-      "offset": 414,
+      "line": 31,
+      "offset": 452,
     },
     "start": Object {
       "column": 1,
