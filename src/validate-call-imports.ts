@@ -1,14 +1,13 @@
 import {joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import * as path from 'path';
-import * as S from './soy-types';
 import * as T from 'babel-types';
 import jsTraverse from 'babel-traverse';
-import soyVisit from './soy-traverse';
+import SoyContext from './soy-context';
 
-function getExternalSoyCalls(ast: S.Program): Array<string> {
+function getExternalSoyCalls(soyContext: SoyContext): Array<string> {
   const calls: Set<string> = new Set();
-  soyVisit(ast, {
+  soyContext.visit({
     Call(node) {
       if (node.id.namespace) {
         calls.add(node.id.namespace);
@@ -28,11 +27,11 @@ function getImportPaths(ast: T.Node): Array<string> {
   return importPaths;
 }
 
-export default function valdiateCallImports(soyAst: S.Program, jsAst: T.Node): Result {
+export default function valdiateCallImports(soyContext: SoyContext, jsAst: T.Node): Result {
   const importNames = getImportPaths(jsAst)
     .map(importPath => path.parse(importPath).name);
 
-  const missingImports = getExternalSoyCalls(soyAst)
+  const missingImports = getExternalSoyCalls(soyContext)
     .filter(name => !importNames.includes(name));
 
   if (missingImports.length) {

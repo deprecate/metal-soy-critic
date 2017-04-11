@@ -1,11 +1,10 @@
 import {joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
-import * as S from './soy-types';
-import * as soyHelpers from './soy-helpers';
 import * as T from 'babel-types';
+import SoyContext from './soy-context';
 
-export default function validateParams(soyAst: S.Program, jsAst: T.Node): Result {
+export default function validateParams(soyContext: SoyContext, jsAst: T.Node): Result {
   /**
    * We just skip validation if the default class does not extend from Component.
    * TODO: See if we can resolve and parse the parent class' STATE.
@@ -17,7 +16,7 @@ export default function validateParams(soyAst: S.Program, jsAst: T.Node): Result
   const jsParams = jsHelpers.getParamNames(jsAst);
   const classMethods = jsHelpers.getClassMethodNames(jsAst);
 
-  const missingParams = soyHelpers.getSoyParams(soyAst)
+  const missingParams = soyContext.getRenderParams()
     .map(param => param.name)
     .filter(param => !jsParams.includes(param) && !classMethods.includes(param));
 

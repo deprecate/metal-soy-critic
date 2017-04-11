@@ -2,15 +2,15 @@ import {isReference, isFunctionCall} from './soy-helpers';
 import {toResult, Result, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-types';
-import visit from './soy-traverse';
+import SoyContext from './soy-context';
 
 function formatMessage(node: S.Ternary, name: string): string {
   return `$${name} - Line ${node.mark.start.line}`;
 }
 
-export default function validateTernaryElvis(ast: S.Program): Result {
+export default function validateTernaryElvis(soyContext: SoyContext): Result {
   const references: Array<string> = [];
-  visit(ast, {
+  soyContext.visit({
     Ternary(node) {
       if (isFunctionCall(node.condition) && node.condition.name === 'isNonnull') {
         const firstArg = node.condition.body[0];

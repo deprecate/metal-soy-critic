@@ -42,6 +42,8 @@ export function getSuperClassImportPath(ast: T.Node): string | null {
         if (binding && T.isImportDeclaration(binding.path.parentPath.node)) {
           importPath = binding.path.parentPath.node.source.value;
         }
+
+        this.stop();
       }
     });
   }

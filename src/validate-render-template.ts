@@ -1,9 +1,9 @@
-import * as chalk from 'chalk';
-import * as S from './soy-types';
 import {joinErrors, toResult, Result} from './util';
+import * as chalk from 'chalk';
+import SoyContext from './soy-context';
 
-export default function validateRenderTemplate(soyAst: S.Program): Result {
-  const templateNames = soyAst.body.map(node => node.id.name);
+export default function validateRenderTemplate(soyContext: SoyContext): Result {
+  const templateNames = soyContext.ast.body.map(node => node.id.name);
 
   const renderFound = !!templateNames.find(name => name === 'render');
 

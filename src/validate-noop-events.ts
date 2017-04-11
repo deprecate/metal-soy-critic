@@ -2,15 +2,15 @@ import {fullName} from './soy-helpers';
 import {toResult, Result, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-types';
-import visit from './soy-traverse';
+import SoyContext from './soy-context';
 
 function hasEventsParam(params: Array<S.Param>): boolean {
   return !!params.find(param => param.name === 'events');
 }
 
-export default function validateNoopEvents(ast: S.Program): Result {
+export default function validateNoopEvents(soyContext: SoyContext): Result {
   const calls: Set<string> = new Set();
-  visit(ast, {
+  soyContext.visit({
     Call(node) {
       if (node.id.name !== 'render' && hasEventsParam(node.body)) {
         calls.add(fullName(node));

@@ -1,7 +1,7 @@
 import {toResult, Result, isSorted, joinErrors} from './util';
 import * as chalk from 'chalk';
 import * as S from './soy-types';
-import visit from './soy-traverse';
+import SoyContext from './soy-context';
 
 function formatMessage(node: S.MapLiteral): string {
   const firstLine = node.items[0].mark.start.line;
@@ -10,9 +10,9 @@ function formatMessage(node: S.MapLiteral): string {
   return `Lines ${firstLine} to ${lastLine}`;
 }
 
-export default function validateSortedParams(ast: S.Program): Result {
+export default function validateSortedParams(soyContext: SoyContext): Result {
   const messages: Array<string> = [];
-  visit(ast, {
+  soyContext.visit({
     MapLiteral(node) {
       const keys = node.items.map(item => item.key.value);
 

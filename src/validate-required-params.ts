@@ -1,13 +1,12 @@
+import {difference, joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import * as jsHelpers from './js-helpers';
-import * as soyHelpers from './soy-helpers';
-import {difference, joinErrors, toResult, Result} from './util';
 import * as T from 'babel-types';
-import * as S from './soy-types';
+import SoyContext from './soy-context';
 
-export default function validateRequiredParams(soyAst: S.Program, jsAst: T.Node): Result {
+export default function validateRequiredParams(soyContext: SoyContext, jsAst: T.Node): Result {
   const jsParams = jsHelpers.getParams(jsAst);
-  const soyParams = soyHelpers.getSoyParams(soyAst);
+  const soyParams = soyContext.getRenderParams();
   const soyParamNames = soyParams.map(param => param.name);
 
   const requiredJSParams = new Set<string>(jsParams

@@ -1,9 +1,9 @@
 import {combineResults, toResult, Result} from './util';
 import * as babylon from 'babylon';
 import * as fs from 'fs';
-import * as S from './soy-types';
 import * as T from 'babel-types';
-import parseSoy, {SoyParseError} from './soy-parser';
+import {SoyParseError} from './soy-parser';
+import SoyContext from './soy-context';
 
 /* Validators */
 import validateRenderTemplate from './validate-render-template';
@@ -21,8 +21,8 @@ import validateTernaryElvis from './validate-ternary-elvis';
  * Validators should be added here. Each validator is a function that should
  * have one of the following signatures.
  */
-type Validator = (soyAst: S.Program, jsAst: T.Node) => Result;
-type SoyValidator = (ast: S.Program) => Result;
+type Validator = (soyContext: SoyContext, jsAst: T.Node) => Result;
+type SoyValidator = (ast: SoyContext) => Result;
 
 const validators: Array<Validator> = [
   validateCallImports,
@@ -55,9 +55,9 @@ function getJSPath(filePath: string): string {
   return filePath.replace('.soy', '.js');
 }
 
-async function getSoyAst(filePath: string): Promise<S.Program> {
+async function getSoyAst(filePath: string): Promise<SoyContext> {
   const buffer = await readFile(filePath);
-  return parseSoy(buffer.toString('utf8'));
+  return new SoyContext(buffer.toString('utf8'));
 }
 
 async function getJSAst(filePath: string): Promise<T.Node> {
@@ -65,28 +65,28 @@ async function getJSAst(filePath: string): Promise<T.Node> {
   return babylon.parse(buffer.toString('utf8'), {allowImportExportEverywhere: true});
 }
 
-function runValidators(soyAst: S.Program, jsAst: T.Node): Result {
+function runValidators(soyContext: SoyContext, jsAst: T.Node): Result {
   return validators
-    .map(validator => validator(soyAst, jsAst))
+    .map(validator => validator(soyContext, jsAst))
     .reduce(combineResults);
 }
 
-function runSoyValidators(ast: S.Program): Result {
+function runSoyValidators(soyContext: SoyContext): Result {
   return soyValidators
-    .map(validator => validator(ast))
+    .map(validator => validator(soyContext))
     .reduce(combineResults);
 }
 
-async function validateWithSoy(soyAst: S.Program, filePath: string): Promise<Result> {
+async function validateWithSoy(soyContext: SoyContext, filePath: string): Promise<Result> {
   try {
     const jsAst = await getJSAst(getJSPath(filePath));
 
     return combineResults(
-      runSoyValidators(soyAst),
-      runValidators(soyAst, jsAst));
+      runSoyValidators(soyContext),
+      runValidators(soyContext, jsAst));
   } catch (err) {
     if (err.code === 'ENOENT') {
-      return runSoyValidators(soyAst);
+      return runSoyValidators(soyContext);
     } else if (err instanceof SyntaxError) {
       return toResult(false, 'Failed to parse component (javascript) file');
     }
@@ -96,9 +96,9 @@ async function validateWithSoy(soyAst: S.Program, filePath: string): Promise<Res
 
 export default async function validateFile(filePath: string): Promise<Result> {
   try {
-    const soyAst = await getSoyAst(filePath);
+    const soyContext = await getSoyAst(filePath);
 
-    return validateWithSoy(soyAst, filePath);
+    return validateWithSoy(soyContext, filePath);
   } catch (err) {
     if (err.code === 'ENOENT') {
       return toResult(false, 'Failed to open soy file, does it exist?');
