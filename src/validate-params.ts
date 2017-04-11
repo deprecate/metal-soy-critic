@@ -1,20 +1,19 @@
 import {joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
-import * as jsHelpers from './js-helpers';
-import * as T from 'babel-types';
 import SoyContext from './soy-context';
+import JSContext from './js-context';
 
-export default function validateParams(soyContext: SoyContext, jsAst: T.Node): Result {
+export default function validateParams(soyContext: SoyContext, jsContext: JSContext): Result {
   /**
    * We just skip validation if the default class does not extend from Component.
    * TODO: See if we can resolve and parse the parent class' STATE.
    */
-  if (jsHelpers.getSuperClassImportPath(jsAst) !== 'metal-component') {
+  if (jsContext.getSuperClassImportPath() !== 'metal-component') {
     return toResult(true);
   }
 
-  const jsParams = jsHelpers.getParamNames(jsAst);
-  const classMethods = jsHelpers.getClassMethodNames(jsAst);
+  const jsParams = jsContext.getParamNames();
+  const classMethods = jsContext.getClassMethodNames();
 
   const missingParams = soyContext.getRenderParams()
     .map(param => param.name)

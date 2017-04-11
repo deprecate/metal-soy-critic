@@ -1,9 +1,8 @@
 import {combineResults, toResult, Result} from './util';
-import * as babylon from 'babylon';
 import * as fs from 'fs';
-import * as T from 'babel-types';
 import {SoyParseError} from './soy-parser';
 import SoyContext from './soy-context';
+import JSContext from './js-context';
 
 /* Validators */
 import validateRenderTemplate from './validate-render-template';
@@ -21,7 +20,7 @@ import validateTernaryElvis from './validate-ternary-elvis';
  * Validators should be added here. Each validator is a function that should
  * have one of the following signatures.
  */
-type Validator = (soyContext: SoyContext, jsAst: T.Node) => Result;
+type Validator = (soyContext: SoyContext, jsContext: JSContext) => Result;
 type SoyValidator = (ast: SoyContext) => Result;
 
 const validators: Array<Validator> = [
@@ -40,13 +39,13 @@ const soyValidators: Array<SoyValidator> = [
   validateTernaryElvis
 ];
 
-function readFile(filePath: string): Promise<Buffer> {
+function readFile(filePath: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, (err, data) => {
+    fs.readFile(filePath, (err, buffer) => {
       if (err) {
-        reject(err);
+        return reject(err);
       }
-      resolve(data);
+      resolve(buffer.toString('utf8'));
     });
   });
 }
@@ -55,19 +54,19 @@ function getJSPath(filePath: string): string {
   return filePath.replace('.soy', '.js');
 }
 
-async function getSoyAst(filePath: string): Promise<SoyContext> {
-  const buffer = await readFile(filePath);
-  return new SoyContext(buffer.toString('utf8'));
+async function getSoyContext(filePath: string): Promise<SoyContext> {
+  const raw = await readFile(filePath);
+  return new SoyContext(raw);
 }
 
-async function getJSAst(filePath: string): Promise<T.Node> {
-  const buffer = await readFile(filePath);
-  return babylon.parse(buffer.toString('utf8'), {allowImportExportEverywhere: true});
+async function getJSContext(filePath: string): Promise<JSContext> {
+  const raw = await readFile(filePath);
+  return new JSContext(raw);
 }
 
-function runValidators(soyContext: SoyContext, jsAst: T.Node): Result {
+function runValidators(soyContext: SoyContext, jsContext: JSContext): Result {
   return validators
-    .map(validator => validator(soyContext, jsAst))
+    .map(validator => validator(soyContext, jsContext))
     .reduce(combineResults);
 }
 
@@ -79,11 +78,11 @@ function runSoyValidators(soyContext: SoyContext): Result {
 
 async function validateWithSoy(soyContext: SoyContext, filePath: string): Promise<Result> {
   try {
-    const jsAst = await getJSAst(getJSPath(filePath));
+    const jsContext = await getJSContext(getJSPath(filePath));
 
     return combineResults(
       runSoyValidators(soyContext),
-      runValidators(soyContext, jsAst));
+      runValidators(soyContext, jsContext));
   } catch (err) {
     if (err.code === 'ENOENT') {
       return runSoyValidators(soyContext);
@@ -96,7 +95,7 @@ async function validateWithSoy(soyContext: SoyContext, filePath: string): Promis
 
 export default async function validateFile(filePath: string): Promise<Result> {
   try {
-    const soyContext = await getSoyAst(filePath);
+    const soyContext = await getSoyContext(filePath);
 
     return validateWithSoy(soyContext, filePath);
   } catch (err) {

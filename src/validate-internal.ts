@@ -1,24 +1,23 @@
 import {joinErrors, toResult, Result} from './util';
 import SoyContext from './soy-context';
 import * as chalk from 'chalk';
-import * as jsHelpers from './js-helpers';
-import * as T from 'babel-types';
+import JSContext from './js-context';
 
 function isInternalName(name: string): boolean {
   return name.startsWith('_') || name.endsWith('_');
 }
 
-export default function validateInternal(_: SoyContext, jsAst: T.Node): Result {
-  const params = jsHelpers.getParams(jsAst);
+export default function validateInternal(_: SoyContext, jsContext: JSContext): Result {
+  const params = jsContext.getParams();
 
   const missingInternal = params
     .filter(node => {
-      const name = jsHelpers.getKeyName(node.key);
+      const name = JSContext.getKeyName(node.key);
 
       return isInternalName(name) &&
-        !jsHelpers.hasAttribute(node.value, 'internal');
+        !JSContext.hasAttribute(node.value, 'internal');
     })
-    .map(node => jsHelpers.getKeyName(node.key));
+    .map(node => JSContext.getKeyName(node.key));
 
   if (!missingInternal.length) {
     return toResult(true);

@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as T from 'babel-types';
 import jsTraverse from 'babel-traverse';
 import SoyContext from './soy-context';
+import JSContext from './js-context';
 
 function getExternalSoyCalls(soyContext: SoyContext): Array<string> {
   const calls: Set<string> = new Set();
@@ -27,8 +28,8 @@ function getImportPaths(ast: T.Node): Array<string> {
   return importPaths;
 }
 
-export default function valdiateCallImports(soyContext: SoyContext, jsAst: T.Node): Result {
-  const importNames = getImportPaths(jsAst)
+export default function valdiateCallImports(soyContext: SoyContext, jsContext: JSContext): Result {
+  const importNames = getImportPaths(jsContext.ast)
     .map(importPath => path.parse(importPath).name);
 
   const missingImports = getExternalSoyCalls(soyContext)
