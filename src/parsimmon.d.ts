@@ -1,7 +1,7 @@
-import * as P from 'parsimmon';
+import 'parsimmon';
 
 declare module 'parsimmon' {
-  function lookahead<T>(p: Parser<T>): P.Parser<string>;
+  function lookahead<T>(p: Parser<T>): Parser<string>;
 
   interface Parser<T> {
     lookahead<U>(p: Parser<U>): Parser<T>;
