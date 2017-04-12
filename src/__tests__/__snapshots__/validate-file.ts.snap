@@ -4,7 +4,7 @@ exports[`Validate file should fail; bad whitespace 1`] = `
 Array [
   "There seems to be extra [33mwhitespace[39m on these lines:
 
-[31mLine 8: {@param title: string[4m }[24m[39m",
+[31mLine 8: {@param title: string[7m }[27m[39m",
 ]
 `;
 
