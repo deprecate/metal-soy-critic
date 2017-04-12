@@ -15,6 +15,7 @@ import validateSortedParams from './validate-sorted-params';
 import validateSortedParamDeclarations from './validate-sorted-param-declarations';
 import validateSortedMaps from './validate-sorted-maps';
 import validateTernaryElvis from './validate-ternary-elvis';
+import validateWhitespace from './validate-whitespace';
 
 /**
  * Validators should be added here. Each validator is a function that should
@@ -36,7 +37,8 @@ const soyValidators: Array<SoyValidator> = [
   validateSortedParams,
   validateSortedParamDeclarations,
   validateSortedMaps,
-  validateTernaryElvis
+  validateTernaryElvis,
+  validateWhitespace
 ];
 
 function readFile(filePath: string): Promise<string> {
