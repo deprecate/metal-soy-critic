@@ -2,6 +2,9 @@
   "name": "metal-soy-critic",
   "version": "1.14.0",
   "description": "A metal-soy code validation utility.",
+  "engines": {
+    "node": ">=6.4.0"
+  },
   "repository": "https://github.com/mthadley/metal-soy-critic",
   "main": "./lib/index.js",
   "files": [
