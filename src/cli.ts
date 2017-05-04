@@ -55,7 +55,7 @@ async function getSoyFiles(filePath: string, ignore?: string): Promise<Array<str
         if (err) {
           return reject(err);
         }
-        resolve(matches);
+        resolve(matches.map(filePath => path.relative('', filePath)));
       });
     });
   }
