@@ -14,14 +14,14 @@ First install `mcritic` from  npm:
 $ npm install -g metal-soy-critic
 ```
 
-Then pass it a list of soy files that you would like to check:
+Then pass it a directory containing soy files that you would like to check:
 
 ```
-$ mcritic src/**/*.soy
+$ mcritic src
 ```
 
-If your shell does not support the `globstar` feature, you can use `find` instead:
+You can also ignore files matching a particular glob:
 
 ```
-$ find src -name "*.soy" | xargs mcritic
+$ mcritic . --ignore "**/{node_modules,classes,build}/**"
 ```
