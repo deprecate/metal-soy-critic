@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cli should accept an ignore glob 1`] = `
+"0 out of 0 file(s) have problems:
+
+"
+`;
+
 exports[`cli should print more with verbose flag 1`] = `
 "0 out of 1 file(s) have problems:
 
@@ -19,13 +25,161 @@ exports[`cli should print status when no errors 1`] = `
 
 exports[`cli should print usage without args 1`] = `
 "
-  Usage: index mcritic [options] <file ...>
+  Usage: index mcritic [options] <path>
 
   Options:
 
-    -h, --help     output usage information
-    -V, --version  output the version number
-    -v, --verbose  output for all files
+    -h, --help             output usage information
+    -V, --version          output the version number
+    -i, --ignore <ignore>  A glob to ignore files, if passed a directory
+    -v, --verbose          Output for all files
+
+"
+`;
+
+exports[`cli should recursively look for Soy files if passed a directory 1`] = `
+"18 out of 25 file(s) have problems:
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/BadTernaryElvis.soy
+
+     Use the Elvis (?:) operator instead of a ternary for default values:
+     
+     $optionalInfo - Line 20
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/BadWhitespace.soy
+
+     There seems to be extra whitespace on these lines:
+     
+     Line 8: {@param title: string }
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/DelTemplate.soy
+
+     Cannot find a .render template, do you have a typo?
+     
+     First
+     Second
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/Invalid.soy
+
+     Expected: '{deltemplate'
+     any character
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/InvalidJS.soy
+
+     Failed to parse component (javascript) file
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/InvalidNamespace.soy
+
+     Expected: '{namespace'
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/LetStatements.soy
+
+     These map keys should be sorted:
+     
+     Lines 15 to 16
+
+
+
+     Use the Elvis (?:) operator instead of a ternary for default values:
+     
+     $name - Line 20
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/MapParam.soy
+
+     Please sort the params in these calls:
+     
+     OtherComponent.render - Lines 9 to 15
+
+
+
+     These map keys should be sorted:
+     
+     Lines 11 to 13
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/MissingCallImport.soy
+
+     It looks like the following component calls are missing an import:
+     
+     MyExternalComponent
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/MissingInternal.soy
+
+     Based on their name, these attributes should have the .internal() config added:
+     
+     count_
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/MissingParams.soy
+
+     These params can't be found in STATE or your Class:
+     
+     optionalInfo
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/MissingRender.soy
+
+     Cannot find a .render template, do you have a typo?
+     
+     rander
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/MissingRequired.soy
+
+     These attributes are required in your Soy Template but not in your Component:
+     
+     title
+
+
+
+     These attributes are .required() in your Component but not in your Template:
+     
+     description
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/NestedCalls.soy
+
+     Please sort the params in these calls:
+     
+     OtherComponent.render - Lines 28 to 32
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/NoopEvents.soy
+
+     These calls are not components, so their events param will do nothing:
+     
+     OtherComponent.Helper
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/SortedParamDeclarations.soy
+
+     These templates need their param declarations sorted:
+     
+     .render
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/SortedParams.soy
+
+     Please sort the params in these calls:
+     
+     OtherComponent.render - Lines 8 to 11
+
+
+File - /Users/mike/projects/metal-soy-critic/test/fixtures/UnsortedMap.soy
+
+     These map keys should be sorted:
+     
+     Lines 10 to 12
+     Lines 18 to 20
+
 
 "
 `;

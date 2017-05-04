@@ -43,4 +43,18 @@ describe('cli', () => {
     expect(exitCode).toBe(0);
     expect(output).toMatchSnapshot();
   });
+
+  test('should recursively look for Soy files if passed a directory', async () => {
+    const [exitCode, output] = await runCli('test/fixtures');
+
+    expect(exitCode).toBe(1);
+    expect(output).toMatchSnapshot();
+  });
+
+  test('should accept an ignore glob', async () => {
+    const [exitCode, output] = await runCli('test/fixtures', '--ignore', '**/*.soy');
+
+    expect(exitCode).toBe(0);
+    expect(output).toMatchSnapshot();
+  });
 });
