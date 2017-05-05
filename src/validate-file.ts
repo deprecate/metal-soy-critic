@@ -7,6 +7,7 @@ import JSContext from './js-context';
 /* Validators */
 import validateRenderTemplate from './validate-render-template';
 import validateCallImports from './validate-call-imports';
+import validateDocParams from './validate-doc-params';
 import validateParams from './validate-params';
 import validateInternal from './validate-internal';
 import validateRequiredParams from './validate-required-params';
@@ -32,6 +33,7 @@ const validators: Array<Validator> = [
 ];
 
 const soyValidators: Array<SoyValidator> = [
+  validateDocParams,
   validateRenderTemplate,
   validateNoopEvents,
   validateSortedParams,
