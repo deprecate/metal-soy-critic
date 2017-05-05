@@ -23,6 +23,23 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 34,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "render",
         "namespace": null,
@@ -34,9 +51,9 @@ Object {
           "offset": 149,
         },
         "start": Object {
-          "column": 17,
-          "line": 1,
-          "offset": 16,
+          "column": 1,
+          "line": 3,
+          "offset": 18,
         },
       },
       "params": Array [
@@ -116,6 +133,7 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "doc": null,
       "id": Object {
         "name": "helper",
         "namespace": null,
@@ -127,9 +145,9 @@ Object {
           "offset": 263,
         },
         "start": Object {
-          "column": 12,
-          "line": 12,
-          "offset": 149,
+          "column": 1,
+          "line": 14,
+          "offset": 151,
         },
       },
       "params": Array [
@@ -192,6 +210,7 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "doc": null,
       "id": Object {
         "name": "helperOther",
         "namespace": null,
@@ -203,9 +222,9 @@ Object {
           "offset": 367,
         },
         "start": Object {
-          "column": 12,
-          "line": 18,
-          "offset": 263,
+          "column": 1,
+          "line": 20,
+          "offset": 265,
         },
       },
       "params": Array [
@@ -392,6 +411,23 @@ Object {
           "type": "Call",
         },
       ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 34,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "First",
         "namespace": "Test",
@@ -403,9 +439,9 @@ Object {
           "offset": 384,
         },
         "start": Object {
-          "column": 17,
-          "line": 1,
-          "offset": 16,
+          "column": 1,
+          "line": 3,
+          "offset": 18,
         },
       },
       "params": Array [
@@ -608,6 +644,7 @@ Object {
           "type": "Call",
         },
       ],
+      "doc": null,
       "id": Object {
         "name": "Second",
         "namespace": "Othernamespace",
@@ -619,9 +656,9 @@ Object {
           "offset": 765,
         },
         "start": Object {
-          "column": 15,
-          "line": 25,
-          "offset": 384,
+          "column": 1,
+          "line": 27,
+          "offset": 386,
         },
       },
       "params": Array [
@@ -861,6 +898,23 @@ Object {
           "type": "Call",
         },
       ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 34,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "render",
         "namespace": null,
@@ -872,9 +926,9 @@ Object {
           "offset": 375,
         },
         "start": Object {
-          "column": 17,
-          "line": 1,
-          "offset": 16,
+          "column": 1,
+          "line": 3,
+          "offset": 18,
         },
       },
       "params": Array [
@@ -938,6 +992,7 @@ Object {
     Object {
       "attributes": Array [],
       "body": Array [],
+      "doc": null,
       "id": Object {
         "name": "helper",
         "namespace": null,
@@ -949,9 +1004,9 @@ Object {
           "offset": 452,
         },
         "start": Object {
-          "column": 12,
-          "line": 25,
-          "offset": 375,
+          "column": 1,
+          "line": 27,
+          "offset": 377,
         },
       },
       "params": Array [
@@ -1452,6 +1507,23 @@ Object {
           "type": "LetStatement",
         },
       ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 34,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "render",
         "namespace": null,
@@ -1463,9 +1535,9 @@ Object {
           "offset": 451,
         },
         "start": Object {
-          "column": 17,
-          "line": 1,
-          "offset": 16,
+          "column": 1,
+          "line": 3,
+          "offset": 18,
         },
       },
       "params": Array [],
@@ -1755,6 +1827,23 @@ Object {
           "type": "Call",
         },
       ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 34,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "render",
         "namespace": null,
@@ -1766,9 +1855,9 @@ Object {
           "offset": 278,
         },
         "start": Object {
-          "column": 17,
-          "line": 1,
-          "offset": 16,
+          "column": 1,
+          "line": 3,
+          "offset": 18,
         },
       },
       "params": Array [],
@@ -2044,6 +2133,23 @@ Object {
           "type": "Call",
         },
       ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 34,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "render",
         "namespace": null,
@@ -2055,9 +2161,9 @@ Object {
           "offset": 604,
         },
         "start": Object {
-          "column": 17,
-          "line": 1,
-          "offset": 16,
+          "column": 1,
+          "line": 3,
+          "offset": 18,
         },
       },
       "params": Array [
@@ -2121,6 +2227,7 @@ Object {
     Object {
       "attributes": Array [],
       "body": Array [],
+      "doc": null,
       "id": Object {
         "name": "helper",
         "namespace": null,
@@ -2132,9 +2239,9 @@ Object {
           "offset": 681,
         },
         "start": Object {
-          "column": 12,
-          "line": 37,
-          "offset": 604,
+          "column": 1,
+          "line": 39,
+          "offset": 606,
         },
       },
       "params": Array [
@@ -2266,6 +2373,23 @@ Object {
           "type": "If",
         },
       ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 34,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "render",
         "namespace": null,
@@ -2277,9 +2401,9 @@ Object {
           "offset": 404,
         },
         "start": Object {
-          "column": 17,
-          "line": 1,
-          "offset": 16,
+          "column": 1,
+          "line": 3,
+          "offset": 18,
         },
       },
       "params": Array [
@@ -2402,6 +2526,23 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "doc": Object {
+        "about": "UnderscoreParam",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 56,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 29,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "render",
         "namespace": null,
@@ -2413,9 +2554,9 @@ Object {
           "offset": 153,
         },
         "start": Object {
-          "column": 28,
-          "line": 1,
-          "offset": 27,
+          "column": 1,
+          "line": 3,
+          "offset": 29,
         },
       },
       "params": Array [
@@ -2517,6 +2658,23 @@ Object {
           "type": "Call",
         },
       ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 6,
+            "offset": 34,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
       "id": Object {
         "name": "render",
         "namespace": null,
@@ -2528,9 +2686,9 @@ Object {
           "offset": 196,
         },
         "start": Object {
-          "column": 17,
-          "line": 1,
-          "offset": 16,
+          "column": 1,
+          "line": 3,
+          "offset": 18,
         },
       },
       "params": Array [
@@ -2611,6 +2769,7 @@ Object {
           "type": "Interpolation",
         },
       ],
+      "doc": null,
       "id": Object {
         "name": "helper",
         "namespace": null,
@@ -2622,9 +2781,9 @@ Object {
           "offset": 303,
         },
         "start": Object {
-          "column": 12,
-          "line": 16,
-          "offset": 196,
+          "column": 1,
+          "line": 18,
+          "offset": 198,
         },
       },
       "params": Array [
@@ -2655,6 +2814,137 @@ Object {
       "column": 1,
       "line": 22,
       "offset": 304,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "namespace": "Test",
+  "type": "Program",
+}
+`;
+
+exports[`Soy Parser should parse template docs 1`] = `
+Object {
+  "body": Array [
+    Object {
+      "attributes": Array [],
+      "body": Array [
+        Object {
+          "content": "$name",
+          "mark": Object {
+            "end": Object {
+              "column": 16,
+              "line": 11,
+              "offset": 115,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 11,
+              "offset": 108,
+            },
+          },
+          "type": "Interpolation",
+        },
+        Object {
+          "content": "$age",
+          "mark": Object {
+            "end": Object {
+              "column": 15,
+              "line": 12,
+              "offset": 135,
+            },
+            "start": Object {
+              "column": 9,
+              "line": 12,
+              "offset": 129,
+            },
+          },
+          "type": "Interpolation",
+        },
+      ],
+      "doc": Object {
+        "about": "Test",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 7,
+            "offset": 48,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 3,
+            "offset": 18,
+          },
+        },
+        "params": Array [
+          Object {
+            "mark": Object {
+              "end": Object {
+                "column": 2,
+                "line": 6,
+                "offset": 45,
+              },
+              "start": Object {
+                "column": 1,
+                "line": 5,
+                "offset": 30,
+              },
+            },
+            "name": "age",
+            "paramType": "any",
+            "required": true,
+            "type": "ParamDeclaration",
+          },
+        ],
+        "type": "SoyDoc",
+      },
+      "id": Object {
+        "name": "render",
+        "namespace": null,
+      },
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 14,
+          "offset": 161,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 3,
+          "offset": 18,
+        },
+      },
+      "params": Array [
+        Object {
+          "mark": Object {
+            "end": Object {
+              "column": 24,
+              "line": 8,
+              "offset": 90,
+            },
+            "start": Object {
+              "column": 3,
+              "line": 8,
+              "offset": 69,
+            },
+          },
+          "name": "name",
+          "paramType": "string",
+          "required": true,
+          "type": "ParamDeclaration",
+        },
+      ],
+      "type": "Template",
+    },
+  ],
+  "mark": Object {
+    "end": Object {
+      "column": 1,
+      "line": 15,
+      "offset": 162,
     },
     "start": Object {
       "column": 1,
