@@ -194,9 +194,25 @@ export function NumberLiteral(mark: Mark, value: number): NumberLiteral {
   };
 }
 
+export interface SoyDoc extends Node {
+  about: string,
+  params: Array<ParamDeclaration>,
+  type: 'SoyDoc'
+}
+
+export function SoyDoc(mark: Mark, about: string, params: Array<ParamDeclaration>): SoyDoc {
+  return {
+    about,
+    mark,
+    params,
+    type: 'SoyDoc'
+  };
+}
+
 export interface Template extends Node {
   attributes: Array<Attribute>,
   body: Body,
+  doc: SoyDoc | null,
   id: TemplateName,
   params: Array<ParamDeclaration>,
   type: 'Template'
@@ -204,6 +220,7 @@ export interface Template extends Node {
 
 export function Template(
   mark: Mark,
+  doc: SoyDoc | null,
   id: TemplateName,
   attributes: Array<Attribute>,
   params: Array<ParamDeclaration> = [],
@@ -216,12 +233,14 @@ export function Template(
     mark,
     id,
     params,
+    doc,
     type: 'Template'
   };
 }
 
 export interface DelTemplate extends Node {
   body: Body,
+  doc: SoyDoc | null,
   id: TemplateName,
   params: Array<ParamDeclaration>,
   variant: Interpolation | null,
@@ -230,6 +249,7 @@ export interface DelTemplate extends Node {
 
 export function DelTemplate(
   mark: Mark,
+  doc: SoyDoc | null,
   id: TemplateName,
   variant: Interpolation | null,
   params: Array<ParamDeclaration> = [],
@@ -238,6 +258,7 @@ export function DelTemplate(
 
   return {
     body,
+    doc,
     mark,
     id,
     params,

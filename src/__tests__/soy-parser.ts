@@ -61,4 +61,10 @@ describe('Soy Parser', () => {
 
     expect(soyParser(input)).toMatchSnapshot();
   });
+
+  test('should parse template docs', () => {
+    const input = getFixture('DocParams.soy');
+
+    expect(soyParser(input)).toMatchSnapshot();
+  });
 });

@@ -4,13 +4,17 @@ import * as S from './soy-types';
 
 /* Parsers */
 
+const asterisk = P.string('*');
 const closingBrace = P.string('/}');
 const colon = P.string(':');
 const comma = P.string(',');
+const docEnd = P.string('*/');
+const docStart = P.string('/**');
 const dollar = P.string('$');
 const dquote = P.string('"');
 const lbracket = P.string('[');
 const lparen = P.string('(');
+const newLine = P.string('\n');
 const qmark = P.string('?');
 const rbrace = P.string('}');
 const rbracket = P.string(']');
@@ -128,9 +132,32 @@ const paramDeclaration = nodeMap(
     .then(withAny(rbrace))
 );
 
+const soyDocComment = spaced(asterisk)
+  .lookahead(P.noneOf('@/'))
+  .then(withAny(newLine));
+
+const soyDocParam = nodeMap(
+  (mark, optional, name) => S.ParamDeclaration(mark, optional, name, 'any'),
+  spaced(asterisk)
+    .skip(P.string('@param'))
+    .then(optional(qmark))
+    .map(value => !value),
+  spaced(identifierName)
+);
+
+const soyDoc = nodeMap(
+  S.SoyDoc,
+  spaced(docStart)
+    .then(soyDocComment.many())
+    .map(lines => lines.join('\n')),
+  soyDocParam.many()
+    .skip(spaced(docEnd))
+);
+
 const template = nodeMap(
   S.Template,
-  orAny(P.string('{template'))
+  optional(soyDoc),
+  P.string('{template')
     .skip(P.whitespace)
     .then(templateName),
   spaced(attribute).many(),
@@ -140,7 +167,8 @@ const template = nodeMap(
 
 const delTemplate = nodeMap(
   S.DelTemplate,
-  orAny(P.string('{deltemplate'))
+  optional(soyDoc),
+  P.string('{deltemplate')
     .skip(P.whitespace)
     .then(templateName),
   optional(P.seq(P.whitespace, P.string('variant='))
@@ -152,9 +180,9 @@ const delTemplate = nodeMap(
 const program = nodeMap(
   S.Program,
   namespaceCmd,
-  P.alt(template, delTemplate)
+  spaced(P.alt(template, delTemplate))
     .atLeast(1)
-    .skip(spaced(P.eof))
+    .skip(P.eof)
 );
 
 const parser = program;
@@ -165,6 +193,7 @@ function nodeMap<T, U>(mapper: (mark: S.Mark, a1: T) => U, p1: P.Parser<T>): P.P
 function nodeMap<T, U, V>(mapper: (mark: S.Mark, a1: T, a2: U) => V, p1: P.Parser<T>, p2: P.Parser<U>): P.Parser<V>;
 function nodeMap<T, U, V, W>(mapper: (mark: S.Mark, a1: T, a2: U, a3: V) => W, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>): P.Parser<W>;
 function nodeMap<T, U, V, W, X>(mapper: (mark: S.Mark, a1: T, a2: U, a3: V, a4: W) => X, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>, p4: P.Parser<W>): P.Parser<X>;
+function nodeMap<T, U, V, W, X, Y>(mapper: (mark: S.Mark, a1: T, a2: U, a3: V, a4: W, a5: X) => Y, p1: P.Parser<T>, p2: P.Parser<U>, p3: P.Parser<V>, p4: P.Parser<W>, p5: P.Parser<X>): P.Parser<Y>;
 function nodeMap(mapper: any, ...parsers: Array<any>) {
   return P.seq(...parsers)
     .mark()
