@@ -8,6 +8,14 @@ Array [
 ]
 `;
 
+exports[`Validate file should fail; bad whitespace 2`] = `
+Array [
+  "Param declarations in docs is [33mdeprecated[39m, see these templates:
+
+[31mrender[39m",
+]
+`;
+
 exports[`Validate file should fail; invalid javascript 1`] = `
 Array [
   "Failed to parse component (javascript) file",
