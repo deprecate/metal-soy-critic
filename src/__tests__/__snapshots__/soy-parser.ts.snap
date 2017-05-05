@@ -2888,9 +2888,9 @@ Object {
                 "offset": 45,
               },
               "start": Object {
-                "column": 1,
-                "line": 5,
-                "offset": 30,
+                "column": 8,
+                "line": 4,
+                "offset": 29,
               },
             },
             "name": "age",
@@ -2939,12 +2939,53 @@ Object {
       ],
       "type": "Template",
     },
+    Object {
+      "attributes": Array [],
+      "body": Array [],
+      "doc": Object {
+        "about": "Helper
+
+",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 20,
+            "offset": 185,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 16,
+            "offset": 163,
+          },
+        },
+        "params": Array [],
+        "type": "SoyDoc",
+      },
+      "id": Object {
+        "name": "helper",
+        "namespace": null,
+      },
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 22,
+          "offset": 229,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 16,
+          "offset": 163,
+        },
+      },
+      "params": Array [],
+      "type": "Template",
+    },
   ],
   "mark": Object {
     "end": Object {
       "column": 1,
-      "line": 15,
-      "offset": 162,
+      "line": 23,
+      "offset": 230,
     },
     "start": Object {
       "column": 1,

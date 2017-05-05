@@ -19,6 +19,7 @@ const qmark = P.string('?');
 const rbrace = P.string('}');
 const rbracket = P.string(']');
 const rparen = P.string(')');
+const space = P.string(' ');
 const squote = P.string('\'');
 const underscore = P.string('_');
 
@@ -132,9 +133,11 @@ const paramDeclaration = nodeMap(
     .then(withAny(rbrace))
 );
 
-const soyDocComment = spaced(asterisk)
+const soyDocComment = P.optWhitespace
+  .then(asterisk)
+  .skip(space.many())
   .lookahead(P.noneOf('@/'))
-  .then(withAny(newLine));
+  .then(withAny(newLine.or(asterisk), false));
 
 const soyDocParam = nodeMap(
   (mark, optional, name) => S.ParamDeclaration(mark, optional, name, 'any'),
@@ -146,11 +149,22 @@ const soyDocParam = nodeMap(
 );
 
 const soyDoc = nodeMap(
-  S.SoyDoc,
+  (mark, nodes) => {
+    const lines: Array<string> = [];
+    const params: Array<S.ParamDeclaration> = [];
+
+    nodes.forEach(node => {
+      if (typeof node === 'string') {
+        lines.push(node);
+      } else {
+        params.push(node);
+      }
+    });
+
+    return S.SoyDoc(mark, lines.join('\n'), params);
+  },
   spaced(docStart)
-    .then(soyDocComment.many())
-    .map(lines => lines.join('\n')),
-  soyDocParam.many()
+    .then(soyDocParam.or(soyDocComment).many())
     .skip(spaced(docEnd))
 );
 
