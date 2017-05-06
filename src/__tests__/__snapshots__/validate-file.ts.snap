@@ -12,7 +12,8 @@ exports[`Validate file should fail; bad whitespace 2`] = `
 Array [
   "Param declarations in docs is [33mdeprecated[39m, see these templates:
 
-[31mrender[39m",
+[31mrender[39m
+[31motherHelper[39m",
 ]
 `;
 

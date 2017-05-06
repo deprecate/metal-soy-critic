@@ -2980,12 +2980,89 @@ Object {
       "params": Array [],
       "type": "Template",
     },
+    Object {
+      "attributes": Array [],
+      "body": Array [
+        Object {
+          "content": "$name",
+          "mark": Object {
+            "end": Object {
+              "column": 15,
+              "line": 30,
+              "offset": 326,
+            },
+            "start": Object {
+              "column": 8,
+              "line": 30,
+              "offset": 319,
+            },
+          },
+          "type": "Interpolation",
+        },
+      ],
+      "doc": Object {
+        "about": "otherHelper
+Some more docs
+",
+        "mark": Object {
+          "end": Object {
+            "column": 1,
+            "line": 29,
+            "offset": 288,
+          },
+          "start": Object {
+            "column": 1,
+            "line": 24,
+            "offset": 231,
+          },
+        },
+        "params": Array [
+          Object {
+            "mark": Object {
+              "end": Object {
+                "column": 2,
+                "line": 27,
+                "offset": 266,
+              },
+              "start": Object {
+                "column": 15,
+                "line": 25,
+                "offset": 249,
+              },
+            },
+            "name": "name",
+            "paramType": "any",
+            "required": true,
+            "type": "ParamDeclaration",
+          },
+        ],
+        "type": "SoyDoc",
+      },
+      "id": Object {
+        "name": "otherHelper",
+        "namespace": null,
+      },
+      "mark": Object {
+        "end": Object {
+          "column": 12,
+          "line": 31,
+          "offset": 344,
+        },
+        "start": Object {
+          "column": 1,
+          "line": 24,
+          "offset": 231,
+        },
+      },
+      "params": Array [],
+      "type": "Template",
+    },
   ],
   "mark": Object {
     "end": Object {
       "column": 1,
-      "line": 23,
-      "offset": 230,
+      "line": 32,
+      "offset": 345,
     },
     "start": Object {
       "column": 1,

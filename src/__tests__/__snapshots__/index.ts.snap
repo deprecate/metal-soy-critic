@@ -67,6 +67,7 @@ File - test/fixtures/DocParams.soy
      Param declarations in docs is deprecated, see these templates:
      
      render
+     otherHelper
 
 
 File - test/fixtures/Invalid.soy
