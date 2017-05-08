@@ -85,7 +85,7 @@ describe('Validate file', () => {
     expect(result.messages).toMatchSnapshot();
   }));
 
-  test('should fail; bad whitespace', () => validate('DocParams.soy').then(result => {
+  test('should fail; doc params deprecated', () => validate('DocParams.soy').then(result => {
     expect(result.status).toBe(false);
     expect(result.messages).toMatchSnapshot();
   }));

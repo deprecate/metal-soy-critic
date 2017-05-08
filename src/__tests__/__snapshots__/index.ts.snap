@@ -38,7 +38,7 @@ exports[`cli should print usage without args 1`] = `
 `;
 
 exports[`cli should recursively look for Soy files if passed a directory 1`] = `
-"19 out of 26 file(s) have problems:
+"14 out of 17 file(s) have problems:
 
 File - test/fixtures/BadTernaryElvis.soy
 
@@ -54,27 +54,12 @@ File - test/fixtures/BadWhitespace.soy
      Line 8: {@param title: string }
 
 
-File - test/fixtures/DelTemplate.soy
-
-     Cannot find a .render template, do you have a typo?
-     
-     First
-     Second
-
-
 File - test/fixtures/DocParams.soy
 
      Param declarations in docs is deprecated, see these templates:
      
      render
      otherHelper
-
-
-File - test/fixtures/Invalid.soy
-
-     Expected: '-'
-     '=\\"'
-     a letter
 
 
 File - test/fixtures/InvalidJS.soy
@@ -85,32 +70,6 @@ File - test/fixtures/InvalidJS.soy
 File - test/fixtures/InvalidNamespace.soy
 
      Expected: '{namespace'
-
-
-File - test/fixtures/LetStatements.soy
-
-     These map keys should be sorted:
-     
-     Lines 15 to 16
-
-
-
-     Use the Elvis (?:) operator instead of a ternary for default values:
-     
-     $name - Line 20
-
-
-File - test/fixtures/MapParam.soy
-
-     Please sort the params in these calls:
-     
-     OtherComponent.render - Lines 9 to 15
-
-
-
-     These map keys should be sorted:
-     
-     Lines 11 to 13
 
 
 File - test/fixtures/MissingCallImport.soy
@@ -152,13 +111,6 @@ File - test/fixtures/MissingRequired.soy
      These attributes are .required() in your Component but not in your Template:
      
      description
-
-
-File - test/fixtures/NestedCalls.soy
-
-     Please sort the params in these calls:
-     
-     OtherComponent.render - Lines 28 to 32
 
 
 File - test/fixtures/NoopEvents.soy

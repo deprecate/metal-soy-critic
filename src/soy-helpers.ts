@@ -1,4 +1,4 @@
-import * as S from './soy-types';
+import {types as S} from 'soyparser';
 
 export function fullName(node: S.Call | S.Template | S.DelTemplate): string {
   const namespace = node.id.namespace || '';

@@ -1,7 +1,7 @@
 import {fullName} from './soy-helpers';
 import {toResult, Result, joinErrors} from './util';
 import * as chalk from 'chalk';
-import * as S from './soy-types';
+import {types as S} from 'soyparser';
 import SoyContext from './soy-context';
 
 function hasEventsParam(params: Array<S.Param>): boolean {

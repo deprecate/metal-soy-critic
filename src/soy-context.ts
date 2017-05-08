@@ -1,6 +1,4 @@
-import * as S from './soy-types';
-import visit, {Visitor} from './soy-traverse';
-import parseSoy from './soy-parser';
+import parseSoy, {types as S, traverse} from 'soyparser';
 
 export default class SoyContext {
   readonly ast: S.Program;
@@ -20,7 +18,7 @@ export default class SoyContext {
     return this.raw.substring(mark.start.offset, mark.end.offset);
   }
 
-  visit(visitor: Visitor) {
-    visit(this.ast, visitor);
+  visit(visitor: traverse.Visitor) {
+    traverse.visit(this.ast, visitor);
   }
 }

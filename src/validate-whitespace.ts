@@ -1,6 +1,6 @@
 import {toResult, Result, joinErrors} from './util';
+import {types as S} from 'soyparser';
 import * as chalk from 'chalk';
-import * as S from './soy-types';
 import SoyContext from './soy-context';
 
 const paramDeclarationRegex = /\s+}/;

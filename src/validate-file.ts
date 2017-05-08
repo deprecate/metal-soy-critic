@@ -1,8 +1,8 @@
 import {combineResults, toResult, Result} from './util';
+import {SoyParseError} from 'soyparser';
 import * as fs from 'fs';
-import {SoyParseError} from './soy-parser';
-import SoyContext from './soy-context';
 import JSContext from './js-context';
+import SoyContext from './soy-context';
 
 /* Validators */
 import validateRenderTemplate from './validate-render-template';

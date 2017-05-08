@@ -1,7 +1,7 @@
 import {fullName} from './soy-helpers';
 import {toResult, Result, isSorted, joinErrors} from './util';
+import {types as S} from 'soyparser';
 import * as chalk from 'chalk';
-import * as S from './soy-types';
 import SoyContext from './soy-context';
 
 function formatMessage(node: S.Call): string {
