@@ -25,7 +25,8 @@ Array [
 
 exports[`Validate file should fail; invalid namespace 1`] = `
 Array [
-  "Expected: '{namespace'",
+  "Parsing failed at 1:1. Expecting:
+'{namespace'",
 ]
 `;
 
