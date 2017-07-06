@@ -20,6 +20,11 @@ describe('Validate file', () => {
     expect(result.messages.length).toBe(0);
   }));
 
+  test('should pass; case insensitive import', () => validate('CaseImport.soy').then(result => {
+    expect(result.status).toBe(true);
+    expect(result.messages.length).toBe(0);
+  }));
+
   test('should fail; missing params', () => validate('MissingParams.soy').then(result => {
     expect(result.status).toBe(false);
     expect(result.messages).toMatchSnapshot();

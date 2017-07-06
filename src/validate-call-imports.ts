@@ -1,4 +1,4 @@
-import {joinErrors, toResult, Result} from './util';
+import {includes, joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import * as path from 'path';
 import * as T from 'babel-types';
@@ -33,7 +33,7 @@ export default function valdiateCallImports(soyContext: SoyContext, jsContext: J
     .map(importPath => path.parse(importPath).name);
 
   const missingImports = getExternalSoyCalls(soyContext)
-    .filter(name => !importNames.includes(name));
+    .filter(name => !importNames.find(importName => includes(importName, name)));
 
   if (missingImports.length) {
     return toResult(
