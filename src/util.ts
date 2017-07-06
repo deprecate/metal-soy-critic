@@ -49,5 +49,5 @@ export function isSorted(items: Array<string>): boolean {
 }
 
 export function includes(source: string, target: string): boolean {
-  return source.toUpperCase().includes(target.toLocaleUpperCase());
+  return source.toUpperCase().includes(target.toUpperCase());
 }
