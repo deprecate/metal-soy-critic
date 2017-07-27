@@ -3,6 +3,7 @@ import {SoyParseError} from 'soyparser';
 import * as fs from 'fs';
 import JSContext from './js-context';
 import SoyContext from './soy-context';
+import {Config} from './config';
 
 /* Validators */
 import validateRenderTemplate from './validate-render-template';
@@ -22,8 +23,8 @@ import validateWhitespace from './validate-whitespace';
  * Validators should be added here. Each validator is a function that should
  * have one of the following signatures.
  */
-type Validator = (soyContext: SoyContext, jsContext: JSContext) => Result;
-type SoyValidator = (ast: SoyContext) => Result;
+type Validator = (soyContext: SoyContext, jsContext: JSContext, config: Config) => Result;
+type SoyValidator = (ast: SoyContext, config: Config) => Result;
 
 const validators: Array<Validator> = [
   validateCallImports,
@@ -68,28 +69,28 @@ async function getJSContext(filePath: string): Promise<JSContext> {
   return new JSContext(raw);
 }
 
-function runValidators(soyContext: SoyContext, jsContext: JSContext): Result {
+function runValidators(soyContext: SoyContext, jsContext: JSContext, config: Config): Result {
   return validators
-    .map(validator => validator(soyContext, jsContext))
+    .map(validator => validator(soyContext, jsContext, config))
     .reduce(combineResults);
 }
 
-function runSoyValidators(soyContext: SoyContext): Result {
+function runSoyValidators(soyContext: SoyContext, config: Config): Result {
   return soyValidators
-    .map(validator => validator(soyContext))
+    .map(validator => validator(soyContext, config))
     .reduce(combineResults);
 }
 
-async function validateWithSoy(soyContext: SoyContext, filePath: string): Promise<Result> {
+async function validateWithSoy(soyContext: SoyContext, filePath: string, config: Config): Promise<Result> {
   try {
     const jsContext = await getJSContext(getJSPath(filePath));
 
     return combineResults(
-      runSoyValidators(soyContext),
-      runValidators(soyContext, jsContext));
+      runSoyValidators(soyContext, config),
+      runValidators(soyContext, jsContext, config));
   } catch (err) {
     if (err.code === 'ENOENT') {
-      return runSoyValidators(soyContext);
+      return runSoyValidators(soyContext, config);
     } else if (err instanceof SyntaxError) {
       return toResult(false, 'Failed to parse component (javascript) file');
     }
@@ -97,11 +98,11 @@ async function validateWithSoy(soyContext: SoyContext, filePath: string): Promis
   }
 }
 
-export default async function validateFile(filePath: string): Promise<Result> {
+export default async function validateFile(filePath: string, config: Config): Promise<Result> {
   try {
     const soyContext = await getSoyContext(filePath);
 
-    return validateWithSoy(soyContext, filePath);
+    return validateWithSoy(soyContext, filePath, config);
   } catch (err) {
     if (err.code === 'ENOENT') {
       return toResult(false, 'Failed to open soy file, does it exist?');

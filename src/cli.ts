@@ -5,6 +5,7 @@ import * as chalk from 'chalk';
 import * as program from 'commander';
 import validateFile from './validate-file';
 import * as glob from 'glob';
+import {readConfig, Config} from './config';
 const pkg = require('../package.json');
 
 export async function main(argv: Array<string>): Promise<void> {
@@ -28,7 +29,9 @@ export async function main(argv: Array<string>): Promise<void> {
     return process.exit(1);
   }
 
-  const validations = await Promise.all(files.map(validate));
+  const config = readConfig();
+
+  const validations = await Promise.all(files.map(file => validate(file, config)));
   const failed = validations.filter(([_, result]) => !result.status);
   const passed = validations.filter(([_, result]) => result.status);
 
@@ -100,8 +103,8 @@ function printHeader(content = ''): void {
   console.log(chalk.yellow(content));
 }
 
-async function validate(filePath: string): Promise<[string, Result]> {
-  const result = await validateFile(filePath);
+async function validate(filePath: string, config: Config): Promise<[string, Result]> {
+  const result = await validateFile(filePath, config);
 
   return [filePath, result];
 }
