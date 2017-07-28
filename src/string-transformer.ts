@@ -12,8 +12,6 @@ function defaultFilter(input: string): string {
   return input;
 }
 
-changeCase;
-defaultFilter;
 export default function transform(input: string, regex: string, output: string): string {
   const matches = input.match(new RegExp(regex));
 
