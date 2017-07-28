@@ -2,9 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mthadley/metal-soy-critic.svg?branch=master)](https://travis-ci.org/mthadley/metal-soy-critic)
 
-A utility for validating your `metal-soy` components. This tool is not meant to
-to do the same work that your javascript or soy compiler already does. Instead
-it is meant to check for bad practices in your components.
+A utility for validating your `metal-soy` components. This tool is not meant to do the same work that your javascript or soy compiler already does. Instead it checks for anti-patterns in your components.
 
 ## Usage
 
@@ -28,7 +26,7 @@ $ mcritic . --ignore "**/{node_modules,classes,build}/**"
 
 ## Configuration
 
-By default, `mcritic` will recursively search parent folders for a `.soycriticrc` JSON file to find configuration. Example:
+By default, `mcritic` will recursively search parent folders for a `.soycriticrc` JSON file from the current working directory. Here is an example:
 
 ```json
 {
@@ -49,11 +47,11 @@ This property is used to provide matches for `callToImportReplace`. This should 
 
 ### `callToImportReplace`
 
-This property uses match groups defined in `callToImportRegex` to translate a component name in a soy template to it's corresponding import name when validing component imports.
+This property uses match groups defined in `callToImportRegex` to translate a component name in a soy template to its corresponding import name when validating their import.
 
-When referencing match groups from `callToImportRegex`, interpolation should be in the form `{$n}` where `n` is the match group number. An example would be `"{$1}.js"`.
+When referencing match groups from `callToImportRegex`, interpolation should be in the form of `{$n}`, where `n` is the match group number. An example would be `"{$1}.js"`.
 
-Interpolations can also contain named string transformations delimted by a `|`. This transformations correspond to the functions provided by [`change-case`](https://www.npmjs.com/package/change-case).
+Interpolations can also contain named string transformations delimited by a `|`. This transformation corresponds to the functions provided by [`change-case`](https://www.npmjs.com/package/change-case).
 
 Examples:
 * `"{$1|lower|snake}.js"`
