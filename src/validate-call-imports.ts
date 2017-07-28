@@ -30,6 +30,7 @@ function getImportPaths(ast: T.Node): Array<string> {
 }
 
 export default function valdiateCallImports(soyContext: SoyContext, jsContext: JSContext, config: Config): Result {
+  config;
   const importNames = getImportPaths(jsContext.ast)
     .map(importPath => path.parse(importPath).name);
 
