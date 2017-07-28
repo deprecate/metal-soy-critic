@@ -11,7 +11,7 @@ const pkg = require('../package.json');
 export async function main(argv: Array<string>): Promise<void> {
   const cli = program
     .version(pkg.version)
-    .usage('mcritic [options] <path>')
+    .usage('[options] <path>')
     .option('-i, --ignore <ignore>', 'A glob to ignore files, if passed a directory')
     .option('-v, --verbose', 'Output for all files')
     .parse(argv);
