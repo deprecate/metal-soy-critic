@@ -107,9 +107,3 @@ describe('isSorted', () => {
     expect(Util.isSorted(word)).toBe(true);
   });
 });
-
-describe('includes', () => {
-  test('should search case insenstively', () => {
-    expect(Util.includes('foobarbaz', 'BAR')).toBe(true);
-  });
-});

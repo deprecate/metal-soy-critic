@@ -1,10 +1,11 @@
 import * as child_process from 'child_process';
+import * as path from 'path';
 
 describe('cli', () => {
-  function runCli(...args: Array<string>): Promise<[number, string]> {
+  function runCliFrom(bin: string, cwd: string, ...args: Array<string>): Promise<[number, string]> {
     return new Promise((resolve, reject) => {
       const output: Array<string> = [];
-      const child = child_process.fork('./lib/index.js', args, {silent: true});
+      const child = child_process.fork(bin, args, {cwd, silent: true});
 
       child.stdout.on('data', data => {
         output.push(data.toString());
@@ -14,6 +15,10 @@ describe('cli', () => {
         resolve([code, output.join('')]);
       });
     });
+  }
+
+  function runCli(...args: Array<string>): Promise<[number, string]> {
+    return runCliFrom('./lib/index.js', process.cwd(), ...args);
   }
 
   test('should print usage without args', async () => {
@@ -53,6 +58,16 @@ describe('cli', () => {
 
   test('should accept an ignore glob', async () => {
     const [exitCode, output] = await runCli('test/fixtures', '--ignore', '**/*.soy');
+
+    expect(exitCode).toBe(0);
+    expect(output).toMatchSnapshot();
+  });
+
+  test('should run using config file', async () => {
+    const [exitCode, output] = await runCliFrom(
+      '../../../lib/index.js',
+       './test/fixtures/config',
+      '../TransformedImport.soy');
 
     expect(exitCode).toBe(0);
     expect(output).toMatchSnapshot();

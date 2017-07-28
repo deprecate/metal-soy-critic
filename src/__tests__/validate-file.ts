@@ -1,9 +1,10 @@
 import {getFixturePath}  from '../../test/util';
 import validateFile from '../validate-file';
+import {DEFAULT_CONFIG} from '../config';
 
 describe('Validate file', () => {
   function validate(fileName) {
-    return validateFile(getFixturePath(fileName));
+    return validateFile(getFixturePath(fileName), DEFAULT_CONFIG);
   }
 
   test('should pass', () => validate('Test.soy').then(result => {
@@ -20,7 +21,7 @@ describe('Validate file', () => {
     expect(result.messages.length).toBe(0);
   }));
 
-  test('should pass; case insensitive import', () => validate('CaseImport.soy').then(result => {
+  test('should pass; valid import', () => validate('CaseImport.soy').then(result => {
     expect(result.status).toBe(true);
     expect(result.messages.length).toBe(0);
   }));

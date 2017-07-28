@@ -1,7 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import 'OtherComponent';
+import 'other-component';
 import templates from './CaseImport.soy';
 import {Config} from 'metal-state';
 

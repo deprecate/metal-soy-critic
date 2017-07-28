@@ -1,4 +1,4 @@
-import {includes, joinErrors, toResult, Result} from './util';
+import {joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import * as path from 'path';
 import * as T from 'babel-types';
@@ -6,6 +6,7 @@ import jsTraverse from 'babel-traverse';
 import SoyContext from './soy-context';
 import JSContext from './js-context';
 import {Config} from './config';
+import transform from './string-transformer';
 
 function getExternalSoyCalls(soyContext: SoyContext): Array<string> {
   const calls: Set<string> = new Set();
@@ -35,7 +36,10 @@ export default function valdiateCallImports(soyContext: SoyContext, jsContext: J
     .map(importPath => path.parse(importPath).name);
 
   const missingImports = getExternalSoyCalls(soyContext)
-    .filter(name => !importNames.find(importName => includes(importName, name)));
+    .filter(name => {
+      name = transform(name, config.callToImportRegex, config.callToImportReplace);
+      return !importNames.find(importName => importName.includes(name));
+    });
 
   if (missingImports.length) {
     return toResult(

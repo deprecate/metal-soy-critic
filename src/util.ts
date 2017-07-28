@@ -47,7 +47,3 @@ export function isSorted(items: Array<string>): boolean {
 
   return sortedItems.join() === items.join();
 }
-
-export function includes(source: string, target: string): boolean {
-  return source.toUpperCase().includes(target.toUpperCase());
-}

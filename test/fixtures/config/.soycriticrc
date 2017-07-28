@@ -1,3 +1,4 @@
 {
-  "jsImportToSoyCallRegex": "foo"
+  "callToImportRegex": "(\\S+)",
+  "callToImportReplace": "{$1|param}"
 }

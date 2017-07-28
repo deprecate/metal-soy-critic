@@ -4,13 +4,15 @@ import * as process from 'process';
 
 const CONFIG_FILE_NAME = '.soycriticrc';
 
-const DEFAULT_CONFIG = {
-  jsImportToSoyCallRegex: '.*'
-};
-
 export interface Config {
-  jsImportToSoyCallRegex: string
+  callToImportRegex: string
+  callToImportReplace: string
 }
+
+export const DEFAULT_CONFIG: Config = {
+  callToImportRegex: '(.*)',
+  callToImportReplace: '{$1}'
+};
 
 export function readConfig(): Config {
   const filePath = getConfigFilePath();

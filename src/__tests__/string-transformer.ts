@@ -18,4 +18,22 @@ describe('string-transformer', () => {
   it('should throw an error if fails to match input', () => {
     expect(() => transform('23Bar42', 'Baz', '')).toThrowError();
   });
+
+  it('should apply filters to match input', () => {
+    const result = transform('FooBAR', 'Foo(BAR)', '{$1|lower}');
+
+    expect(result).toBe('bar');
+  });
+
+  it('should apply multipe filters to matched input', () => {
+    const result = transform('SomeThing.js', '(\\S+).js', '{$1|snake|upper}.js');
+
+    expect(result).toBe('SOME_THING.js');
+  });
+
+  it('should work with default values', () => {
+    const result = transform('SomeThing.js', '(.*)', '{$1}');
+
+    expect(result).toBe('SomeThing.js');
+  });
 });

@@ -35,7 +35,7 @@ describe('config', () => {
       const config = Config.readConfig();
 
       expect(config).toBeInstanceOf(Object);
-      expect(config.jsImportToSoyCallRegex).toBe('.*');
+      expect(config.callToImportRegex).toBe('(.*)');
     });
 
     it('should return a configuration specificied in a file', () => {
@@ -43,7 +43,7 @@ describe('config', () => {
 
       const config = Config.readConfig();
 
-      expect(config.jsImportToSoyCallRegex).toBe('foo');
+      expect(config.callToImportRegex).toBe('(\\S+)');
     });
   });
 });

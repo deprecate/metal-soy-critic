@@ -38,7 +38,7 @@ exports[`cli should print usage without args 1`] = `
 `;
 
 exports[`cli should recursively look for Soy files if passed a directory 1`] = `
-"14 out of 18 file(s) have problems:
+"15 out of 19 file(s) have problems:
 
 File - test/fixtures/BadTernaryElvis.soy
 
@@ -135,6 +135,13 @@ File - test/fixtures/SortedParams.soy
      OtherComponent.render - Lines 8 to 11
 
 
+File - test/fixtures/TransformedImport.soy
+
+     It looks like the following component calls are missing an import:
+     
+     OtherComponent
+
+
 File - test/fixtures/UnsortedMap.soy
 
      These map keys should be sorted:
@@ -142,6 +149,12 @@ File - test/fixtures/UnsortedMap.soy
      Lines 10 to 12
      Lines 18 to 20
 
+
+"
+`;
+
+exports[`cli should run using config file 1`] = `
+"0 out of 1 file(s) have problems:
 
 "
 `;
