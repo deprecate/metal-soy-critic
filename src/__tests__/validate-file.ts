@@ -16,11 +16,6 @@ describe('Validate file', () => {
     expect(result.messages.length).toBe(0);
   }));
 
-  test('should pass; ignores subclasses', () => validate('IgnoreSubclass.soy').then(result => {
-    expect(result.status).toBe(true);
-    expect(result.messages.length).toBe(0);
-  }));
-
   test('should pass; valid import', () => validate('CaseImport.soy').then(result => {
     expect(result.status).toBe(true);
     expect(result.messages.length).toBe(0);
