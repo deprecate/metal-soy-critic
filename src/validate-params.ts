@@ -4,14 +4,6 @@ import SoyContext from './soy-context';
 import JSContext from './js-context';
 
 export default function validateParams(soyContext: SoyContext, jsContext: JSContext): Result {
-  /**
-   * We just skip validation if the default class does not extend from Component.
-   * TODO: See if we can resolve and parse the parent class' STATE.
-   */
-  if (jsContext.getSuperClassImportPath() !== 'metal-component') {
-    return toResult(true);
-  }
-
   const jsParams = jsContext.getParamNames();
   const classMethods = jsContext.getClassMethodNames();
 

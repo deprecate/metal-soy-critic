@@ -38,7 +38,7 @@ exports[`cli should print usage without args 1`] = `
 `;
 
 exports[`cli should recursively look for Soy files if passed a directory 1`] = `
-"15 out of 19 file(s) have problems:
+"15 out of 18 file(s) have problems:
 
 File - test/fixtures/BadTernaryElvis.soy
 
