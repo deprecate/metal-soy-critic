@@ -7,11 +7,13 @@ const CONFIG_FILE_NAME = '.soycriticrc';
 export interface Config {
   callToImportRegex: string
   callToImportReplace: string
+  implicitParams: any
 }
 
 export const DEFAULT_CONFIG: Config = {
   callToImportRegex: '(.*)',
-  callToImportReplace: '{$1}'
+  callToImportReplace: '{$1}',
+  implicitParams: {}
 };
 
 export function readConfig(): Config {

@@ -1,4 +1,8 @@
 {
   "callToImportRegex": "(\\S+)",
-  "callToImportReplace": "{$1|param}"
+  "callToImportReplace": "{$1|param}",
+  "implicitParams": {
+    "*Component": ["additionalParam"],
+    "Foo": ["bar"]
+  }
 }
