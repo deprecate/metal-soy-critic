@@ -2,18 +2,22 @@ import {joinErrors, toResult, Result} from './util';
 import * as chalk from 'chalk';
 import SoyContext from './soy-context';
 import JSContext from './js-context';
-import {Config} from './config';
+import {Config, ImplicitParamsMap} from './config';
 
-function getImplicitParams(className: string | null, paramsMap: any):string[] {
-  return className ? Object.keys(paramsMap)
-    .filter(regex => className.match(new RegExp(regex)))
-    .reduce((acc, value) => acc.concat(paramsMap[value]), []) : [];
+function getImplicitParams(className: string, paramsMap: ImplicitParamsMap): Array<string> {
+  const initialImplicitParams: Array<string> = [];
+
+  return Object.keys(paramsMap)
+    .filter(nameOrRegex => className.match(new RegExp(nameOrRegex)))
+    .reduce((acc, value) => acc.concat(paramsMap[value]), initialImplicitParams);
 }
 
 export default function validateParams(soyContext: SoyContext, jsContext: JSContext, config: Config): Result {
   const jsParams = jsContext.getParamNames();
   const classMethods = jsContext.getClassMethodNames();
-  const implicitParams = getImplicitParams(jsContext.getClassName(), config.implicitParams);
+
+  const className = jsContext.getClassName();
+  const implicitParams = className ? getImplicitParams(className, config.implicitParams) : [];
 
   const missingParams = soyContext.getRenderParams()
     .map(param => param.name)
