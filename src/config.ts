@@ -4,10 +4,14 @@ import * as process from 'process';
 
 const CONFIG_FILE_NAME = '.soycriticrc';
 
+export interface ImplicitParamsMap {
+  [nameOrRegex: string]: string | Array<string>
+}
+
 export interface Config {
   callToImportRegex: string
   callToImportReplace: string
-  implicitParams: any
+  implicitParams: ImplicitParamsMap
 }
 
 export const DEFAULT_CONFIG: Config = {
