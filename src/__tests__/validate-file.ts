@@ -3,8 +3,8 @@ import validateFile from '../validate-file';
 import {DEFAULT_CONFIG} from '../config';
 
 describe('Validate file', () => {
-  function validate(fileName) {
-    return validateFile(getFixturePath(fileName), DEFAULT_CONFIG);
+  function validate(fileName, config = DEFAULT_CONFIG) {
+    return validateFile(getFixturePath(fileName), config);
   }
 
   test('should pass', () => validate('Test.soy').then(result => {
