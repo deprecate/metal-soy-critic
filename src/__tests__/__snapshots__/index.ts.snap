@@ -92,6 +92,8 @@ File - test/fixtures/MissingParams.soy
      These params can't be found in STATE or your Class:
      
      optionalInfo
+     optionalInfo2
+     optionalInfo3
 
 
 File - test/fixtures/MissingRender.soy

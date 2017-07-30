@@ -50,7 +50,9 @@ exports[`Validate file should fail; missing params 1`] = `
 Array [
   "These params can't be found in [33mSTATE[39m or your [33mClass[39m:
 
-[31moptionalInfo[39m",
+[31moptionalInfo[39m
+[31moptionalInfo2[39m
+[31moptionalInfo3[39m",
 ]
 `;
 
@@ -113,3 +115,5 @@ Array [
 [31mOtherComponent.render - Lines 8 to 11[39m",
 ]
 `;
+
+exports[`Validate file should pass; missing params 1`] = `Array []`;
