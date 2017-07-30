@@ -63,6 +63,14 @@ export default class JSContext {
     return methodNames;
   }
 
+  getClassName(): string | null {
+    if (this._defaultBinding && T.isClassDeclaration(this._defaultBinding.path.node)) {
+      return this._defaultBinding.path.node.id.name;
+    }
+
+    return null;
+  }
+
   getParentClassName(): string | null {
     if (this._defaultBinding && T.isClassDeclaration(this._defaultBinding.path.node)) {
       return JSContext.getNameOrMemberName(this._defaultBinding.path.node.superClass);
