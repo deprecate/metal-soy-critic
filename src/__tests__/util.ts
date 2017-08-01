@@ -5,8 +5,8 @@ describe('toResult', () => {
     const result = Util.toResult(true, 'message');
 
     expect(result).toEqual({
+      messages: ['message'],
       status: true,
-      messages: ['message']
     });
   });
 
@@ -14,8 +14,8 @@ describe('toResult', () => {
     const result = Util.toResult(false);
 
     expect(result).toEqual({
+      messages: [],
       status: false,
-      messages: []
     });
   });
 });
@@ -33,17 +33,17 @@ describe('combineResults', () => {
     const result = Util.combineResults(
       {
         messages: [],
-        status: true
+        status: true,
       },
       {
         messages: [],
-        status: true
-      }
+        status: true,
+      },
     );
 
     expect(result).toEqual({
+      messages: [],
       status: true,
-      messages: []
     });
   });
 
@@ -51,17 +51,17 @@ describe('combineResults', () => {
     const result = Util.combineResults(
       {
         messages: ['nope'],
-        status: false
+        status: false,
       },
       {
         messages: [],
-        status: true
-      }
+        status: true,
+      },
     );
 
     expect(result).toEqual({
+      messages: ['nope'],
       status: false,
-      messages: ['nope']
     });
   });
 
@@ -69,17 +69,17 @@ describe('combineResults', () => {
     const result = Util.combineResults(
       {
         messages: ['nope'],
-        status: false
+        status: false,
       },
       {
         messages: ['nah'],
-        status: false
-      }
+        status: false,
+      },
     );
 
     expect(result).toEqual({
+      messages: ['nope', 'nah'],
       status: false,
-      messages: ['nope', 'nah']
     });
   });
 });
@@ -91,8 +91,8 @@ describe('difference', () => {
 
     expect(Util.difference(setA, setB)).toEqual(new Set([3]));
     expect(Util.difference(setB, setA)).toEqual(new Set([4]));
-  })
-})
+  });
+});
 
 describe('isSorted', () => {
   test('should return false', () => {

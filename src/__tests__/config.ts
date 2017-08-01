@@ -1,5 +1,5 @@
-import * as Config from '../config';
 import * as process from 'process';
+import * as Config from '../config';
 
 describe('config', () => {
   describe('getConfigFilePath', () => {

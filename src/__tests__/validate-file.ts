@@ -1,14 +1,14 @@
-import {getFixturePath}  from '../../test/util';
-import validateFile from '../validate-file';
+import {getFixturePath} from '../../test/util';
 import {DEFAULT_CONFIG} from '../config';
+import validateFile from '../validate-file';
 
 describe('Validate file', () => {
   const implicitParamsConfig = {
     implicitParams: {
-      "Test": ["optionalInfo"],
-      "^T.*": "optionalInfo2",
-      ".*st$": ["optionalInfo3"]
-    }
+      '.*st$': ['optionalInfo3'],
+      'Test': ['optionalInfo'],
+      '^T.*': 'optionalInfo2',
+    },
   };
 
   function validate(fileName, config = DEFAULT_CONFIG) {
@@ -34,7 +34,9 @@ describe('Validate file', () => {
     expect(result.messages).toMatchSnapshot();
   }));
 
-  test('should pass; missing params', () => validate('MissingParams.soy', {...DEFAULT_CONFIG, ...implicitParamsConfig}).then(result => {
+  test('should pass; missing params', () => validate(
+    'MissingParams.soy',
+    {...DEFAULT_CONFIG, ...implicitParamsConfig}).then(result => {
     expect(result.status).toBe(true);
     expect(result.messages).toMatchSnapshot();
   }));

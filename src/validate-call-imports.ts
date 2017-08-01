@@ -1,12 +1,12 @@
-import {joinErrors, toResult, Result} from './util';
-import * as chalk from 'chalk';
-import * as path from 'path';
-import * as T from 'babel-types';
-import jsTraverse from 'babel-traverse';
-import SoyContext from './soy-context';
-import JSContext from './js-context';
-import {Config} from './config';
 import transform from './string-transformer';
+import SoyContext from './soy-context';
+import jsTraverse from 'babel-traverse';
+import JSContext from './js-context';
+import * as T from 'babel-types';
+import * as path from 'path';
+import * as chalk from 'chalk';
+import {joinErrors, toResult, Result} from './util';
+import {Config} from './config';
 
 function getExternalSoyCalls(soyContext: SoyContext): Array<string> {
   const calls: Set<string> = new Set();
