@@ -62,6 +62,25 @@ Examples:
 |----|-------|
 |string|`"{$1}"`|
 
+### `implicitParams`
+
+This property is used to provide implicit params when checking if a Soy param is present in a component's STATE configuration. Here is an example:
+
+```json
+{
+  "implicitParams": {
+    ".*Clay": ["visible", "elementClasses"],
+    "DropDown": "open"
+  }
+}
+```
+
+Each key shoud be a valid `RegExp` string, which will be used to match a class name in your project. When a match is found, the value (which should be a `string` or `Array<string>`) will be added to the available params for that `class` when compared against it's Soy file.
+
+|Type|Default|
+|----|-------|
+|object|`{}`|
+
 ## Contributing
 
 Feature requests, issues, and pull requests are welcome!
