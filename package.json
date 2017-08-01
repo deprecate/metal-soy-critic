@@ -11,6 +11,7 @@
     "lib"
   ],
   "scripts": {
+    "lint": "tslint src/**/*.ts",
     "test": "npm run compile && jest",
     "compile": "tsc",
     "prepublish": "npm run compile"
@@ -58,6 +59,7 @@
     "@types/node": "^7.0.8",
     "@types/parsimmon": "^1.0.2",
     "jest": "^19.0.2",
+    "tslint": "^5.5.0",
     "typescript": "^2.3.2"
   }
 }
