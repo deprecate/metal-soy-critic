@@ -26,7 +26,7 @@ $ mcritic . --ignore "**/{node_modules,classes,build}/**"
 
 ## Configuration
 
-By default, `mcritic` will recursively search the current and parent folders for a `.soycriticrc.json` JSON file from the current working directory. Here is an example:
+By default, `mcritic` will recursively search the current and parent folders for a `.soycriticrc.json` file from the current working directory. Here is an example:
 
 ```json
 {
