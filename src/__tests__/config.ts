@@ -38,12 +38,36 @@ describe('config', () => {
       expect(config.callToImportRegex).toBe('(.*)');
     });
 
-    it('should return a configuration specificied in a file', () => {
+    it('should return a configuration specified in a file', () => {
       process.chdir('./test/fixtures/config');
 
       const config = Config.readConfig();
 
       expect(config.callToImportRegex).toBe('(\\S+)');
+    });
+  });
+
+  describe('isRegex', () => {
+    it('should return true if the string is a regex', () => {
+      expect(Config.isRegex('foo')).toBe(true);
+      expect(Config.isRegex('foo.*')).toBe(true);
+      expect(Config.isRegex('foo(.*')).toBe(false);
+    });
+  });
+
+  describe('validateConfig', () => {
+    it('should return the config for valid a config', () => {
+      expect(Config.validateConfig(Config.DEFAULT_CONFIG)).toMatchObject(Config.DEFAULT_CONFIG);
+    });
+
+    it('should throw an Error if the config is invalid', () => {
+      const invalidConfig = {
+        callToImportRegex: '(asd',
+        callToImportReplace: 'bar',
+        implicitParams: {},
+      };
+
+      expect(() => Config.validateConfig(invalidConfig)).toThrowError();
     });
   });
 });

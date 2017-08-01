@@ -72,4 +72,14 @@ describe('cli', () => {
     expect(exitCode).toBe(0);
     expect(output).toMatchSnapshot();
   });
+
+  test('should fail with invalid config file', async () => {
+    const [exitCode, output] = await runCliFrom(
+      '../../../lib/index.js',
+       './test/fixtures/invalid-config',
+      '../TransformedImport.soy');
+
+    expect(exitCode).toBe(1);
+    expect(output).toMatchSnapshot();
+  });
 });

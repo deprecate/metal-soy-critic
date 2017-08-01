@@ -29,7 +29,12 @@ export async function main(argv: Array<string>): Promise<void> {
     return process.exit(1);
   }
 
-  const config = readConfig();
+  try {
+    var config = readConfig();
+  } catch(e) {
+    console.log(chalk.red(`Failed to read config: ${e.message}`));
+    return process.exit(1);
+  }
 
   const validations = await Promise.all(files.map(file => validate(file, config)));
   const failed = validations.filter(([_, result]) => !result.status);

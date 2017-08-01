@@ -20,19 +20,35 @@ export const DEFAULT_CONFIG: Config = {
   implicitParams: {}
 };
 
+export function validateConfig(config: Config): Config {
+  if (!isRegex(config.callToImportRegex)) {
+    throw new Error('callToImportRegex is not a valid RegExp.');
+  }
+
+  if (!isRegex(config.callToImportReplace)) {
+    throw new Error('callToImportReplace is not a valid replace string.');
+  }
+
+  for (const key in config.implicitParams) {
+    if (!isRegex(key)) {
+      throw new Error(`"${key}" is not a valid RegExp.`);
+    }
+  }
+
+  return config;
+}
+
 export function readConfig(): Config {
   const filePath = getConfigFilePath();
   let config = {};
 
   if (filePath) {
-    try {
-      const buffer = fs.readFileSync(filePath);
+    const buffer = fs.readFileSync(filePath);
 
-      config = JSON.parse(buffer.toString('utf8'));
-    } catch(e) {}
+    config = JSON.parse(buffer.toString('utf8'));
   }
 
-  return {...DEFAULT_CONFIG, ...config};
+  return validateConfig({...DEFAULT_CONFIG, ...config});
 }
 
 export function getConfigFilePath(): string | null {
@@ -48,4 +64,13 @@ export function getConfigFilePath(): string | null {
   }
 
   return null;
+}
+
+export function isRegex(regex: string): boolean {
+  try {
+    new RegExp(regex);
+  } catch(e) {
+    return false;
+  }
+  return true;
 }
