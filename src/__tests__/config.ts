@@ -27,7 +27,7 @@ describe('config', () => {
   describe('readConfig', () => {
     const cwd = process.cwd();
 
-    afterAll(() => {
+    afterEach(() => {
       process.chdir(cwd);
     });
 
@@ -44,6 +44,14 @@ describe('config', () => {
       const config = Config.readConfig();
 
       expect(config.callToImportRegex).toBe('(\\S+)');
+    });
+
+    it('should read config files with a json extension', () => {
+      process.chdir('./test/fixtures/config-json');
+
+      const config = Config.readConfig();
+
+      expect(config.callToImportRegex).toBe('json');
     });
   });
 

@@ -1,0 +1,4 @@
+{
+  "callToImportRegex": "json",
+  "callToImportReplace": "{$1|param}"
+}

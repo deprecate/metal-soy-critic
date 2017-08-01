@@ -2,7 +2,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as process from 'process';
 
-const CONFIG_FILE_NAME = '.soycriticrc';
+const CONFIG_FILE_NAMES = [
+  '.soycriticrc',
+  '.soycriticrc.json',
+];
 
 export interface ImplicitParamsMap {
   [nameOrRegex: string]: string | Array<string>
@@ -55,10 +58,12 @@ export function getConfigFilePath(): string | null {
   let currentPath = process.cwd();
 
   while (currentPath !== '/') {
-    const nextPath = path.join(currentPath, '/', CONFIG_FILE_NAME);
+    for (const fileName of CONFIG_FILE_NAMES) {
+      const nextPath = path.join(currentPath, '/', fileName);
 
-    if (fs.existsSync(nextPath)) {
-      return nextPath;
+      if (fs.existsSync(nextPath)) {
+        return nextPath;
+      }
     }
     currentPath = path.dirname(currentPath);
   }
