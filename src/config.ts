@@ -1,3 +1,4 @@
+import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as process from 'process';
@@ -52,6 +53,22 @@ export function validateConfig(config: Config): Config {
   return config;
 }
 
+export function convertConfig(config: any): Config {
+  if (config.callToImportRegex && config.callToImportReplace) {
+    config.callToImport = [
+      {
+        regex: config.callToImportRegex,
+        replace: config.callToImportReplace
+      }
+    ];
+
+    console.log(chalk.yellow('CONFIG API HAS CHANGED, PLEASE UPDATE\n'));
+    console.log('\tYour callToImport configuration is outdated, update it to new API.\n');
+  }
+ 
+ return config;
+}
+
 export function readConfig(): Config {
   const filePath = getConfigFilePath();
   let config = {};
@@ -61,7 +78,9 @@ export function readConfig(): Config {
 
     config = JSON.parse(buffer.toString('utf8'));
   }
-
+  
+  config = convertConfig(config);
+  
   return validateConfig({...DEFAULT_CONFIG, ...config});
 }
 
