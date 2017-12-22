@@ -1,7 +1,12 @@
+before_install:
+  - nvm install 8
+
+install:
+  - npm install
+
 language: node_js
-node_js:
-  - "node"
-  - "6"
-script:
-  - npm test
+
+script: 
+  - npm run compile
   - npm run lint
+  - npm run jest

@@ -11,10 +11,11 @@
     "lib"
   ],
   "scripts": {
-    "lint": "tslint src/**/*.ts",
-    "test": "npm run compile && jest",
     "compile": "tsc",
-    "prepublish": "npm run compile"
+    "jest": "jest",
+    "lint": "tslint src/**/*.ts",
+    "prepublish": "npm run compile",
+    "test": "npm run compile && jest"
   },
   "jest": {
     "moduleFileExtensions": [
