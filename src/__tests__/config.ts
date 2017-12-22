@@ -53,6 +53,15 @@ describe('config', () => {
 
       expect(config.callToImport).toEqual([{regex: 'json', replace: '{$1|param}'}]);
     });
+
+    it('should return a converted configuration specified in a file if is found in the old way', () => {
+      process.chdir('./test/fixtures/deprecated-config');
+
+      const config = Config.readConfig();
+
+      expect(config.callToImport).toEqual([{regex: '(\\S+)', replace: '{$1|param}'}]);
+    });
+    
   });
 
   describe('isRegex', () => {
