@@ -30,37 +30,42 @@ By default, `mcritic` will recursively search the current and parent folders for
 
 ```json
 {
-  "callToImportRegex": "(\\S+)",
-  "callToImportReplace": "{$1|param}"
+  "callToImport": [
+    {
+      "regex": "(\\S+)",
+      "replace": "{$1|param}"
+    }
+  ]
 }
 ```
 
 Here are the currently supported **settings**:
 
-### `callToImportRegex`
+### `callToImport`
 
-This property is used to provide matches for `callToImportReplace`. This should be a standard javascript regex that contains capture groups to be referenced in `callToImportReplace`.
+This property is used to provide a list of replacement configurations. Each list item must contain two properties:
+
+- `regex`
+
+  This property is used to provide matches for `replace`. This should be a standard javascript regex that contains capture groups to be referenced in `replace`.
+
+- `replace`
+
+  This property uses match groups defined in `regex` to translate a component name in a soy template to its corresponding import name when validating their import.
+
+  When referencing match groups from `regex`, interpolation should be in the form of `{$n}`, where `n` is the match group number. An example would be `"{$1}.js"`.
+
+  Interpolations can also contain named string transformations delimited by a `|`. This transformation corresponds to the functions provided by [`change-case`](https://www.npmjs.com/package/change-case).
+
+  Examples:
+  * `"{$1|lower|snake}.js"`
+  * `"{$2}-{$1}"`
+  * `"{$1|dot}.js"`
+
 
 |Type|Default|
 |----|-------|
-|string|`"(.*)"`|
-
-### `callToImportReplace`
-
-This property uses match groups defined in `callToImportRegex` to translate a component name in a soy template to its corresponding import name when validating their import.
-
-When referencing match groups from `callToImportRegex`, interpolation should be in the form of `{$n}`, where `n` is the match group number. An example would be `"{$1}.js"`.
-
-Interpolations can also contain named string transformations delimited by a `|`. This transformation corresponds to the functions provided by [`change-case`](https://www.npmjs.com/package/change-case).
-
-Examples:
-* `"{$1|lower|snake}.js"`
-* `"{$2}-{$1}"`
-* `"{$1|dot}.js"`
-
-|Type|Default|
-|----|-------|
-|string|`"{$1}"`|
+|array|`"[{"regex": "(.*)", "replace": "{$1}"}]"`|
 
 ### `implicitParams`
 
