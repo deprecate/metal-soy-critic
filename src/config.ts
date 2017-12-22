@@ -7,29 +7,40 @@ const CONFIG_FILE_NAMES = [
   '.soycriticrc.json',
 ];
 
+type CallToImportConfig = {
+  regex: string;
+  replace: string;
+}
+
 export interface ImplicitParamsMap {
   [nameOrRegex: string]: string | Array<string>
 }
 
 export interface Config {
-  callToImportRegex: string
-  callToImportReplace: string
+  callToImport: Array<CallToImportConfig>
   implicitParams: ImplicitParamsMap
 }
 
 export const DEFAULT_CONFIG: Config = {
-  callToImportRegex: '(.*)',
-  callToImportReplace: '{$1}',
+  callToImport: [{regex: '(.*)',replace: '{$1}'}],
   implicitParams: {}
 };
 
 export function validateConfig(config: Config): Config {
-  if (!isRegex(config.callToImportRegex)) {
-    throw new Error('callToImportRegex is not a valid RegExp.');
+  if (!Array.isArray(config.callToImport)) {
+    throw new Error('callToImport is not a valid config array.');
   }
 
-  if (!isRegex(config.callToImportReplace)) {
-    throw new Error('callToImportReplace is not a valid replace string.');
+  for (let i=0; i < config.callToImport.length; i++) {
+    let callToImportItem = config.callToImport[i];
+
+    if (!isRegex(callToImportItem.regex)) {
+      throw new Error(`callToImport.regex "${callToImportItem.regex}" is not a valid RegExp.`);
+    }
+
+    if (!isRegex(callToImportItem.replace)) {
+      throw new Error(`callToImport.replace "${callToImportItem.replace}" is not a valid replace string.`);
+    }
   }
 
   for (const key in config.implicitParams) {
