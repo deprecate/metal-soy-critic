@@ -1,4 +1,8 @@
 {
-  "callToImportRegex": "json",
-  "callToImportReplace": "{$1|param}"
+  "callToImport": [
+    {
+      "regex": "json",
+      "replace": "{$1|param}"
+    }
+  ]
 }

@@ -7,7 +7,7 @@ exports[`cli should accept an ignore glob 1`] = `
 `;
 
 exports[`cli should fail with invalid config file 1`] = `
-"Failed to read config: callToImportRegex is not a valid RegExp.
+"Failed to read config: callToImport.regex \\"(\\\\S+\\" is not a valid RegExp.
 "
 `;
 

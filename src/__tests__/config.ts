@@ -35,7 +35,7 @@ describe('config', () => {
       const config = Config.readConfig();
 
       expect(config).toBeInstanceOf(Object);
-      expect(config.callToImportRegex).toBe('(.*)');
+      expect(config.callToImport).toEqual([{regex: '(.*)', replace: '{$1}'}]);
     });
 
     it('should return a configuration specified in a file', () => {
@@ -43,7 +43,7 @@ describe('config', () => {
 
       const config = Config.readConfig();
 
-      expect(config.callToImportRegex).toBe('(\\S+)');
+      expect(config.callToImport).toEqual([{regex: '(\\S+)', replace: '{$1|param}'}]);
     });
 
     it('should read config files with a json extension', () => {
@@ -51,7 +51,7 @@ describe('config', () => {
 
       const config = Config.readConfig();
 
-      expect(config.callToImportRegex).toBe('json');
+      expect(config.callToImport).toEqual([{regex: 'json', replace: '{$1|param}'}]);
     });
   });
 
@@ -70,8 +70,12 @@ describe('config', () => {
 
     it('should throw an Error if the config is invalid', () => {
       const invalidConfig = {
-        callToImportRegex: '(asd',
-        callToImportReplace: 'bar',
+        callToImport: [
+          {
+            regex: '(asd',
+            replace: 'bar',
+          }
+        ],
         implicitParams: {},
       };
 
