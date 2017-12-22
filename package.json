@@ -5,7 +5,7 @@
   "engines": {
     "node": ">=6.4.0"
   },
-  "repository": "https://github.com/mthadley/metal-soy-critic",
+  "repository": "https://github.com/metal/metal-soy-critic",
   "main": "./lib/index.js",
   "files": [
     "lib"
