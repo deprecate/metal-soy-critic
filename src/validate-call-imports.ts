@@ -33,11 +33,18 @@ function getImportPaths(ast: T.Node): Array<string> {
 export default function valdiateCallImports(soyContext: SoyContext, jsContext: JSContext, config: Config): Result {
   const importNames = getImportPaths(jsContext.ast)
     .map(importPath => path.parse(importPath).name);
-
-  const missingImports = getExternalSoyCalls(soyContext)
+    
+    const missingImports = getExternalSoyCalls(soyContext)
     .filter(name => {
-      name = transform(name, config.callToImportRegex, config.callToImportReplace);
-      return !importNames.find(importName => importName.includes(name));
+      for (let i=0; i < config.callToImport.length; i++) {
+        let transformedName = transform(name, config.callToImport[i].regex, config.callToImport[i].replace);
+
+        if (importNames.find(importName => importName.includes(transformedName))) {
+          return false;
+        }
+      }
+
+      return true;
     });
 
   if (missingImports.length) {
