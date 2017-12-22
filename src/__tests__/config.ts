@@ -61,7 +61,6 @@ describe('config', () => {
 
       expect(config.callToImport).toEqual([{regex: '(\\S+)', replace: '{$1|param}'}]);
     });
-    
   });
 
   describe('isRegex', () => {
@@ -83,7 +82,7 @@ describe('config', () => {
           {
             regex: '(asd',
             replace: 'bar',
-          }
+          },
         ],
         implicitParams: {},
       };
