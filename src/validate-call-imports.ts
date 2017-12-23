@@ -25,8 +25,12 @@ function getImportPaths(ast: T.Node): Array<string> {
   jsTraverse(ast, {
     ImportDeclaration(path) {
       importPaths.push(path.node.source.value);
+    },
+    ImportSpecifier(path) {
+      importPaths.push(path.node.imported.name);
     }
   });
+  
   return importPaths;
 }
 
