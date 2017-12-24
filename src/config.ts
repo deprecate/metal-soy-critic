@@ -32,15 +32,13 @@ export function validateConfig(config: Config): Config {
     throw new Error('callToImport is not a valid config array.');
   }
 
-  for (let i=0; i < config.callToImport.length; i++) {
-    let callToImportItem = config.callToImport[i];
-
-    if (!isRegex(callToImportItem.regex)) {
-      throw new Error(`callToImport.regex "${callToImportItem.regex}" is not a valid RegExp.`);
+  for (const item of config.callToImport) {
+    if (!isRegex(item.regex)) {
+      throw new Error(`callToImport.regex "${item.regex}" is not a valid RegExp.`);
     }
 
-    if (!isRegex(callToImportItem.replace)) {
-      throw new Error(`callToImport.replace "${callToImportItem.replace}" is not a valid replace string.`);
+    if (!isRegex(item.replace)) {
+      throw new Error(`callToImport.replace "${item.replace}" is not a valid replace string.`);
     }
   }
 

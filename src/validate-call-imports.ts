@@ -40,8 +40,8 @@ export default function valdiateCallImports(soyContext: SoyContext, jsContext: J
     
     const missingImports = getExternalSoyCalls(soyContext)
     .filter(name => {
-      for (let i=0; i < config.callToImport.length; i++) {
-        let transformedName = transform(name, config.callToImport[i].regex, config.callToImport[i].replace);
+      for (const item of config.callToImport) {
+        let transformedName = transform(name, item.regex, item.replace);
 
         if (importNames.find(importName => importName.includes(transformedName))) {
           return false;
