@@ -8,9 +8,9 @@ const CONFIG_FILE_NAMES = [
   '.soycriticrc.json',
 ];
 
-type CallToImportConfig = {
-  regex: string;
-  replace: string;
+export interface CallToImportConfig {
+  regex: string
+  replace: string
 }
 
 export interface ImplicitParamsMap {
