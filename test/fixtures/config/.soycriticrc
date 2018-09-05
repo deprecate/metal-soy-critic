@@ -1,8 +1,0 @@
-{
-  "callToImport": [
-    {
-      "regex": "(\\S+)",
-      "replace": "{$1|param}"
-    }
-  ]
-}
