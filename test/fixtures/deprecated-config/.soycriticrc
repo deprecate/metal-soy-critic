@@ -1,4 +1,0 @@
-{
-  "callToImportRegex": "(\\S+)",
-  "callToImportReplace": "{$1|param}"
-}
